@@ -1,0 +1,190 @@
+\documentclass[12pt,a4paper,openright,twoside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{disi-thesis}
+\usepackage{code-lstlistings}
+\usepackage{notes}
+\usepackage{shortcuts}
+\usepackage{acronym}
+
+\school{\unibo}
+\programme{DIPARTIMENTO DI INFORMATICA – SCIENZA E INGEGNERIA
+
+Laurea in Tecnologie dei Sistemi Informatici}
+\title{Fancy Title}
+\author{Francesco Santi}
+\date{\today}
+\subject{Supervisor's course name}
+\supervisor{Prof. Supervisor Here}
+\cosupervisor{Dott. CoSupervisor 1}
+\academicyear{2024--2025}
+
+% Definition of acronyms
+\acrodef{IoT}{Internet of Thing}
+\acrodef{vm}[VM]{Virtual Machine}
+
+
+\mainlinespacing{1.241} % line spacing in mainmatter, comment to default (1)
+
+\begin{document}
+
+% ===== FRONTESPIZIO ORIGINALE =====
+\frontmatter\frontispiece
+
+% ===== Dedica (opzionale) =====
+\begin{dedication}
+Dedico questo traguardo inanziutto a Maggie che in questo mio percorso mi è sempre stata vicina, inoltre famiglia e amici.
+\end{dedication}
+
+% ===== Introduzione (front matter, prima dell'indice) =====
+% Se il tuo stile NON avesse \chapterWithoutNumber, usa la forma generica qui sotto:
+\chapter*{Introduzione}
+\addcontentsline{toc}{chapter}{Introduzione}
+Questa è l’introduzione di una pagina che riassume la relazione:
+scopo, periodo svolto (3 gennaio 2025 – 20 giugno 2025), ruolo in Datapizza
+e una panoramica di ciò che verrà descritto nei capitoli (contesto aziendale,
+contesto applicativo, obiettivi, tecnologie, progettazione, sviluppo, dispiegamento,
+verifica, conclusioni).
+
+% ===== Indice =====
+\tableofcontents
+
+\mainmatter
+% ----------------------------------------------------------------------------------------
+\chapter{Introduzione}
+La presente relazione è redatta ai fini della richiesta di convalida dell'attività lavorativa svolta da Francesco Santi nel periodo compreso tra il 3 gennaio 2025 e il 20 giugno 2025.\\
+Il rapporto di lavoro è tuttora in corso, in quanto attualmente impiegato con contratto full-time presso \textbf{Datapizza}.
+
+% ----------------------------------------------------------------------------------------
+\chapter{Contesto aziendale}
+\section{Descrizione dell’azienda}
+Datapizza è una startup innovativa con sede legale in Via Giuseppe Ripamonti 190, 20141 Milano (MI).  
+La missione è rendere l’Italia competitiva nel settore tech, attraverso soluzioni avanzate e servizi mirati.  
+
+Principali competenze:
+\begin{itemize}
+  \item \textbf{Tech Recruiting}: connessione tra aziende e talenti tech;
+  \item \textbf{Tech Community}: oltre 500k iscritti, riferimento su notizie e tendenze tecnologiche;
+  \item \textbf{AI Engineering}: consulenze personalizzate e sviluppo soluzioni di intelligenza artificiale;
+  \item \textbf{AI Adoption}: percorsi interni per aumentare produttività e adozione tecnologica.
+\end{itemize}
+
+\section{Dimensioni e crescita}
+Datapizza conta oltre 50 dipendenti, in costante crescita, con approccio dinamico tipico delle startup ma processi strutturati per garantire scalabilità e qualità.
+
+% ----------------------------------------------------------------------------------------
+\chapter{Contesto applicativo}
+L’attività ha riguardato principalmente tre prodotti software:
+\begin{itemize}
+  \item \textbf{Datapizza Jobs} – piattaforma recruiting lato candidati;
+  \item \textbf{Datapizza Company} – piattaforma recruiting lato aziende;
+  \item \textbf{Datapizza Tech} – landing pages aziendali.
+\end{itemize}
+
+% ----------------------------------------------------------------------------------------
+\chapter{Obiettivo della tesi}
+Gli obiettivi erano:
+\begin{itemize}
+  \item contribuire allo sviluppo frontend e backend;
+  \item ridurre technical debt e migliorare qualità del codice;
+  \item ridisegnare la presenza web tramite landing pages specializzate;
+  \item acquisire e consolidare competenze tecniche e trasversali.
+\end{itemize}
+
+% ----------------------------------------------------------------------------------------
+\chapter{Tecnologie}
+\section{Metodologia di lavoro}
+Approccio \textbf{Agile} con sprint di due settimane, daily standup, planning, retrospettive e one-to-one periodici.  
+
+\section{Stack tecnologico}
+\textbf{Frontend}: React + TypeScript, React Query, Tailwind CSS, ShadCN UI, Next.js.  
+\textbf{Backend}: Django (Python), PostgreSQL, AWS.  
+\textbf{Strumenti}: VS Code, Figma, Cursor, GitHub/GitLab, Jira, Discord, Google Workspace, Mixpanel, Redash, DBeaver, Notion.
+
+% ----------------------------------------------------------------------------------------
+\chapter{Progettazione}
+Avvio del \textbf{gestionale interno} aziendale:
+\begin{itemize}
+  \item setup scheletro progetto;
+  \item definizione routing e architettura base;
+  \item condivisione convenzioni di sviluppo.
+\end{itemize}
+
+% ----------------------------------------------------------------------------------------
+\chapter{Sviluppo}
+\section{Onboarding iniziale}
+Studio delle codebase, architettura dei prodotti, workflow di sviluppo e deployment.
+
+\section{Riduzione technical debt}
+\begin{itemize}
+  \item standardizzazione API calls con React Query;
+  \item migrazione UI verso ShadCN;
+  \item refactoring componenti e nomenclature;
+  \item rimozione librerie inutilizzate (-15\% bundle size).
+\end{itemize}
+
+\section{Landing pages}
+Creazione di 6 landing pages strategiche:
+\begin{enumerate}
+  \item Home page;
+  \item Tech Recruiting;
+  \item Community;
+  \item AI Adoption;
+  \item AI Engineering;
+  \item Jobs.
+\end{enumerate}
+Con mappatura eventi Mixpanel in ottica GDPR.
+
+\section{Customer support}
+Attività di manutenzione e bug fixing durante tutto il periodo.
+
+\section{Nuove feature}
+Implementazione di funzionalità evolutive nei prodotti Jobs e Company, con rilascio in produzione e monitoraggio impatto utenti.
+
+% ----------------------------------------------------------------------------------------
+\chapter{Dispiegamento in opera}
+Deploy progressivi tramite pipeline CI/CD aziendali. Monitoraggio post-deploy con analytics e metriche.
+
+% ----------------------------------------------------------------------------------------
+\chapter{Verifica sperimentale}
+\begin{itemize}
+  \item test di regressione e usabilità;
+  \item monitoraggio eventi utente con Mixpanel;
+  \item analisi funnel e conversioni con Redash.
+\end{itemize}
+
+% ----------------------------------------------------------------------------------------
+\chapter{Conclusioni e sviluppi futuri}
+L’esperienza in Datapizza ha consentito:
+\begin{itemize}
+  \item crescita tecnica (React, Next.js, Django, DevOps di base);
+  \item sviluppo di soft skills (comunicazione, product mindset, lavoro agile);
+  \item partecipazione a decisioni tecniche con impatto reale sul business.
+\end{itemize}
+
+Sviluppi futuri:
+\begin{itemize}
+  \item estensione funzionalità del gestionale interno;
+  \item ottimizzazione continua delle landing pages;
+  \item maggiore integrazione di soluzioni di intelligenza artificiale.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+% BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\backmatter
+
+\nocite{*} % Remove this as soon as you have the first citation
+
+\bibliographystyle{alpha}
+\bibliography{bibliography}
+
+% --- Ringraziamenti ---
+\chapter{Ringraziamenti}
+\begin{itemize}
+\item Ringrazio il team di Datapizza, il mio referente Giuseppe Renna,
+la mia famiglia e i miei amici per il costante supporto.
+\end{itemize}
+
+\end{document}
