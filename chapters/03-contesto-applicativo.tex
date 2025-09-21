@@ -1,7 +1,92 @@
 \chapter{Contesto applicativo}
-L'attività ha riguardato principalmente tre prodotti software:
+
+\section{Situazione iniziale delle landing pages}
+Prima del progetto di redesign, la presenza web di Datapizza consisteva in un'unica landing page che accorpava genericamente community e recruiting, senza alcuna rappresentazione dei verticali AI (AI Engineering e AI Adoption).
+
+\subsection{Problematiche riscontrate}
+Questa soluzione, adeguata quando l'azienda contava 10-20 persone, presentava limitazioni critiche per un'azienda cresciuta a 60+ dipendenti con quattro verticali distinti:
+
+\textbf{Mancanza di posizionamento}
 \begin{itemize}
-  \item \textbf{Datapizza Jobs} – piattaforma recruiting lato candidati;
-  \item \textbf{Datapizza Company} – piattaforma recruiting lato aziende;
-  \item \textbf{Datapizza Tech} – landing pages aziendali.
+  \item Impossibilità di comunicare value proposition specifiche per servizi molto diversi
+  \item Confusione tra target B2B enterprise (AI consulting) e B2C (candidati)
+  \item Assenza totale dei nuovi verticali AI lanciati nel 2023-2025
+\end{itemize}
+
+\textbf{Scalabilità e gestione}
+\begin{itemize}
+  \item Architettura monolitica difficile da aggiornare
+  \item Impossibilità di testare messaggi diversi per verticale
+  \item Nessuna differenziazione UX per diversi customer journey
+\end{itemize}
+
+\textbf{Tracking e ottimizzazione}
+\begin{itemize}
+  \item Assenza di analytics strutturato per conversioni
+  \item Impossibilità di tracciare comportamento utente per servizio
+  \item Nessuna conformità GDPR per tracking
+  \item Mancanza di dati per decisioni data-driven
+\end{itemize}
+
+\textbf{Performance}
+\begin{itemize}
+  \item [DA INTEGRARE: metriche Lighthouse/Core Web Vitals pre-redesign]
+  \item Design system non strutturato
+  \item SEO non ottimizzato per diversi servizi
+\end{itemize}
+
+\section{Necessità di refactor}
+La crescita aziendale e l'evoluzione dei servizi hanno reso necessaria una trasformazione radicale dell'architettura web.
+
+\subsection{Drivers strategici}
+\begin{itemize}
+  \item Rappresentare 4 verticali distinti (Recruiting, Community, AI Engineering, AI Adoption)
+  \item Differenziare comunicazione B2B enterprise vs B2C candidati
+  \item Abilitare tracking GDPR-compliant per ottimizzazione conversioni
+  \item Supportare crescita da 10-20 a 60+ persone e 100+ clienti
+\end{itemize}
+
+\subsection{Obiettivi del redesign}
+\textbf{Architettura}
+\begin{itemize}
+  \item 6 landing pages specializzate (Home, Tech Recruiting, Community, AI Adoption, AI Engineering, Jobs)
+  \item Design system modulare e riutilizzabile
+  \item Routing Next.js ottimizzato con SSR/SSG
+\end{itemize}
+
+\textbf{Tracking e Analytics}
+\begin{itemize}
+  \item Implementazione Mixpanel per eventi utente GDPR-compliant
+  \item Dashboard Redash per analisi funnel
+  \item Mappatura customer journey per verticale
+\end{itemize}
+
+\textbf{Performance e UX}
+\begin{itemize}
+  \item Ottimizzazione Core Web Vitals
+  \item Esperienza utente dedicata per target (B2B vs B2C)
+  \item SEO strutturato per servizi specifici
+\end{itemize}
+
+\section{Valore strategico per l'azienda}
+\textbf{Impatto business}
+\begin{itemize}
+  \item Landing pages come canale principale acquisizione lead
+  \item Riduzione CAC attraverso funnel ottimizzati
+  \item Abilitazione campagne marketing verticale-specifiche
+  \item [DA INTEGRARE: ROI atteso/conversion rate target]
+\end{itemize}
+
+\textbf{Posizionamento}
+\begin{itemize}
+  \item Comunicazione chiara come "AI Transformation Company"
+  \item Credibilità enterprise per servizi AI
+  \item Differenziazione competitiva (community 500k+ come trust signal)
+\end{itemize}
+
+\textbf{Scalabilità}
+\begin{itemize}
+  \item Framework pronto per nuovi verticali futuri
+  \item Sistema A/B testing per iterazione continua
+  \item Architettura manutenibile dal team
 \end{itemize}
