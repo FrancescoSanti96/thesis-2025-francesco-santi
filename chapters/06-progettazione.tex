@@ -1,7 +1,278 @@
 \chapter{Progettazione}
-Avvio del \textbf{gestionale interno} aziendale:
+
+\section{Metodologia e organizzazione del lavoro}
+\subsection{Approccio Agile}
+Il progetto è stato sviluppato seguendo metodologia Agile con:
 \begin{itemize}
-  \item setup scheletro progetto;
-  \item definizione routing e architettura base;
-  \item condivisione convenzioni di sviluppo.
+  \item Sprint bisettimanali con obiettivi definiti
+  \item Daily standup per allineamento quotidiano
+  \item Sprint planning e retrospettive
+  \item One-to-one periodici per feedback
+\end{itemize}
+
+Strumenti utilizzati:
+\begin{itemize}
+  \item \textbf{Jira}: gestione task e sprint planning
+  \item \textbf{Discord/Google Meet}: comunicazione team
+  \item \textbf{Figma}: design handoff e collaborazione
+  \item \textbf{Notion}: documentazione e knowledge base
+\end{itemize}
+
+\subsection{Struttura del team}
+Il team di prodotto era composto da:
+\begin{itemize}
+  \item 1 UX/UI Designer - Progettazione esperienza utente
+  \item 1 Product Designer - Definizione requisiti di prodotto
+  \item 1 Tech Lead (Giuseppe Renna) - Leadership tecnica e referente diretto
+  \item 1 AI Engineer - Sviluppo soluzioni AI
+  \item 4 Software Engineer - Sviluppo frontend e backend
+\end{itemize}
+
+Il ruolo personale: Software Engineer con responsabilità 70\% frontend e 30\% backend.
+
+\subsection{Workflow di sviluppo}
+\begin{itemize}
+  \item \textbf{Version control}: Git con GitHub/GitLab
+  \item \textbf{Branching strategy}: [TODO: specificare - feature branches, gitflow, ecc.]
+  \item \textbf{Code review}: Pull/Merge Request con peer review obbligatoria
+  \item \textbf{CI/CD}: Pipeline automazione per testing e deploy
+  \item \textbf{Ambienti}: Development, Staging, Production
+\end{itemize}
+
+\subsection{Timeline e milestone}
+\begin{itemize}
+  \item \textbf{Gennaio 2025}: Onboarding, analisi codebase, technical debt reduction
+  \item \textbf{Febbraio-Marzo 2025}: [TODO: Progettazione architettura, design system]
+  \item \textbf{Marzo-Aprile 2025}: [TODO: Sviluppo landing pages]
+  \item \textbf{Aprile-Maggio 2025}: [TODO: Testing, ottimizzazione, deploy]
+  \item \textbf{Maggio-Giugno 2025}: [TODO: Monitoring, iterazioni]
+\end{itemize}
+
+\section{Analisi dei requisiti}
+\subsection{Requisiti funzionali}
+\begin{itemize}
+  \item Sistema di routing per 6 landing pages specializzate
+  \item Tracking eventi utente con Mixpanel (GDPR-compliant)
+  \item Form di lead generation differenziati per verticale
+  \item Integrazione newsletter "Commit"
+  \item Supporto multilingua (italiano/inglese)
+  \item Sistema CMS [TODO: specificare se headless CMS usato]
+\end{itemize}
+
+\subsection{Requisiti non funzionali}
+\begin{itemize}
+  \item \textbf{Performance}: Core Web Vitals ottimizzati, FCP < 2s, LCP < 2.5s
+  \item \textbf{SEO}: Struttura semantica, sitemap XML, meta tags dinamici
+  \item \textbf{Accessibilità}: Conformità WCAG 2.1 livello AA
+  \item \textbf{Scalabilità}: Architettura modulare per nuovi verticali futuri
+  \item \textbf{Sicurezza}: HTTPS, GDPR compliance, cookie consent management
+  \item \textbf{Manutenibilità}: Design system documentato, componenti riutilizzabili
+\end{itemize}
+
+\section{Architettura frontend ad alto livello}
+\subsection{Stack tecnologico}
+\begin{itemize}
+  \item \textbf{Framework}: Next.js (basato su React)
+  \item \textbf{Rendering}: Static Site Generation (SSG) + Server-Side Rendering (SSR)
+  \item \textbf{Styling}: Tailwind CSS per utility-first styling
+  \item \textbf{Componenti}: ShadCN UI customizzato
+  \item \textbf{State management}: React Query per API calls e caching
+  \item \textbf{Type safety}: TypeScript per tutto il codebase
+\end{itemize}
+
+\subsection{Architettura applicativa}
+[TODO: Inserire diagramma architettura]
+
+L'architettura si articola su più layer:
+\begin{itemize}
+  \item \textbf{Presentation Layer}: Componenti React (pages, layouts, UI components)
+  \item \textbf{Business Logic}: Custom hooks, utilities, helper functions
+  \item \textbf{Data Layer}: API integration, Mixpanel events, form handling
+  \item \textbf{Routing}: Next.js App Router con supporto i18n (/it/, /en/)
+  \item \textbf{Build/Deploy}: [TODO: Vercel/AWS/altro?] con pipeline CI/CD
+\end{itemize}
+
+\subsection{Pattern architetturali}
+\begin{itemize}
+  \item \textbf{Component composition}: Riutilizzo attraverso composizione
+  \item \textbf{Atomic Design}: Organizzazione atoms → molecules → organisms → templates
+  \item \textbf{Container/Presentational}: Separazione logica da presentazione
+  \item \textbf{Custom hooks}: Astrazione logica condivisa
+  \item \textbf{Server/Client Components}: [TODO: se Next.js 13+ App Router]
+\end{itemize}
+
+\section{Design system e collaborazione}
+\subsection{Processo di design e handoff}
+Stretta collaborazione tra sviluppo e design:
+\begin{itemize}
+  \item \textbf{Design in Figma}: Wireframe, mockup high-fidelity, prototipi interattivi
+  \item \textbf{Design review}: Sessioni di validazione UX/UI con team
+  \item \textbf{Handoff strutturato}: Specs precise (spacing, colors, typography, assets)
+  \item \textbf{Feedback loop}: Iterazione continua durante sprint
+\end{itemize}
+
+\subsection{Fondamenta visive}
+\textbf{Palette colori}
+\begin{itemize}
+  \item Primary: [TODO: hex code - es. \#FF6B35]
+  \item Secondary: [TODO: hex code]
+  \item Neutral scale: [TODO: grigi per testo/backgrounds]
+  \item Semantic colors: success, warning, error [TODO: hex codes]
+  \item [TODO: Dark mode support?]
+\end{itemize}
+
+\textbf{Typography}
+\begin{itemize}
+  \item Font principale: [TODO: nome font - es. Inter, Poppins]
+  \item Fallback: -apple-system, BlinkMacSystemFont, Segoe UI, system-ui
+  \item Type scale: [TODO: h1-h6 sizes in rem/px]
+  \item Line height: [TODO: es. 1.5 body, 1.2 headings]
+  \item Font weights: Regular (400), Medium (500), Semibold (600), Bold (700)
+\end{itemize}
+
+\textbf{Spacing e layout}
+\begin{itemize}
+  \item Grid system: 8pt base unit
+  \item Spacing scale: 4, 8, 16, 24, 32, 48, 64, 96px
+  \item Breakpoints responsive:
+    \begin{itemize}
+      \item Mobile: [TODO: < Xpx]
+      \item Tablet: [TODO: X-Ypx]
+      \item Desktop: [TODO: > Ypx]
+    \end{itemize}
+  \item Container max-width: [TODO: es. 1280px]
+  \item Border radius: [TODO: es. 4px, 8px, 16px]
+\end{itemize}
+
+\subsection{Libreria componenti}
+\textbf{ShadCN UI come base}
+\begin{itemize}
+  \item Component library headless basata su Radix UI
+  \item Customizzazione completa con Tailwind CSS
+  \item Accessibilità (ARIA) integrata
+  \item Componenti unstyled adattabili al brand
+\end{itemize}
+
+\textbf{Componenti implementati}
+\begin{itemize}
+  \item \textbf{Atoms}: Button (varianti), Input, Badge, Icon, Link
+  \item \textbf{Molecules}: Card, FormField, NavItem, Dropdown, Modal
+  \item \textbf{Organisms}: Header, Footer, Hero, Feature Grid, Testimonials
+  \item \textbf{Templates}: Landing layouts riutilizzabili
+\end{itemize}
+
+\textbf{Variazioni per target}
+\begin{itemize}
+  \item \textbf{B2B}: Tone professionale, whitespace generoso, imagery corporate
+  \item \textbf{B2C}: Tone friendly, elementi colorati, illustrazioni
+  \item \textbf{Community}: Elementi tech, code snippets, badge/tags
+\end{itemize}
+
+\section{Architettura delle 6 landing pages}
+\subsection{Struttura comune}
+Ogni landing condivide:
+\begin{itemize}
+  \item Layout base: Header navigazione + Content + Footer
+  \item Pattern CTA consistente
+  \item Social proof integrato (500k+ community)
+  \item Form contatto/iscrizione
+  \item SEO optimization (meta, structured data)
+\end{itemize}
+
+\subsection{Specifiche per landing}
+\textbf{1. Home Page (/it/)}
+\begin{itemize}
+  \item Obiettivo: Hub centrale, overview verticali
+  \item Target: Tutti (router verso servizi)
+  \item Sezioni: Hero + 4 verticali + Community + Newsletter
+  \item CTA: "Scopri [servizio]", "Iscriviti newsletter"
+\end{itemize}
+
+\textbf{2. Tech Recruiting (/it/tech-recruiting/)}
+\begin{itemize}
+  \item Obiettivo: Lead generation aziende B2B
+  \item Target: HR, Hiring Manager
+  \item Sezioni: Hero + Processo 6 step + Talent pool + Case studies + Form contatto
+  \item CTA: "Trova talenti", "Contattaci"
+\end{itemize}
+
+\textbf{3. Tech Community (/it/tech-media-agency/)}
+\begin{itemize}
+  \item Obiettivo: Acquisizione membri, iscrizione newsletter
+  \item Target: Developer, tech enthusiast
+  \item Sezioni: Hero + Newsletter "Commit" + Eventi + Discord + Contenuti
+  \item CTA: "Iscriviti", "Unisciti Discord"
+\end{itemize}
+
+\textbf{4. AI Adoption (/it/ai-adoption/)}
+\begin{itemize}
+  \item Obiettivo: Lead generation servizi upskilling
+  \item Target: C-level, HR, Management
+  \item Sezioni: Hero + Evidenze scientifiche + Percorsi + Clienti + Form
+  \item CTA: "Richiedi demo", "Contatta team"
+\end{itemize}
+
+\textbf{5. AI Engineering (/it/ai-engineering/)}
+\begin{itemize}
+  \item Obiettivo: Lead generation progetti custom AI
+  \item Target: CTO, IT Decision Maker
+  \item Sezioni: Hero + Framework proprietario + Showcase progetti + Tech stack + Form
+  \item CTA: "Scopri framework", "Avvia progetto"
+\end{itemize}
+
+\textbf{6. Jobs Platform (/jobs/)}
+\begin{itemize}
+  \item Obiettivo: Applicazioni candidati
+  \item Target: Developer, Data Scientist in cerca lavoro
+  \item Sezioni: Hero + Ricerca posizioni + Trasparenza salary + Tech Buddy + Process
+  \item CTA: "Cerca lavoro", "Carica CV"
+\end{itemize}
+
+\section{Sistema di tracking e analytics}
+\subsection{Architettura Mixpanel}
+\begin{itemize}
+  \item Event taxonomy per verticale [TODO: esempi eventi chiave]
+  \item User properties: source, landing, device, location
+  \item Funnel tracking: page view → interaction → conversion
+  \item GDPR compliance: cookie consent, opt-out, data retention
+\end{itemize}
+
+\subsection{Metriche chiave}
+\begin{itemize}
+  \item Page views e sessioni per landing
+  \item Bounce rate e average session duration
+  \item Conversion rate (form submit, newsletter signup, CTA clicks)
+  \item Scroll depth e engagement
+\end{itemize}
+
+\subsection{Dashboard e analisi}
+\begin{itemize}
+  \item Redash per query SQL e dashboard custom
+  \item Real-time monitoring eventi
+  \item A/B testing framework [TODO: tool usato - Mixpanel Experiments?]
+\end{itemize}
+
+\section{Scalabilità e manutenibilità}
+\subsection{Gestione versioni}
+\begin{itemize}
+  \item Semantic versioning del codebase
+  \item Feature flags per rollout graduale
+  \item Rollback strategy
+\end{itemize}
+
+\subsection{Performance optimization}
+\begin{itemize}
+  \item Image optimization con next/image (WebP, lazy loading)
+  \item Code splitting automatico Next.js
+  \item Asset optimization: minification, compression
+  \item CDN per static assets [TODO: provider - Cloudflare/AWS?]
+  \item Caching strategy: ISR (Incremental Static Regeneration) [TODO: revalidation time]
+\end{itemize}
+
+\subsection{Processo per nuove landing}
+\begin{itemize}
+  \item Template riutilizzabili da duplicare
+  \item Component library documentata
+  \item Guidelines design system
+  \item Checklist SEO/Performance/Accessibility
 \end{itemize}
