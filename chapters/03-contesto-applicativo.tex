@@ -28,65 +28,56 @@ Questa soluzione, adeguata quando l'azienda contava 10-20 persone, presentava li
   \item Mancanza di dati per decisioni data-driven
 \end{itemize}
 
-\textbf{Performance}
+\textbf{Performance e tecnico}
 \begin{itemize}
   \item [DA INTEGRARE: metriche Lighthouse/Core Web Vitals pre-redesign]
   \item Design system non strutturato
   \item SEO non ottimizzato per diversi servizi
+  \item Codice non modulare e difficile da mantenere
 \end{itemize}
 
 \section{Necessità di refactor}
 La crescita aziendale e l'evoluzione dei servizi hanno reso necessaria una trasformazione radicale dell'architettura web.
 
-\subsection{Drivers strategici}
+\subsection{Drivers strategici del cambiamento}
 \begin{itemize}
-  \item Rappresentare 4 verticali distinti (Recruiting, Community, AI Engineering, AI Adoption)
-  \item Differenziare comunicazione B2B enterprise vs B2C candidati
-  \item Abilitare tracking GDPR-compliant per ottimizzazione conversioni
-  \item Supportare crescita da 10-20 a 60+ persone e 100+ clienti
+  \item \textbf{Crescita organizzativa}: da 10-20 a 60+ persone richiede presenza web professionale
+  \item \textbf{Nuovi verticali}: AI Engineering e AI Adoption necessitano posizionamento dedicato
+  \item \textbf{Differenziazione target}: servizi B2B enterprise vs B2C richiedono comunicazione specifica
+  \item \textbf{Espansione commerciale}: 100+ aziende clienti necessitano canali di acquisizione ottimizzati
 \end{itemize}
 
-\subsection{Obiettivi del redesign}
-\textbf{Architettura}
+\subsection{Limitazioni tecniche dell'esistente}
 \begin{itemize}
-  \item 6 landing pages specializzate (Home, Tech Recruiting, Community, AI Adoption, AI Engineering, Jobs)
-  \item Design system modulare e riutilizzabile
-  \item Routing Next.js ottimizzato con SSR/SSG
+  \item Impossibilità di implementare tracking granulare per servizio
+  \item Difficoltà nel mantenere performance ottimali con contenuti crescenti
+  \item Assenza di framework per testing A/B
+  \item Mancanza di separazione delle responsabilità nel codice
 \end{itemize}
 
-\textbf{Tracking e Analytics}
+\section{Valore strategico del progetto}
+Il progetto rappresenta un investimento strategico fondamentale per supportare la crescita aziendale:
+
+\textbf{Impatto sul business}
 \begin{itemize}
-  \item Implementazione Mixpanel per eventi utente GDPR-compliant
-  \item Dashboard Redash per analisi funnel
-  \item Mappatura customer journey per verticale
+  \item Le landing pages costituiscono il principale canale di acquisizione lead
+  \item Necessità di ridurre il costo di acquisizione cliente (CAC)
+  \item Abilitazione di campagne marketing mirate per verticale
+  \item Supporto alla strategia commerciale multi-target
 \end{itemize}
 
-\textbf{Performance e UX}
+\textbf{Posizionamento competitivo}
 \begin{itemize}
-  \item Ottimizzazione Core Web Vitals
-  \item Esperienza utente dedicata per target (B2B vs B2C)
-  \item SEO strutturato per servizi specifici
+  \item Comunicazione chiara dell'identità "AI Transformation Company"
+  \item Credibilità enterprise per servizi AI ad alto valore
+  \item Differenziazione attraverso community 500k+ come trust signal
+  \item Professionalizzazione dell'immagine aziendale
 \end{itemize}
 
-\section{Valore strategico per l'azienda}
-\textbf{Impatto business}
+\textbf{Scalabilità futura}
 \begin{itemize}
-  \item Landing pages come canale principale acquisizione lead
-  \item Riduzione CAC attraverso funnel ottimizzati
-  \item Abilitazione campagne marketing verticale-specifiche
-  \item [DA INTEGRARE: ROI atteso/conversion rate target]
-\end{itemize}
-
-\textbf{Posizionamento}
-\begin{itemize}
-  \item Comunicazione chiara come "AI Transformation Company"
-  \item Credibilità enterprise per servizi AI
-  \item Differenziazione competitiva (community 500k+ come trust signal)
-\end{itemize}
-
-\textbf{Scalabilità}
-\begin{itemize}
-  \item Framework pronto per nuovi verticali futuri
-  \item Sistema A/B testing per iterazione continua
-  \item Architettura manutenibile dal team
+  \item Architettura pronta per nuovi verticali di business
+  \item Framework riutilizzabile per future iniziative
+  \item Capacità di iterazione rapida basata su dati
+  \item Manutenibilità a lungo termine del sistema
 \end{itemize}

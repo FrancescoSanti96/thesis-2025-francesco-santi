@@ -1,8 +1,174 @@
 \chapter{Obiettivo della tesi}
-Gli obiettivi erano:
+
+\section{Obiettivi generali del progetto}
+Il progetto di redesign delle landing pages ha mirato a risolvere le problematiche identificate nel contesto applicativo, trasformando la presenza web aziendale da monolite generico a ecosistema di landing specializzate.
+
+Gli obiettivi generali comprendevano:
 \begin{itemize}
-  \item contribuire allo sviluppo frontend e backend;
-  \item ridurre technical debt e migliorare qualità del codice;
-  \item ridisegnare la presenza web tramite landing pages specializzate;
-  \item acquisire e consolidare competenze tecniche e trasversali.
+  \item Contribuire allo sviluppo frontend e backend dell'ecosistema web aziendale
+  \item Ridurre technical debt e migliorare qualità del codice esistente
+  \item Ridisegnare la presenza web tramite landing pages specializzate per verticale
+  \item Acquisire e consolidare competenze tecniche e trasversali in ambiente aziendale
+\end{itemize}
+
+\section{Obiettivi principali delle landing pages}
+
+\subsection{Posizionamento e comunicazione}
+\textbf{Differenziazione per verticale}
+\begin{itemize}
+  \item Creare value proposition chiare e specifiche per ciascun servizio (AI Engineering, AI Adoption, Tech Recruiting, Community)
+  \item Separare chiaramente la comunicazione B2B enterprise da quella B2C candidati
+  \item Posizionare Datapizza come "AI Transformation Company" attraverso contenuti mirati
+\end{itemize}
+
+\textbf{Brand consistency}
+\begin{itemize}
+  \item Implementare design system coerente ma flessibile per adattarsi ai diversi target
+  \item Mantenere elementi di continuità visiva (palette, typography, componenti)
+  \item Integrare social proof (500k+ community) come elemento di credibilità trasversale
+\end{itemize}
+
+\subsection{Performance e user experience}
+\textbf{Ottimizzazione tecnica}
+\begin{itemize}
+  \item Raggiungere punteggi Lighthouse superiori a 90 per Performance, Accessibility, Best Practices, SEO
+  \item Ottimizzare Core Web Vitals: FCP < 2s, LCP < 2.5s, CLS < 0.1
+  \item Implementare lazy loading e code splitting per ridurre tempo di caricamento iniziale
+\end{itemize}
+
+\textbf{Esperienza utente}
+\begin{itemize}
+  \item Progettare customer journey ottimizzati per ciascun target
+  \item Implementare CTA strategiche e form di conversione dedicati per verticale
+  \item Garantire responsive design per tutti i dispositivi (mobile-first approach)
+\end{itemize}
+
+\subsection{Scalabilità e manutenibilità}
+\textbf{Architettura modulare}
+\begin{itemize}
+  \item Sviluppare framework riutilizzabile per future landing pages
+  \item Implementare design system con componenti atomici (atoms, molecules, organisms)
+  \item Strutturare codebase per facilitare aggiornamenti e nuove implementazioni
+\end{itemize}
+
+\textbf{Gestione contenuti}
+\begin{itemize}
+  \item Abilitare aggiornamenti rapidi dei contenuti senza deploy
+  \item [TODO: Specificare se CMS headless implementato]
+  \item Permettere A/B testing su elementi chiave delle landing
+\end{itemize}
+
+\section{Obiettivi secondari}
+
+\subsection{Tracking e analytics}
+\textbf{Implementazione Mixpanel}
+\begin{itemize}
+  \item Mappare eventi utente specifici per ciascuna landing page
+  \item Implementare tracking GDPR-compliant con cookie consent management
+  \item Creare funnel di conversione per misurare efficacia per verticale
+  \item Abilitare segmentazione utenti basata su comportamento e provenienza
+\end{itemize}
+
+\textbf{Dashboard e reportistica}
+\begin{itemize}
+  \item Integrare Redash per analisi avanzata e dashboard personalizzate
+  \item Implementare real-time monitoring delle performance
+  \item Creare alert automatici per anomalie nel traffico o conversioni
+\end{itemize}
+
+\subsection{SEO e visibilità}
+\begin{itemize}
+  \item Ottimizzare struttura URL e meta tags per ciascun servizio
+  \item Implementare structured data (JSON-LD) per rich snippets
+  \item Creare sitemap dinamica e gestione robots.txt
+  \item Ottimizzare per parole chiave specifiche per verticale (AI consulting, tech recruiting, etc.)
+\end{itemize}
+
+\subsection{Integrazione con ecosistema esistente}
+\begin{itemize}
+  \item Collegare seamlessly con piattaforme Jobs e Company
+  \item Integrare newsletter "Commit" e sistema di iscrizione
+  \item Connettere con Discord community e eventi
+  \item Implementare single sign-on dove applicabile
+\end{itemize}
+
+\section{Criteri di successo e KPI}
+
+\subsection{Metriche di performance tecnica}
+\begin{itemize}
+  \item Lighthouse Performance Score > 90
+  \item First Contentful Paint < 2 secondi
+  \item Largest Contentful Paint < 2.5 secondi
+  \item Cumulative Layout Shift < 0.1
+  \item Time to Interactive < 3 secondi
+\end{itemize}
+
+\subsection{Metriche di business}
+\textbf{Conversion rate}
+\begin{itemize}
+  \item [TODO: Baseline conversion rate pre-redesign se disponibile]
+  \item Target miglioramento conversion rate del X\% per landing B2B
+  \item Target iscrizioni newsletter Commit: Y iscrizioni/mese
+  \item Riduzione bounce rate del Z\% rispetto alla situazione pre-redesign
+\end{itemize}
+
+\textbf{Engagement}
+\begin{itemize}
+  \item Aumento tempo medio sessione
+  \item Miglioramento scroll depth medio
+  \item Incremento interazioni con CTA principali
+\end{itemize}
+
+\subsection{Metriche di qualità}
+\begin{itemize}
+  \item Zero errori critici in produzione post-deploy
+  \item Accessibilità WCAG 2.1 AA compliance al 100\%
+  \item Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+  \item Mobile responsiveness su tutti i breakpoints
+\end{itemize}
+
+\section{Vincoli e limitazioni}
+\subsection{Vincoli tecnici}
+\begin{itemize}
+  \item Compatibilità con stack esistente (Django backend, AWS infrastructure)
+  \item Rispetto budget performance per hosting e CDN
+  \item Timeline di sviluppo: [TODO: specificare durata sprint dedicati]
+  \item Risorse team: 1 Software Engineer principale (70\% frontend, 30\% backend)
+\end{itemize}
+
+\subsection{Vincoli di compliance}
+\begin{itemize}
+  \item Conformità GDPR per tracking utenti EU
+  \item Privacy policy aggiornata per nuovi sistemi di tracking
+  \item Cookie consent management compliant
+  \item Data retention policies per analytics
+\end{itemize}
+
+\section{Roadmap di implementazione}
+\textbf{Fase 1}: Architettura e design system
+\begin{itemize}
+  \item Setup Next.js e configurazione routing
+  \item Implementazione design system base con ShadCN UI
+  \item Creazione componenti core riutilizzabili
+\end{itemize}
+
+\textbf{Fase 2}: Sviluppo landing pages
+\begin{itemize}
+  \item Implementazione Home Page come hub centrale
+  \item Sviluppo landing specializzate per verticali AI
+  \item Implementazione landing recruiting e Jobs platform
+\end{itemize}
+
+\textbf{Fase 3}: Tracking e ottimizzazione
+\begin{itemize}
+  \item Integrazione Mixpanel e implementazione eventi
+  \item Setup dashboard Redash
+  \item Testing e ottimizzazione performance
+\end{itemize}
+
+\textbf{Fase 4}: Deploy e monitoring
+\begin{itemize}
+  \item Deploy su ambiente di staging per testing
+  \item Go-live in produzione con rollout graduale
+  \item Monitoring post-launch e iterazioni
 \end{itemize}
