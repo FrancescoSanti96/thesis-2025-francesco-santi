@@ -1,29 +1,183 @@
 \chapter{Sviluppo}
-\section{Onboarding iniziale}
-Studio delle codebase, architettura dei prodotti, workflow di sviluppo e deployment.
 
-\section{Riduzione technical debt}
+\section{Processo di sviluppo}
+Lo sviluppo delle landing pages è avvenuto seguendo un approccio iterativo basato su sprint bisettimanali, con rilasci incrementali e feedback continuo dal team di design e product.
+
+\subsection{Metodologia iterativa}
 \begin{itemize}
-  \item standardizzazione API calls con React Query;
-  \item migrazione UI verso ShadCN;
-  \item refactoring componenti e nomenclature;
-  \item rimozione librerie inutilizzate (-15\% bundle size).
+  \item Sprint planning con prioritizzazione landing per impatto business
+  \item Sviluppo incrementale con rilasci per singola landing page
+  \item Code review obbligatoria per ogni merge request
+  \item Testing continuo su ambienti staging prima del deploy production
 \end{itemize}
 
-\section{Landing pages}
-Creazione di 6 landing pages strategiche:
-\begin{enumerate}
-  \item Home page;
-  \item Tech Recruiting;
-  \item Community;
-  \item AI Adoption;
-  \item AI Engineering;
-  \item Jobs.
-\end{enumerate}
-Con mappatura eventi Mixpanel in ottica GDPR.
+\section{Sviluppo delle 6 landing pages}
+\subsection{Ordine di implementazione}
+Le landing sono state sviluppate seguendo priorità strategiche:
 
-\section{Customer support}
-Attività di manutenzione e bug fixing durante tutto il periodo.
+\textbf{1. Home Page} (/it/)
+\begin{itemize}
+  \item Hub centrale con overview dei 4 verticali
+  \item Routing intelligente verso landing specializzate
+  \item Social proof (500k+ community, 100+ aziende)
+  \item [TODO: durata sviluppo, sprint dedicati]
+\end{itemize}
 
-\section{Nuove feature}
-Implementazione di funzionalità evolutive nei prodotti Jobs e Company, con rilascio in produzione e monitoraggio impatto utenti.
+\textbf{2. Tech Recruiting} (/it/tech-recruiting/)
+\begin{itemize}
+  \item Funnel B2B per lead generation enterprise
+  \item Processo 6 step visualizzato
+  \item Showcase talent pool e case studies
+  \item Form contatto integrato con CRM [TODO: quale CRM]
+\end{itemize}
+
+\textbf{3. Tech Community} (/it/tech-media-agency/)
+\begin{itemize}
+  \item Acquisizione membri e iscrizioni newsletter
+  \item Integrazione sistema newsletter "Commit"
+  \item Showcase eventi e Discord community
+  \item [TODO: integrazione API newsletter]
+\end{itemize}
+
+\textbf{4. AI Adoption} (/it/ai-adoption/)
+\begin{itemize}
+  \item Value proposition servizi upskilling
+  \item Visualizzazione evidenze scientifiche (grafici BCG)
+  \item Percorsi formativi per diversi target
+  \item Form demo request
+\end{itemize}
+
+\textbf{5. AI Engineering} (/it/ai-engineering/)
+\begin{itemize}
+  \item Showcase framework proprietario "Datapizza AI"
+  \item Gallery progetti (Copiloti Sales, HR, Legal, Customer)
+  \item Tech stack visualization
+  \item CTA per avvio progetto custom
+\end{itemize}
+
+\textbf{6. Jobs Platform} (/jobs/)
+\begin{itemize}
+  \item Esperienza candidati ottimizzata
+  \item Ricerca posizioni con filtri avanzati
+  \item Trasparenza salary (RAL sempre visibile)
+  \item Sistema Tech Buddy integrato
+\end{itemize}
+
+\section{Implementazione tecnica}
+
+\subsection{Architettura componenti}
+\textbf{Design System Setup}
+\begin{itemize}
+  \item Configurazione Tailwind con palette custom Datapizza
+  \item Implementazione componenti base ShadCN customizzati
+  \item Creazione component library secondo Atomic Design:
+    \begin{itemize}
+      \item \textbf{Atoms}: Button, Input, Badge, Icon
+      \item \textbf{Molecules}: Card, FormField, NavItem
+      \item \textbf{Organisms}: Header, Footer, Hero, Section
+      \item \textbf{Templates}: Layout landing pages
+    \end{itemize}
+  \item [TODO: esempi componenti custom sviluppati]
+\end{itemize}
+
+\textbf{Routing e Navigazione}
+\begin{itemize}
+  \item Setup Next.js routing per /it/ e /en/
+  \item [TODO: SSG, SSR o ISR per ciascuna landing?]
+  \item Gestione meta tags dinamici per SEO
+  \item Sitemap generation automatica
+\end{itemize}
+
+\subsection{Integrazione tracking Mixpanel}
+\textbf{Event Mapping}
+\begin{itemize}
+  \item Definizione taxonomy eventi per verticale
+  \item Implementazione tracking GDPR-compliant
+  \item Cookie consent management
+  \item TODO: esempi eventi chiave 
+\end{itemize}
+
+\textbf{Funnel Implementation}
+\begin{itemize}
+  \item Page view → Scroll depth → Interaction → Conversion
+  \item User properties tracking (source, device, location)
+  \item Custom events per ogni CTA principale
+  \item [TODO: esempio funnel specifico implementato]
+\end{itemize}
+
+\subsection{Performance Optimization}
+\begin{itemize}
+  \item Image optimization con next/image (lazy loading, WebP)
+  \item Code splitting automatico per route
+  \item Critical CSS inlining
+  \item Font optimization (preload, display swap)
+  \item [TODO: risultati performance - Lighthouse score]
+\end{itemize}
+
+\section{Difficoltà incontrate e soluzioni}
+
+\subsection{Challenge 1: [TODO: titolo sfida tecnica]}
+\textbf{Problema}:
+\begin{itemize}
+  \item [TODO: descrizione problema specifico - es. performance immagini, compatibilità browser, integrazione API]
+\end{itemize}
+
+\textbf{Soluzione adottata}:
+\begin{itemize}
+  \item [TODO: come risolto - es. implementazione CDN, polyfill, refactor architettura]
+\end{itemize}
+
+\textbf{Risultato}:
+\begin{itemize}
+  \item [TODO: outcome - es. riduzione 50\% tempo caricamento]
+\end{itemize}
+
+\subsection{Challenge 2: GDPR Compliance}
+\textbf{Problema}:
+\begin{itemize}
+  \item Necessità di tracciare utenti rispettando normativa europea
+  \item Gestione consent per analytics e marketing cookies
+\end{itemize}
+
+\textbf{Soluzione adottata}:
+\begin{itemize}
+  \item Implementazione cookie consent banner
+  \item Tracking opt-out automatico se consent negato
+  \item Data retention policies configurate su Mixpanel
+  \item [TODO: libreria consent management usata]
+\end{itemize}
+
+\subsection{Challenge 3: [TODO: altra difficoltà rilevante]}
+[TODO: stesso pattern problema-soluzione-risultato]
+
+\section{Esempi di codice significativi}
+
+\subsection{Esempio 1: [TODO: Componente Hero Riutilizzabile]}
+\begin{lstlisting}[language=JavaScript]
+// TODO: esempio componente React significativo
+// es. Hero component con varianti per diversi target
+\end{lstlisting}
+
+\textbf{Motivazioni}:
+\begin{itemize}
+  \item [TODO: perché questo approccio - riutilizzabilità, performance, maintainability]
+\end{itemize}
+
+\subsection{Esempio 2: [TODO: Tracking Mixpanel Implementation]}
+\begin{lstlisting}[language=JavaScript]
+// TODO: esempio implementazione tracking eventi
+\end{lstlisting}
+
+\textbf{Impatto}:
+\begin{itemize}
+  \item [TODO: risultati - es. "permesso di tracciare X conversioni, identificare Y bottleneck"]
+\end{itemize}
+
+\section{Testing e quality assurance}
+\begin{itemize}
+  \item [TODO: testing strategy - unit, integration, E2E]
+  \item Cross-browser testing (Chrome, Firefox, Safari, Edge)
+  \item Responsive testing su diversi dispositivi
+  \item Accessibility testing (WCAG 2.1 AA)
+  \item Performance testing (Lighthouse, Core Web Vitals)
+\end{itemize}

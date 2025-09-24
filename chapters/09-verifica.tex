@@ -1,6 +1,175 @@
 \chapter{Verifica sperimentale}
+
+\section{Testing funzionale}
+\subsection{Test di regressione}
+Verifica che funzionalità esistenti continuino a funzionare:
 \begin{itemize}
-  \item test di regressione e usabilità;
-  \item monitoraggio eventi utente con Mixpanel;
-  \item analisi funnel e conversioni con Redash.
+  \item Routing tra landing pages
+  \item Form submission e validazione
+  \item Integrazione newsletter "Commit"
+  \item Link esterni (Discord, social, Jobs platform)
+  \item [TODO: altri test critici eseguiti]
+\end{itemize}
+
+\subsection{Test di usabilità}
+\begin{itemize}
+  \item Navigation flow per ciascun target (B2B/B2C)
+  \item Chiarezza CTA e conversion path
+  \item Mobile usability testing
+  \item [TODO: feedback utenti/stakeholder raccolti]
+\end{itemize}
+
+\subsection{Cross-browser e responsive}
+\begin{itemize}
+  \item Browser testati: Chrome, Firefox, Safari, Edge
+  \item Dispositivi: Desktop, Tablet, Mobile (iOS/Android)
+  \item [TODO: issue rilevati e risolti]
+\end{itemize}
+
+\section{Analisi performance}
+\subsection{Lighthouse scores}
+Risultati audit performance per landing principali:
+
+\textbf{Pre-redesign}
+\begin{itemize}
+  \item [TODO: score baseline se disponibili]
+\end{itemize}
+
+\textbf{Post-redesign}
+\begin{itemize}
+  \item Performance: [TODO: score - target >90]
+  \item Accessibility: [TODO: score - target >90]
+  \item Best Practices: [TODO: score - target >90]
+  \item SEO: [TODO: score - target >90]
+\end{itemize}
+
+\subsection{Core Web Vitals}
+Metriche misurate in produzione:
+\begin{itemize}
+  \item \textbf{FCP} (First Contentful Paint): [TODO: es. 1.2s - target <2s]
+  \item \textbf{LCP} (Largest Contentful Paint): [TODO: es. 2.1s - target <2.5s]
+  \item \textbf{CLS} (Cumulative Layout Shift): [TODO: es. 0.05 - target <0.1]
+  \item \textbf{TTI} (Time to Interactive): [TODO: es. 2.8s - target <3s]
+\end{itemize}
+
+\subsection{Bundle size}
+\begin{itemize}
+  \item Initial bundle: [TODO: KB]
+  \item Code splitting effectiveness: [TODO: chunks generati]
+  \item Riduzione vs baseline: -15\% (technical debt reduction)
+\end{itemize}
+
+\section{Tracking e analytics}
+\subsection{Verifica eventi Mixpanel}
+Validazione tracking implementato:
+\begin{itemize}
+  \item Eventi base: page\_view, landing\_loaded, scroll\_depth
+  \item Eventi conversione: form\_submit, cta\_clicked, newsletter\_signup
+  \item User properties: source, device, location
+  \item [TODO: volume eventi giornalieri]
+\end{itemize}
+
+\subsection{Analisi funnel con Redash}
+Funnel di conversione misurati per verticale:
+\begin{itemize}
+  \item \textbf{B2B (Recruiting/AI)}: Landing view → CTA click → Form submit
+  \item \textbf{B2C (Jobs)}: Landing view → Search → Apply
+  \item \textbf{Community}: Landing view → Scroll → Newsletter signup
+  \item [TODO: conversion rate per funnel]
+\end{itemize}
+
+\subsection{Metriche engagement}
+\begin{itemize}
+  \item Tempo medio sessione: [TODO: minuti]
+  \item Bounce rate: [TODO: % - baseline vs attuale]
+  \item Scroll depth medio: [TODO: %]
+  \item Click-through rate CTA: [TODO: %]
+\end{itemize}
+
+\section{Accessibilità e SEO}
+\subsection{WCAG compliance}
+\begin{itemize}
+  \item Livello conformità: WCAG 2.1 AA
+  \item Test con screen reader: [TODO: tool usato - NVDA/JAWS]
+  \item Keyboard navigation: tutti gli elementi accessibili
+  \item Contrasto colori: ratio minimo 4.5:1 rispettato
+\end{itemize}
+
+\subsection{SEO validation}
+\begin{itemize}
+  \item Meta tags: title, description, OG tags verificati
+  \item Structured data: JSON-LD implementato e validato
+  \item Sitemap XML: generata correttamente per tutte le route
+  \item Robots.txt: configurato per corretta indicizzazione
+  \item [TODO: Google Search Console insights se disponibili]
+\end{itemize}
+
+\section{Monitoraggio post-rilascio}
+\subsection{Problemi riscontrati in produzione}
+\textbf{Issue 1: [TODO: titolo problema]}
+\begin{itemize}
+  \item \textbf{Descrizione}: [TODO: cosa è successo]
+  \item \textbf{Impatto}: [TODO: utenti/funzionalità affettate]
+  \item \textbf{Root cause}: [TODO: causa individuata]
+  \item \textbf{Soluzione}: [TODO: fix applicato]
+  \item \textbf{Tempo risoluzione}: [TODO: ore/giorni]
+\end{itemize}
+
+\textbf{Issue 2: [TODO: altro problema rilevante]}
+[TODO: stesso pattern sopra]
+
+\subsection{Hotfix e patch}
+\begin{itemize}
+  \item [TODO: numero hotfix rilasciati post-launch]
+  \item [TODO: issue critici vs minori]
+  \item [TODO: tempo medio fix per severity]
+\end{itemize}
+
+\subsection{Analytics real-time}
+Monitoraggio continuo metriche:
+\begin{itemize}
+  \item Dashboard live Mixpanel per anomalie
+  \item Alert automatici su error rate spike
+  \item Performance degradation detection
+  \item [TODO: incidenti rilevati tramite monitoring]
+\end{itemize}
+
+\section{Risultati rispetto agli obiettivi}
+\subsection{Obiettivi tecnici}
+Confronto con target definiti in Cap. 4:
+\begin{itemize}
+  \item \textbf{Performance}: [TODO: target vs achieved]
+  \item \textbf{Accessibility}: [TODO: target vs achieved]
+  \item \textbf{SEO}: [TODO: target vs achieved]
+  \item \textbf{Scalabilità}: Architettura modulare implementata ✓
+\end{itemize}
+
+\subsection{Obiettivi di business}
+\textbf{Conversion rate}
+\begin{itemize}
+  \item Baseline pre-redesign: [TODO: %]
+  \item Post-redesign: [TODO: %]
+  \item Miglioramento: [TODO: +X%]
+\end{itemize}
+
+\textbf{Lead generation}
+\begin{itemize}
+  \item Lead B2B (Recruiting/AI): [TODO: numero/mese]
+  \item Newsletter signups: [TODO: numero/mese]
+  \item Job applications: [TODO: numero/mese]
+\end{itemize}
+
+\textbf{Traffico}
+\begin{itemize}
+  \item Traffico totale: [TODO: utenti/mese]
+  \item Traffico per landing: [TODO: distribuzione %]
+  \item Bounce rate improvement: [TODO: -X%]
+\end{itemize}
+
+\subsection{Impatto sul business}
+\begin{itemize}
+  \item Riduzione CAC (Costo Acquisizione Cliente): [TODO: se misurabile]
+  \item ROI campagne marketing: [TODO: se disponibile]
+  \item Posizionamento brand: presenza web professionale per 60+ persone
+  \item Scalabilità: framework pronto per nuovi verticali
 \end{itemize}

@@ -1,2 +1,162 @@
 \chapter{Dispiegamento in opera}
-Deploy progressivi tramite pipeline CI/CD aziendali. Monitoraggio post-deploy con analytics e metriche.
+
+\section{Pipeline CI/CD}
+\subsection{Automazione build e deploy}
+Il processo di deploy è completamente automatizzato attraverso pipeline CI/CD:
+\begin{itemize}
+  \item \textbf{Trigger}: Push su branch main/production
+  \item \textbf{Build automatico}: Compilazione Next.js con ottimizzazioni
+  \item \textbf{Testing pre-deploy}: [TODO: test automatici eseguiti - unit, integration, E2E?]
+  \item \textbf{Deployment}: Rilascio automatico su ambiente target
+  \item \textbf{Notifiche}: Alert su Discord/Slack per esito deploy
+\end{itemize}
+
+\subsection{Stages della pipeline}
+\begin{enumerate}
+  \item \textbf{Lint e Type Check}: Verifica qualità codice e TypeScript
+  \item \textbf{Build}: Compilazione ottimizzata per produzione
+  \item \textbf{Test}: [TODO: suite test automatizzati]
+  \item \textbf{Deploy Staging}: Rilascio ambiente di test
+  \item \textbf{Smoke Tests}: Verifica funzionamento base
+  \item \textbf{Deploy Production}: Rilascio definitivo
+\end{enumerate}
+
+\section{Hosting e infrastruttura}
+\subsection{Provider e configurazione}
+\begin{itemize}
+  \item \textbf{Hosting}: [TODO: Vercel/AWS/Netlify/altro]
+  \item \textbf{Architettura}: [TODO: Serverless/Server-based]
+  \item \textbf{CDN}: [TODO: CloudFront/Vercel Edge/Cloudflare]
+  \item \textbf{Storage}: AWS S3 per asset statici (immagini, font, media)
+  \item \textbf{Database}: [TODO: RDS/gestito dal provider/self-hosted]
+\end{itemize}
+
+\subsection{Configurazione dominio}
+\begin{itemize}
+  \item Domain: datapizza.tech
+  \item Routing multilingua: /it/ e /en/
+  \item SSL/TLS: Certificato HTTPS automatico
+  \item [TODO: DNS configuration specifics]
+\end{itemize}
+
+\section{Gestione ambienti}
+\subsection{Ambienti di sviluppo}
+\textbf{Development (locale)}
+\begin{itemize}
+  \item Ambiente sviluppo su macchine developer
+  \item Database locale o shared dev DB
+  \item Hot reload per sviluppo rapido
+  \item Mock API per testing isolato
+\end{itemize}
+
+\textbf{Staging}
+\begin{itemize}
+  \item Ambiente pre-produzione per testing
+  \item Replica configurazione production
+  \item Testing QA e UAT (User Acceptance Testing)
+  \item URL: [TODO: staging.datapizza.tech o altro]
+\end{itemize}
+
+\textbf{Production}
+\begin{itemize}
+  \item Ambiente live accessibile agli utenti
+  \item Performance monitoring attivo
+  \item Backup automatizzati
+  \item High availability configuration
+\end{itemize}
+
+\subsection{Variabili ambiente}
+Gestione configurazioni sensibili:
+\begin{itemize}
+  \item API keys (Mixpanel, servizi esterni)
+  \item Database connection strings
+  \item Secret tokens e credenziali
+  \item Feature flags per rollout graduale
+  \item [TODO: tool per gestione secrets - Vault/AWS Secrets Manager]
+\end{itemize}
+
+\section{Strategia di deploy}
+\subsection{Deploy progressivi}
+\begin{itemize}
+  \item \textbf{Rollout graduale}: Rilascio incrementale a percentuali utenti
+  \item \textbf{Canary deployment}: [TODO: se implementato - test su subset utenti]
+  \item \textbf{Blue-Green deployment}: [TODO: se usato - switch istantaneo tra versioni]
+\end{itemize}
+
+\subsection{Rollback strategy}
+In caso di problemi post-deploy:
+\begin{itemize}
+  \item Rollback automatico se health check fallisce
+  \item Possibilità di rollback manuale a versione precedente
+  \item Git tag per versioni stabili
+  \item [TODO: tempo medio rollback - es. < 5 minuti]
+\end{itemize}
+
+\subsection{Zero-downtime deployment}
+\begin{itemize}
+  \item [TODO: strategia usata per evitare downtime]
+  \item Database migrations gestite separatamente
+  \item Cache warming per performance immediate
+\end{itemize}
+
+\section{Automazioni e monitoring}
+
+\subsection{Automazioni deploy}
+\begin{itemize}
+  \item \textbf{Cache invalidation}: Automatic CDN cache clear post-deploy
+  \item \textbf{Sitemap regeneration}: Update automatico sitemap.xml
+  \item \textbf{Webhook notifications}: Alert team su Discord/Slack
+  \item \textbf{Analytics tracking}: Verifica corretta inizializzazione Mixpanel
+\end{itemize}
+
+\subsection{Monitoraggio post-deploy}
+\textbf{Error Tracking}
+\begin{itemize}
+  \item [TODO: Sentry/altro tool per error monitoring]
+  \item Alert real-time su errori critici
+  \item Source maps per debugging in produzione
+  \item Error rate threshold per automatic rollback
+\end{itemize}
+
+\textbf{Performance Monitoring}
+\begin{itemize}
+  \item Core Web Vitals tracking in produzione
+  \item API response time monitoring
+  \item [TODO: tool APM - New Relic/Datadog/altro]
+  \item Dashboard Lighthouse CI per tracking performance nel tempo
+\end{itemize}
+
+\textbf{Analytics Real-Time}
+\begin{itemize}
+  \item Mixpanel live view per eventi post-deploy
+  \item Verifica funnel di conversione funzionanti
+  \item Monitoraggio traffico per landing page
+  \item Alert su anomalie metriche (spike/drop improvvisi)
+\end{itemize}
+
+\subsection{Health Checks}
+\begin{itemize}
+  \item Endpoint /health per status check automatico
+  \item Ping periodico per verifica uptime
+  \item Database connection check
+  \item External API dependencies check
+  \item [TODO: SLA uptime target - es. 99.9\%]
+\end{itemize}
+
+\section{Sicurezza e compliance}
+\begin{itemize}
+  \item HTTPS enforcement su tutte le route
+  \item Security headers (CSP, HSTS, X-Frame-Options)
+  \item Rate limiting per protezione API
+  \item GDPR compliance per tracking utenti EU
+  \item [TODO: security audit tools usati]
+\end{itemize}
+
+\section{Backup e disaster recovery}
+\begin{itemize}
+  \item Backup automatizzati database [TODO: frequenza]
+  \item Git come backup codice sorgente
+  \item Asset backup su S3 con versioning
+  \item [TODO: Recovery Time Objective - RTO]
+  \item [TODO: Recovery Point Objective - RPO]
+\end{itemize}
