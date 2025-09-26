@@ -1,83 +1,92 @@
 \chapter{Contesto applicativo}
 
 \section{Situazione iniziale delle landing pages}
-Prima del progetto di redesign, la presenza web di Datapizza consisteva in un'unica landing page che accorpava genericamente community e recruiting, senza alcuna rappresentazione dei verticali AI (AI Engineering e AI Adoption).
+Prima del progetto di redesign, la presenza web di Datapizza consisteva 
+in un'unica landing page che accorpava genericamente community e 
+recruiting, senza rappresentazione dei verticali AI (AI Engineering e 
+AI Adoption).
 
 \subsection{Problematiche riscontrate}
-Questa soluzione, adeguata quando l'azienda contava 10-20 persone, presentava limitazioni critiche per un'azienda cresciuta a 60+ dipendenti con quattro verticali distinti:
+Questa soluzione, adeguata per un'azienda di 10-20 persone, presentava 
+limitazioni critiche per una realtà cresciuta a 60+ dipendenti con 
+quattro verticali distinti:
 
 \textbf{Mancanza di posizionamento}
 \begin{itemize}
-  \item Impossibilità di comunicare value proposition specifiche per servizi molto diversi
-  \item Confusione tra target B2B enterprise (AI consulting) e B2C (candidati)
-  \item Assenza totale dei nuovi verticali AI lanciati nel 2023-2025
+  \item Impossibilità di comunicare value proposition specifiche
+  \item Confusione tra target B2B enterprise e B2C candidati
+  \item Assenza verticali AI lanciati nel 2023-2025
 \end{itemize}
 
 \textbf{Scalabilità e gestione}
 \begin{itemize}
   \item Architettura monolitica difficile da aggiornare
   \item Impossibilità di testare messaggi diversi per verticale
-  \item Nessuna differenziazione UX per diversi customer journey
+  \item Nessuna differenziazione UX per customer journey
 \end{itemize}
 
 \textbf{Tracking e ottimizzazione}
 \begin{itemize}
-  \item Assenza di analytics strutturato per conversioni
-  \item Impossibilità di tracciare comportamento utente per servizio
-  \item Nessuna conformità GDPR per tracking
-  \item Mancanza di dati per decisioni data-driven
+  \item Assenza di analytics strutturato
+  \item Impossibilità di tracciare comportamento per servizio
+  \item Mancanza dati per decisioni data-driven
 \end{itemize}
 
 \textbf{Performance e tecnico}
 \begin{itemize}
-  \item DA INTEGRARE: metriche Lighthouse/Core Web Vitals pre-redesign
+  \item Accessibilità e conformità WCAG non garantite
   \item Design system non strutturato
-  \item SEO non ottimizzato per diversi servizi
   \item Codice non modulare e difficile da mantenere
+  \item SEO e performance non ottimizzati
 \end{itemize}
 
 \section{Necessità di refactor}
-La crescita aziendale e l'evoluzione dei servizi hanno reso necessaria una trasformazione radicale dell'architettura web.
+La crescita aziendale e l'evoluzione dei servizi hanno reso necessaria 
+una trasformazione radicale dell'architettura web.
 
 \subsection{Drivers strategici del cambiamento}
 \begin{itemize}
-  \item \textbf{Crescita organizzativa}: da 10-20 a 60+ persone richiede presenza web professionale
-  \item \textbf{Nuovi verticali}: AI Engineering e AI Adoption necessitano posizionamento dedicato
-  \item \textbf{Differenziazione target}: servizi B2B enterprise vs B2C richiedono comunicazione specifica
-  \item \textbf{Espansione commerciale}: 100+ aziende clienti necessitano canali di acquisizione ottimizzati
+  \item \textbf{Crescita organizzativa}: da 10 a 60+ persone 
+        richiede presenza web professionale
+  \item \textbf{Nuovi verticali}: AI Engineering e AI Adoption 
+        necessitano posizionamento dedicato
+  \item \textbf{Differenziazione target}: servizi B2B vs B2C richiedono 
+        comunicazione specifica
+  \item \textbf{Espansione commerciale}: 100+ aziende clienti necessitano 
+        canali acquisizione ottimizzati
 \end{itemize}
 
 \subsection{Limitazioni tecniche dell'esistente}
 \begin{itemize}
   \item Impossibilità di implementare tracking granulare per servizio
-  \item Difficoltà nel mantenere performance ottimali con contenuti crescenti
-  \item Assenza di framework per testing A/B
-  \item Mancanza di separazione delle responsabilità nel codice
+  \item Difficoltà nel mantenere performance con contenuti crescenti
+  \item Mancanza separazione responsabilità nel codice
 \end{itemize}
 
 \section{Valore strategico del progetto}
-Il progetto rappresenta un investimento strategico fondamentale per supportare la crescita aziendale:
+Il progetto rappresenta un investimento strategico per supportare la 
+crescita aziendale:
 
 \textbf{Impatto sul business}
 \begin{itemize}
-  \item Le landing pages costituiscono il principale canale di acquisizione lead
-  \item Necessità di ridurre il costo di acquisizione cliente (CAC)
-  \item Abilitazione di campagne marketing mirate per verticale
-  \item Supporto alla strategia commerciale multi-target
+  \item Principale canale di acquisizione lead
+  \item Riduzione costo acquisizione cliente (CAC)
+  \item Campagne marketing mirate per verticale
+  \item Supporto strategia commerciale multi-target
 \end{itemize}
 
 \textbf{Posizionamento competitivo}
 \begin{itemize}
-  \item Comunicazione chiara dell'identità "AI Transformation Company"
-  \item Credibilità enterprise per servizi AI ad alto valore
-  \item Differenziazione attraverso community 500k+ come trust signal
-  \item Professionalizzazione dell'immagine aziendale
+  \item Comunicazione identità "AI Transformation Company"
+  \item Credibilità enterprise per servizi AI
+  \item Community 500k+ come trust signal
+  \item Professionalizzazione immagine aziendale
 \end{itemize}
 
 \textbf{Scalabilità futura}
 \begin{itemize}
-  \item Architettura pronta per nuovi verticali di business
-  \item Framework riutilizzabile per future iniziative
-  \item Capacità di iterazione rapida basata su dati
-  \item Manutenibilità a lungo termine del sistema
+  \item Architettura pronta per nuovi verticali
+  \item Framework riutilizzabile
+  \item Iterazione rapida basata su dati
+  \item Manutenibilità a lungo termine
 \end{itemize}

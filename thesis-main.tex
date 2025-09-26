@@ -14,9 +14,8 @@ Laurea in Tecnologie dei Sistemi Informatici}
 }
 \author{Francesco Santi}
 \date{\today}
-\subject{Supervisor's course name}
-\supervisor{Prof. Supervisor Here}
-\cosupervisor{Dott. CoSupervisor 1}
+\subject{Progettazioe e sviluppo del software}
+\supervisor{Gianluca Aguzzi}
 \academicyear{2024--2025}
 
 % Definition of acronyms
@@ -33,7 +32,8 @@ Laurea in Tecnologie dei Sistemi Informatici}
 
 % ===== Dedica (opzionale) =====
 \begin{dedication}
-Dedico questo traguardo innanzitutto a Maggie che in questo mio percorso mi è sempre stata vicina, inoltre famiglia e amici.
+Dedico questo traguardo innanzitutto a Maggie che in questi anni é sempre stata al mio fianco, 
+inoltre lo dedico ai miei genitori.
 \end{dedication}
 
 % ===== Introduzione (front matter, prima dell'indice) =====
@@ -41,33 +41,46 @@ Dedico questo traguardo innanzitutto a Maggie che in questo mio percorso mi è s
 \chapter*{Introduzione}
 \addcontentsline{toc}{chapter}{Introduzione}
 
+\section*{Scopo della tesi}
 Lo scopo di questa tesi è documentare l'esperienza svolta presso Datapizza nel periodo compreso tra il 3 gennaio 2025 e il 20 giugno 2025, con focus sul progetto di \textbf{redesign completo delle landing pages aziendali}. Attualmente sono dipendente full-time dell'azienda nel ruolo di Software Engineer.
 
 \section*{Il Contesto}
 Datapizza è una scale-up con sede a Milano in rapida crescita che opera principalmente su quattro verticali: Tech Recruiting, Tech Community (500k+ iscritti), AI Engineering e AI Adoption. 
 
+\section*{Ruolo e responsabilità}
+Sono stato inserito nel team di prodotto come Software Engineer, con 
+responsabilità prevalentemente frontend (70\%) e backend (30\%). La composizione dettagliata del team e l'organizzazione del lavoro sono approfondite nel Capitolo 6.
+
 \section*{Il Progetto Principale}
-Ho partecipato alla progettazione e sviluppo di un ecosistema di \textbf{6 landing pages specializzate}, ognuna con posizionamento chiaro, sistema di tracking avanzato (Mixpanel) e architettura scalabile:
+Ho partecipato alla progettazione e sviluppo di un ecosistema di \textbf{6 landing pages specializzate}, ognuna con posizionamento chiaro, sistema di tracking avanzato e architettura scalabile:
 
 \begin{enumerate}
   \item Home Page - Hub centrale aziendale
   \item Tech Recruiting - Matching talenti-aziende
   \item Tech Community - Community tech italiana
   \item AI Adoption - Upskilling e trasformazione
-  \item AI Engineering - Sviluppo agenti AI
+  \item AI Engineering - Sviluppo soluzioni AI
   \item Jobs Platform - Piattaforma candidati
 \end{enumerate}
 
 Questo ha permesso di: differenziare i messaggi per target specifici, implementare tracking per ottimizzare le conversioni, e abilitare marketing mirato e misurabile.
 
-\section*{Altre Attività}
+\section*{Attività complementari}
 Oltre alle landing pages, ho contribuito a:
 \begin{itemize}
-  \item Technical debt reduction (standardizzazione API, migrazione UI)
-  \item Inizio sviluppo CRM 
-  \item Feature development su Datapizza Jobs e Company
-  \item Customer support continuativo
+  \item \textbf{Technical debt reduction}: standardizzazione API con 
+        React Query, migrazione UI verso ShadCN, refactoring componenti, 
+        miglioramento qualità del codice 
+  \item \textbf{Gestionale interno}: setup architettura iniziale del 
+        nuovo CRM aziendale, definizione routing e convenzioni sviluppo
+  \item \textbf{Tech Recruiting}: sviluppo feature su Datapizza Jobs 
+        (lato candidati) e Datapizza Company (lato aziende)
+  \item \textbf{Customer support}: bug fixing, manutenzione e quality 
+        assurance continuativa
 \end{itemize}
+
+Queste attività hanno arricchito l'esperienza permettendo di acquisire 
+competenze trasversali e visione completa dell'ecosistema di prodotto.
 
 % ===== Indice =====
 \tableofcontents
@@ -81,9 +94,8 @@ Oltre alle landing pages, ho contribuito a:
 \input{chapters/05-tecnologie}
 \input{chapters/06-progettazione}
 \input{chapters/07-sviluppo}
-\input{chapters/08-dispiegamento}
-\input{chapters/09-verifica}
-\input{chapters/10-conclusioni}
+
+
 
 %----------------------------------------------------------------------------------------
 % BIBLIOGRAPHY
