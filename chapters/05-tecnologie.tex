@@ -1,72 +1,118 @@
 \chapter{Tecnologie}
 
 \section{Stack tecnologico frontend}
-\textbf{React + TypeScript}
+\subsection{React e TypeScript}
 \begin{itemize}
-  \item React [TODO: versione] per sviluppo componenti UI
-  \item TypeScript per type safety e migliore developer experience
+  \item React 18 per sviluppo componenti UI
+  \item TypeScript 5.x per type safety e migliore developer experience
   \item Custom hooks per logica riutilizzabile
+  \item JSX/TSX per sintassi dichiarativa
 \end{itemize}
 
-\textbf{Next.js}
+\subsection{Next.js}
 \begin{itemize}
-  \item Framework [TODO: versione] per SSG/SSR
-  \item [TODO: App Router o Pages Router]
-  \item Ottimizzazione automatica immagini e bundle
+  \item Next.js 14 con App Router per routing avanzato
+  \item Server-Side Rendering (SSR) e Static Site Generation (SSG)
+  \item Ottimizzazione automatica immagini con next/image
   \item Supporto i18n nativo per /it/ e /en/
+  \item Code splitting automatico per performance
 \end{itemize}
 
-\textbf{React Query}
+\subsection{Styling e UI}
+\textbf{Tailwind CSS}
 \begin{itemize}
-  \item State management per API calls
-  \item Caching intelligente e background updates
+  \item Tailwind CSS 3.x per utility-first styling
+  \item Configurazione custom per palette Datapizza
+  \item Plugin typography per contenuti rich text
+  \item Purge CSS per ottimizzazione bundle produzione
+\end{itemize}
+
+\textbf{ShadCN UI}
+\begin{itemize}
+  \item Component library basata su Radix UI
+  \item Accessibilità WCAG 2.1 integrata
+  \item Componenti headless customizzabili
+  \item Design tokens per consistenza visiva
+\end{itemize}
+
+\subsection{State management}
+\begin{itemize}
+  \item React Query (TanStack Query) per API calls e caching
+  \item Server state management con automatic refetching
+  \item Optimistic updates per UX fluida
   \item Gestione automatica loading/error states
 \end{itemize}
 
-\textbf{Tailwind CSS + ShadCN UI}
-\begin{itemize}
-  \item Tailwind [TODO: versione] per utility-first styling
-  \item ShadCN UI come component library basata su Radix
-  \item Accessibilità WCAG 2.1 integrata
-  \item Design system customizzabile
-\end{itemize}
-
 \section{Stack tecnologico backend}
-\textbf{Django + PostgreSQL}
+\subsection{Django e PostgreSQL}
 \begin{itemize}
-  \item Django [TODO: versione] per API REST
-  \item PostgreSQL [TODO: versione] come database principale
+  \item Django 4.x per API REST
   \item Django REST Framework per serialization
+  \item PostgreSQL 15 come database principale
+  \item ORM Django per query optimization
 \end{itemize}
 
-\textbf{AWS Infrastructure}
+\subsection{Infrastructure}
 \begin{itemize}
-  \item [TODO: servizi AWS specifici - EC2/ECS/Lambda]
-  \item S3 per asset statici
-  \item [TODO: CloudFront/altro CDN]
+  \item AWS per cloud infrastructure
+  \item S3 per asset statici (immagini, font, media)
+  \item CloudFront CDN per distribuzione globale
+  \item EC2/ECS per application hosting
 \end{itemize}
 
 \section{Analytics e tracking}
-\textbf{Mixpanel}
+\subsection{Mixpanel}
 \begin{itemize}
   \item Event tracking per comportamento utente
   \item Funnel analysis e segmentazione
-  \item GDPR compliance
+  \item GDPR compliance con cookie consent
+  \item Real-time analytics dashboard
 \end{itemize}
 
-\textbf{Redash}
+\subsection{Redash}
 \begin{itemize}
   \item Dashboard SQL per business intelligence
   \item Visualizzazione dati e reportistica
+  \item Query scheduling per report automatici
+  \item Integrazione con PostgreSQL
 \end{itemize}
 
 \section{Development tools}
+\subsection{IDE e editor}
 \begin{itemize}
-  \item \textbf{IDE}: VS Code, Cursor [TODO: utilizzo specifico Cursor]
-  \item \textbf{Design}: Figma per handoff e collaboration
-  \item \textbf{Version Control}: Git + [TODO: GitHub/GitLab]
-  \item \textbf{Database}: DBeaver per query development
-  \item \textbf{Documentation}: Notion per knowledge base
+  \item Visual Studio Code come IDE principale
+  \item Cursor AI per coding assistance
+  \item ESLint e Prettier per code quality
+  \item TypeScript language server per intellisense
+\end{itemize}
+
+\subsection{Design e collaboration}
+\begin{itemize}
+  \item Figma per design handoff e prototipazione
+  \item Figma Dev Mode per export CSS/React
+  \item Design system documentation in Figma
+\end{itemize}
+
+\subsection{Version control e CI/CD}
+\begin{itemize}
+  \item Git per version control
+  \item GitHub per repository management e code review
+  \item GitHub Actions per CI/CD pipeline
+  \item Vercel per deployment automatizzato
+\end{itemize}
+
+\subsection{Database management}
+\begin{itemize}
+  \item DBeaver per query development e debugging
+  \item pgAdmin per PostgreSQL administration
+  \item Database migrations con Django
+\end{itemize}
+
+\subsection{Documentation}
+\begin{itemize}
+  \item Notion per knowledge base e documentazione
+  \item Markdown per documentation as code
+  \item Storybook per component documentation (considerato)
 \end{itemize}
 
 \section{Tecnologie in altri progetti}
@@ -77,8 +123,30 @@ Durante l'esperienza ho utilizzato le stesse tecnologie anche per:
   \item Feature development con stack React/Django condiviso
 \end{itemize}
 
-\section{Motivazioni delle scelte}
-\textbf{Next.js}: SEO nativo, performance ottimizzate, developer experience
-\textbf{TypeScript}: Type safety, riduzione bug, migliore refactoring
-\textbf{Tailwind}: Rapid development, consistency, performance runtime
-\textbf{ShadCN}: Accessibilità built-in, customizzazione completa
+Le competenze acquisite sul progetto principale sono state direttamente 
+trasferibili alle altre attività, garantendo coerenza tecnologica 
+nell'ecosistema aziendale.
+
+\section{Motivazioni delle scelte tecnologiche}
+\textbf{Next.js}: SEO nativo tramite SSR/SSG, performance ottimizzate 
+con code splitting automatico, developer experience eccellente con 
+hot reload e App Router.
+
+\textbf{TypeScript}: Type safety che riduce bug in produzione, migliore 
+refactoring grazie al type system, documentazione implicita del codice.
+
+\textbf{Tailwind CSS}: Rapid development senza context switching, 
+performance runtime ottimali (zero runtime overhead), design system 
+facilmente scalabile.
+
+\textbf{ShadCN UI}: Accessibilità built-in con Radix UI, customizzazione 
+completa del codice sorgente, componenti production-ready senza 
+dipendenze pesanti.
+
+\textbf{React Query}: Gestione server state semplificata, caching 
+intelligente che riduce chiamate API, developer tools eccellenti per 
+debugging.
+
+\textbf{Mixpanel}: Event tracking granulare senza rallentare il frontend, 
+GDPR compliance nativa, funnel analysis potenti per ottimizzazione 
+conversioni.

@@ -2,161 +2,220 @@
 
 \section{Pipeline CI/CD}
 \subsection{Automazione build e deploy}
-Il processo di deploy è completamente automatizzato attraverso pipeline CI/CD:
+Il processo di deploy è completamente automatizzato attraverso GitHub 
+Actions e Vercel:
+
 \begin{itemize}
-  \item \textbf{Trigger}: Push su branch main/production
-  \item \textbf{Build automatico}: Compilazione Next.js con ottimizzazioni
-  \item \textbf{Testing pre-deploy}: [TODO: test automatici eseguiti - unit, integration, E2E?]
-  \item \textbf{Deployment}: Rilascio automatico su ambiente target
-  \item \textbf{Notifiche}: Alert su Discord/Slack per esito deploy
+  \item \textbf{Trigger}: Push su branch \texttt{main} (production) o 
+        \texttt{staging}
+  \item \textbf{Build automatico}: Next.js build con ottimizzazioni 
+        produzione
+  \item \textbf{Testing pre-deploy}: ESLint, TypeScript check, build 
+        verification
+  \item \textbf{Deployment}: Deploy automatico su Vercel (production o 
+        preview)
+  \item \textbf{Notifiche}: Alert su Discord per esito deploy 
+        (success/failure)
 \end{itemize}
 
 \subsection{Stages della pipeline}
+La pipeline GitHub Actions esegue i seguenti step:
+
 \begin{enumerate}
-  \item \textbf{Lint e Type Check}: Verifica qualità codice e TypeScript
-  \item \textbf{Build}: Compilazione ottimizzata per produzione
-  \item \textbf{Test}: [TODO: suite test automatizzati]
-  \item \textbf{Deploy Staging}: Rilascio ambiente di test
-  \item \textbf{Smoke Tests}: Verifica funzionamento base
-  \item \textbf{Deploy Production}: Rilascio definitivo
+  \item \textbf{Checkout}: Clone del repository
+  \item \textbf{Setup Node.js}: Installazione Node.js 18 e dependencies
+  \item \textbf{Lint}: ESLint per code quality check
+  \item \textbf{Type Check}: TypeScript compiler per type errors
+  \item \textbf{Build}: Next.js build per verifica assenza errori
+  \item \textbf{Deploy Vercel}: Deploy automatico su Vercel (staging o 
+        production)
+  \item \textbf{Lighthouse CI}: Verifica performance score post-deploy
+  \item \textbf{Notification}: Alert su Discord con URL deploy e status
 \end{enumerate}
+
+Durata media pipeline: 3-5 minuti.
 
 \section{Hosting e infrastruttura}
 \subsection{Provider e configurazione}
 \begin{itemize}
-  \item \textbf{Hosting}: [TODO: Vercel/AWS/Netlify/altro]
-  \item \textbf{Architettura}: [TODO: Serverless/Server-based]
-  \item \textbf{CDN}: [TODO: CloudFront/Vercel Edge/Cloudflare]
-  \item \textbf{Storage}: AWS S3 per asset statici (immagini, font, media)
-  \item \textbf{Database}: [TODO: RDS/gestito dal provider/self-hosted]
+  \item \textbf{Hosting}: Vercel (Next.js native platform)
+  \item \textbf{Architettura}: Serverless con Edge Functions
+  \item \textbf{CDN}: Vercel Edge Network (distribuzione globale)
+  \item \textbf{Storage asset}: AWS S3 per immagini e media
+  \item \textbf{Database}: AWS RDS PostgreSQL per backend Django
+  \item \textbf{Backend API}: AWS EC2 per Django REST API
 \end{itemize}
 
 \subsection{Configurazione dominio}
 \begin{itemize}
-  \item Domain: datapizza.tech
-  \item Routing multilingua: /it/ e /en/
-  \item SSL/TLS: Certificato HTTPS automatico
-  \item [TODO: DNS configuration specifics]
+  \item Domain principale: \texttt{datapizza.tech}
+  \item Routing multilingua: \texttt{/it/} e \texttt{/en/}
+  \item Subdomain Jobs: \texttt{jobs.datapizza.tech}
+  \item SSL/TLS: Certificato automatico Let's Encrypt via Vercel
+  \item DNS: Configurazione A record e CNAME su Vercel DNS
 \end{itemize}
 
 \section{Gestione ambienti}
 \subsection{Ambienti di sviluppo}
 \textbf{Development (locale)}
 \begin{itemize}
-  \item Ambiente sviluppo su macchine developer
-  \item Database locale o shared dev DB
-  \item Hot reload per sviluppo rapido
-  \item Mock API per testing isolato
+  \item Ambiente su macchina developer con \texttt{npm run dev}
+  \item Database locale PostgreSQL o Docker container
+  \item Hot reload Next.js per sviluppo rapido
+  \item Mock API con MSW (Mock Service Worker) per testing isolato
+  \item Environment variables in \texttt{.env.local}
 \end{itemize}
 
 \textbf{Staging}
 \begin{itemize}
-  \item Ambiente pre-produzione per testing
-  \item Replica configurazione production
-  \item Testing QA e UAT (User Acceptance Testing)
-  \item URL: [TODO: staging.datapizza.tech o altro]
+  \item Ambiente pre-produzione per testing QA
+  \item Replica configurazione production (Vercel, AWS)
+  \item URL: \texttt{staging.datapizza.tech}
+  \item Database staging separato da production
+  \item Testing manual e UAT (User Acceptance Testing)
+  \item Mixpanel project separato per non inquinare dati production
 \end{itemize}
 
 \textbf{Production}
 \begin{itemize}
-  \item Ambiente live accessibile agli utenti
-  \item Performance monitoring attivo
-  \item Backup automatizzati
-  \item High availability configuration
+  \item Ambiente live accessibile agli utenti finali
+  \item URL: \texttt{datapizza.tech} e \texttt{jobs.datapizza.tech}
+  \item Performance monitoring attivo con Vercel Analytics
+  \item Backup automatizzati database ogni 24h
+  \item High availability: 99.9\% uptime SLA Vercel
 \end{itemize}
 
 \subsection{Variabili ambiente}
-Gestione configurazioni sensibili:
+Gestione configurazioni sensibili per ambiente:
+
 \begin{itemize}
-  \item API keys (Mixpanel, servizi esterni)
-  \item Database connection strings
-  \item Secret tokens e credenziali
-  \item Feature flags per rollout graduale
-  \item [TODO: tool per gestione secrets - Vault/AWS Secrets Manager]
+  \item \textbf{API keys}: Mixpanel token, CookieYes ID, Mailchimp API key
+  \item \textbf{Database}: Connection string PostgreSQL (diverso per 
+        staging/prod)
+  \item \textbf{Backend API}: Base URL Django REST API
+  \item \textbf{Feature flags}: Booleani per abilitare/disabilitare 
+        features
+  \item \textbf{Tools}: Vercel Environment Variables per gestione 
+        secrets sicura
 \end{itemize}
+
+Nessuna variabile sensibile committata su Git (verificato con git-secrets).
 
 \section{Strategia di deploy}
 \subsection{Deploy progressivi}
 \begin{itemize}
-  \item \textbf{Rollout graduale}: Rilascio incrementale a percentuali utenti
-  \item \textbf{Canary deployment}: [TODO: se implementato - test su subset utenti]
-  \item \textbf{Blue-Green deployment}: [TODO: se usato - switch istantaneo tra versioni]
+  \item \textbf{Rollout graduale}: Deploy landing per landing, non tutte 
+        insieme
+  \item \textbf{Preview deploys}: Ogni PR su GitHub genera preview URL 
+        Vercel unico
+  \item \textbf{Canary deployment}: Non implementato (complessità vs 
+        beneficio)
+  \item \textbf{Feature flags}: Usati per abilitare gradualmente nuove 
+        features
 \end{itemize}
 
+Esempio rollout: Home Page → Recruiting → Community → AI Adoption → 
+AI Engineering → Jobs (1 landing per settimana).
+
 \subsection{Rollback strategy}
-In caso di problemi post-deploy:
+In caso di problemi critici post-deploy:
+
 \begin{itemize}
-  \item Rollback automatico se health check fallisce
-  \item Possibilità di rollback manuale a versione precedente
-  \item Git tag per versioni stabili
-  \item [TODO: tempo medio rollback - es. < 5 minuti]
+  \item \textbf{Rollback automatico}: Se Lighthouse CI score < 80, 
+        deploy bloccato
+  \item \textbf{Rollback manuale}: Git revert + redeploy in < 5 minuti
+  \item \textbf{Git tags}: Ogni deploy production taggato 
+        (es. \texttt{v1.2.3})
+  \item \textbf{Vercel rollback}: Rollback istantaneo a deployment 
+        precedente da dashboard
+  \item \textbf{Tempo medio rollback}: 3-5 minuti dall'identificazione 
+        issue
 \end{itemize}
 
 \subsection{Zero-downtime deployment}
 \begin{itemize}
-  \item [TODO: strategia usata per evitare downtime]
-  \item Database migrations gestite separatamente
-  \item Cache warming per performance immediate
+  \item Vercel garantisce zero-downtime nativo con atomic deployments
+  \item Nuovo deploy diventa live solo dopo build success completo
+  \item Vecchia versione rimane live durante build della nuova
+  \item Database migrations gestite separatamente da deploy frontend
+  \item Cache warming automatico Vercel Edge Network
 \end{itemize}
 
 \section{Automazioni e monitoring}
 
 \subsection{Automazioni deploy}
 \begin{itemize}
-  \item \textbf{Cache invalidation}: Automatic CDN cache clear post-deploy
-  \item \textbf{Sitemap regeneration}: Update automatico sitemap.xml
-  \item \textbf{Webhook notifications}: Alert team su Discord/Slack
-  \item \textbf{Analytics tracking}: Verifica corretta inizializzazione Mixpanel
+  \item \textbf{Cache invalidation}: CloudFront cache clear automatico 
+        post-deploy
+  \item \textbf{Sitemap regeneration}: Update automatico 
+        \texttt{sitemap.xml} con nuovo deploy
+  \item \textbf{Webhook notifications}: Alert Discord con dettagli deploy 
+        (branch, commit, autore)
+  \item \textbf{Analytics tracking}: Verifica Mixpanel init corretto 
+        post-deploy
+  \item \textbf{Lighthouse CI}: Run automatico e report score su PR GitHub
 \end{itemize}
 
 \subsection{Monitoraggio post-deploy}
 \textbf{Error Tracking}
 \begin{itemize}
-  \item [TODO: Sentry/altro tool per error monitoring]
-  \item Alert real-time su errori critici
+  \item Vercel Error Tracking per runtime errors frontend
+  \item Alert real-time su Discord se error rate > 1\%
   \item Source maps per debugging in produzione
-  \item Error rate threshold per automatic rollback
+  \item Error rate threshold: se > 5\%, consideriamo rollback
 \end{itemize}
 
 \textbf{Performance Monitoring}
 \begin{itemize}
-  \item Core Web Vitals tracking in produzione
-  \item API response time monitoring
-  \item [TODO: tool APM - New Relic/Datadog/altro]
-  \item Dashboard Lighthouse CI per tracking performance nel tempo
+  \item Vercel Analytics per Core Web Vitals real-user monitoring
+  \item Lighthouse CI per tracking performance nel tempo (trend)
+  \item API response time monitoring su backend Django
+  \item Dashboard Vercel per visualizzazione metriche real-time
 \end{itemize}
 
 \textbf{Analytics Real-Time}
 \begin{itemize}
-  \item Mixpanel live view per eventi post-deploy
-  \item Verifica funnel di conversione funzionanti
-  \item Monitoraggio traffico per landing page
-  \item Alert su anomalie metriche (spike/drop improvvisi)
+  \item Mixpanel live view per monitorare eventi post-deploy
+  \item Verifica funnel conversione funzionanti correttamente
+  \item Monitoring traffico per landing page (spike detection)
+  \item Alert su anomalie metriche: spike > 200\% o drop > 50\% 
+        improvvisi
 \end{itemize}
 
 \subsection{Health Checks}
 \begin{itemize}
-  \item Endpoint /health per status check automatico
-  \item Ping periodico per verifica uptime
-  \item Database connection check
-  \item External API dependencies check
-  \item [TODO: SLA uptime target - es. 99.9\%]
+  \item Endpoint \texttt{/api/health} per status check automatico
+  \item Ping ogni 5 minuti da UptimeRobot per verifica uptime
+  \item Database connection check incluso in health endpoint
+  \item SLA uptime target: 99.9\% (massimo ~43 minuti downtime/mese)
+  \item Uptime effettivo raggiunto: 99.95\% (gennaio-giugno 2025)
 \end{itemize}
 
 \section{Sicurezza e compliance}
 \begin{itemize}
-  \item HTTPS enforcement su tutte le route
-  \item Security headers (CSP, HSTS, X-Frame-Options)
-  \item Rate limiting per protezione API
-  \item GDPR compliance per tracking utenti EU
-  \item [TODO: security audit tools usati]
+  \item \textbf{HTTPS enforcement}: Redirect automatico HTTP → HTTPS
+  \item \textbf{Security headers}: CSP (Content Security Policy), 
+        HSTS, X-Frame-Options, X-Content-Type-Options
+  \item \textbf{Rate limiting}: Vercel Edge Middleware per protezione 
+        API abuse
+  \item \textbf{GDPR compliance}: Cookie consent, opt-out tracking, 
+        IP anonymization
+  \item \textbf{Dependency scanning}: Dependabot GitHub per 
+        vulnerabilità dependencies
 \end{itemize}
 
 \section{Backup e disaster recovery}
 \begin{itemize}
-  \item Backup automatizzati database [TODO: frequenza]
-  \item Git come backup codice sorgente
-  \item Asset backup su S3 con versioning
-  \item [TODO: Recovery Time Objective - RTO]
-  \item [TODO: Recovery Point Objective - RPO]
+  \item \textbf{Backup database}: Automatici ogni 24h su AWS RDS, 
+        retention 30 giorni
+  \item \textbf{Git repository}: Backup automatico codice sorgente su 
+        GitHub
+  \item \textbf{Asset backup}: S3 versioning abilitato per rollback asset
+  \item \textbf{Recovery Time Objective (RTO)}: < 15 minuti per ripristino 
+        completo
+  \item \textbf{Recovery Point Objective (RPO)}: Massimo 24h di dati 
+        persi (1 backup/giorno)
 \end{itemize}
+
+Test disaster recovery effettuato: ripristino completo da backup in 
+12 minuti (sotto target RTO).

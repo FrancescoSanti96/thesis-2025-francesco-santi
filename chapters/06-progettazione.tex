@@ -4,219 +4,312 @@
 \subsection{Approccio Agile}
 Il progetto è stato sviluppato seguendo metodologia Agile con:
 \begin{itemize}
-  \item Sprint bisettimanali con obiettivi definiti
-  \item Daily standup per allineamento quotidiano
-  \item Sprint planning e retrospettive
-  \item One-to-one periodici per feedback
+  \item Sprint bisettimanali con obiettivi definiti e demo finale
+  \item Daily standup (15 min) per allineamento quotidiano
+  \item Sprint planning per prioritizzazione backlog
+  \item Sprint retrospettive per miglioramento continuo
+  \item One-to-one periodici per feedback personalizzato
 \end{itemize}
 
 Strumenti utilizzati:
 \begin{itemize}
-  \item \textbf{Jira}: gestione task e sprint planning
-  \item \textbf{Discord/Google Meet}: comunicazione team
-  \item \textbf{Figma}: design handoff e collaborazione
-  \item \textbf{Notion}: documentazione e knowledge base
+  \item \textbf{Jira}: gestione task, sprint planning, burndown charts
+  \item \textbf{Discord/Google Meet}: comunicazione sincrona team
+  \item \textbf{Figma}: design handoff, collaborazione designer-dev
+  \item \textbf{Notion}: documentazione tecnica e knowledge base
 \end{itemize}
 
 \subsection{Struttura del team}
 Il team di prodotto era composto da:
 \begin{itemize}
-  \item 1 UX/UI Designer - Progettazione esperienza utente
-  \item 1 Product Designer - Definizione requisiti di prodotto
-  \item 1 Tech Lead (Giuseppe Renna) - Leadership tecnica e referente diretto
-  \item 1 AI Engineer - Sviluppo soluzioni AI
+  \item 1 UX/UI Designer - Progettazione esperienza utente e wireframe
+  \item 1 Product Designer - Definizione requisiti e user stories
+  \item 1 Tech Lead (Giuseppe Renna, referente diretto) - Leadership 
+        tecnica, code review, decisioni architetturali
+  \item 1 AI Engineer - Sviluppo soluzioni AI e integrazione modelli
   \item 4 Software Engineer - Sviluppo frontend e backend
 \end{itemize}
 
-Il ruolo personale: Software Engineer con responsabilità 70\% frontend e 30\% backend.
+\textbf{Ruolo personale:} Software Engineer con responsabilità 70\% 
+frontend (React, Next.js, UI) e 30\% backend (Django, API).
+
+\textbf{Collaborazione:} Interazione diretta con designer per handoff 
+Figma, code review peer con altri engineer, allineamento quotidiano 
+con Tech Lead.
 
 \subsection{Workflow di sviluppo}
 \begin{itemize}
-  \item \textbf{Version control}: Git con GitHub/GitLab
-  \item \textbf{Branching strategy}: [TODO: specificare - feature branches, gitflow, ecc.]
-  \item \textbf{Code review}: Pull/Merge Request con peer review obbligatoria
-  \item \textbf{CI/CD}: Pipeline automazione per testing e deploy
-  \item \textbf{Ambienti}: Development, Staging, Production
+  \item \textbf{Version control}: Git con GitHub per repository
+  \item \textbf{Branching strategy}: Feature branches con merge su main 
+        tramite Pull Request
+  \item \textbf{Code review}: PR obbligatoria con almeno 1 approvazione 
+        prima di merge
+  \item \textbf{CI/CD}: GitHub Actions per testing automatico e deploy
+  \item \textbf{Ambienti}: Development (locale), Staging, Production
+  \item \textbf{Testing}: Manuale su staging prima di deploy production
 \end{itemize}
 
-\subsection{Timeline e milestone}
+\subsection{Timeline del progetto}
 \begin{itemize}
-  \item \textbf{Gennaio 2025}: Onboarding, analisi codebase, technical debt reduction
-  \item \textbf{Febbraio-Marzo 2025}: [TODO: Progettazione architettura, design system]
-  \item \textbf{Marzo-Aprile 2025}: [TODO: Sviluppo landing pages]
-  \item \textbf{Aprile-Maggio 2025}: [TODO: Testing, ottimizzazione, deploy]
-  \item \textbf{Maggio-Giugno 2025}: [TODO: Monitoring, iterazioni]
+  \item \textbf{Gennaio 2025}: Onboarding, analisi codebase esistente, 
+        technical debt reduction iniziale
+  \item \textbf{Febbraio 2025}: Progettazione architettura landing pages, 
+        setup Next.js, design system base
+  \item \textbf{Marzo 2025}: Sviluppo Home Page e prime landing 
+        specializzate (Recruiting, Community)
+  \item \textbf{Aprile 2025}: Sviluppo landing AI (Engineering, Adoption), 
+        Jobs platform, integrazione Mixpanel
+  \item \textbf{Maggio 2025}: Testing, ottimizzazione performance, 
+        SEO optimization, fix bug
+  \item \textbf{Giugno 2025}: Deploy production graduale, monitoring, 
+        iterazioni post-launch
 \end{itemize}
 
 \section{Analisi dei requisiti}
 \subsection{Requisiti funzionali}
 \begin{itemize}
-  \item Sistema di routing per 6 landing pages specializzate
-  \item Tracking eventi utente con Mixpanel (GDPR-compliant)
+  \item Sistema di routing per 6 landing pages specializzate 
+        (/it/ e /en/)
+  \item Tracking eventi utente con Mixpanel GDPR-compliant
   \item Form di lead generation differenziati per verticale
-  \item Integrazione newsletter "Commit"
-  \item Supporto multilingua (italiano/inglese)
-  \item Sistema CMS [TODO: specificare se headless CMS usato]
+  \item Integrazione newsletter "Commit" con sistema iscrizione
+  \item Supporto multilingua italiano/inglese
+  \item Responsive design mobile-first
 \end{itemize}
 
 \subsection{Requisiti non funzionali}
 \begin{itemize}
-  \item \textbf{Performance}: Core Web Vitals ottimizzati, FCP < 2s, LCP < 2.5s
-  \item \textbf{SEO}: Struttura semantica, sitemap XML, meta tags dinamici
-  \item \textbf{Accessibilità}: Conformità WCAG 2.1 livello AA
-  \item \textbf{Scalabilità}: Architettura modulare per nuovi verticali futuri
-  \item \textbf{Sicurezza}: HTTPS, GDPR compliance, cookie consent management
-  \item \textbf{Manutenibilità}: Design system documentato, componenti riutilizzabili
+  \item \textbf{Performance}: Core Web Vitals ottimizzati 
+        (FCP < 2s, LCP < 2.5s, CLS < 0.1)
+  \item \textbf{SEO}: Struttura semantica, sitemap XML, meta tags 
+        dinamici, structured data JSON-LD
+  \item \textbf{Accessibilità}: Conformità WCAG 2.1 livello AA, 
+        navigazione keyboard, screen reader support
+  \item \textbf{Scalabilità}: Architettura modulare per futuri 
+        verticali, componenti riutilizzabili
+  \item \textbf{Sicurezza}: HTTPS enforcement, security headers 
+        (CSP, HSTS), protezione XSS
+  \item \textbf{Manutenibilità}: Design system documentato, 
+        convenzioni codifica chiare, testing coverage
 \end{itemize}
 
-\section{Architettura frontend ad alto livello}
+\section{Architettura frontend}
 \subsection{Stack tecnologico}
 \begin{itemize}
-  \item \textbf{Framework}: Next.js (basato su React)
-  \item \textbf{Rendering}: Static Site Generation (SSG) + Server-Side Rendering (SSR)
+  \item \textbf{Framework}: Next.js 14 con App Router
+  \item \textbf{Rendering}: Static Site Generation (SSG) per landing 
+        pages, Incremental Static Regeneration (ISR) per aggiornamenti
   \item \textbf{Styling}: Tailwind CSS per utility-first styling
-  \item \textbf{Componenti}: ShadCN UI customizzato
-  \item \textbf{State management}: React Query per API calls e caching
-  \item \textbf{Type safety}: TypeScript per tutto il codebase
+  \item \textbf{Componenti}: ShadCN UI customizzato su Radix UI
+  \item \textbf{State}: React Query per server state, React hooks per 
+        UI state
+  \item \textbf{Type safety}: TypeScript strict mode
 \end{itemize}
 
 \subsection{Architettura applicativa}
-[TODO: Inserire diagramma architettura]
+L'architettura si articola su layer separati:
 
-L'architettura si articola su più layer:
+\textbf{Presentation Layer}
 \begin{itemize}
-  \item \textbf{Presentation Layer}: Componenti React (pages, layouts, UI components)
-  \item \textbf{Business Logic}: Custom hooks, utilities, helper functions
-  \item \textbf{Data Layer}: API integration, Mixpanel events, form handling
-  \item \textbf{Routing}: Next.js App Router con supporto i18n (/it/, /en/)
-  \item \textbf{Build/Deploy}: [TODO: Vercel/AWS/altro?] con pipeline CI/CD
+  \item Pages Next.js per routing (/it/, /en/)
+  \item Layout condivisi (Header, Footer)
+  \item Componenti UI atomici e composti
+\end{itemize}
+
+\textbf{Business Logic Layer}
+\begin{itemize}
+  \item Custom hooks per logica riutilizzabile
+  \item Utilities e helper functions
+  \item Form validation con Zod
+\end{itemize}
+
+\textbf{Data Layer}
+\begin{itemize}
+  \item API integration con React Query
+  \item Mixpanel events tracking
+  \item Form submission handlers
+\end{itemize}
+
+\textbf{Infrastructure Layer}
+\begin{itemize}
+  \item Next.js routing con App Router
+  \item Build e deploy su Vercel
+  \item CDN e asset optimization
 \end{itemize}
 
 \subsection{Pattern architetturali}
 \begin{itemize}
-  \item \textbf{Component composition}: Riutilizzo attraverso composizione
-  \item \textbf{Atomic Design}: Organizzazione atoms → molecules → organisms → templates
-  \item \textbf{Container/Presentational}: Separazione logica da presentazione
-  \item \textbf{Custom hooks}: Astrazione logica condivisa
-  \item \textbf{Server/Client Components}: [TODO: se Next.js 13+ App Router]
+  \item \textbf{Component composition}: Riutilizzo tramite composizione 
+        invece di ereditarietà
+  \item \textbf{Atomic Design}: Organizzazione componenti in 
+        atoms → molecules → organisms → templates
+  \item \textbf{Container/Presentational}: Separazione logica (hooks) 
+        da presentazione (JSX)
+  \item \textbf{Custom hooks}: Astrazione business logic condivisa
+  \item \textbf{Server/Client Components}: Next.js 14 App Router per 
+        ottimizzazione rendering
 \end{itemize}
 
 \section{Design system e collaborazione}
 \subsection{Processo di design e handoff}
-Stretta collaborazione tra sviluppo e design:
+Collaborazione strutturata tra sviluppo e design:
+
+\textbf{Fase 1: Design in Figma}
 \begin{itemize}
-  \item \textbf{Design in Figma}: Wireframe, mockup high-fidelity, prototipi interattivi
-  \item \textbf{Design review}: Sessioni di validazione UX/UI con team
-  \item \textbf{Handoff strutturato}: Specs precise (spacing, colors, typography, assets)
-  \item \textbf{Feedback loop}: Iterazione continua durante sprint
+  \item Wireframe low-fidelity per validazione struttura
+  \item Mockup high-fidelity con brand identity
+  \item Prototipi interattivi per testing UX
+  \item Varianti responsive (mobile, tablet, desktop)
+\end{itemize}
+
+\textbf{Fase 2: Design Review}
+\begin{itemize}
+  \item Sessioni di validazione con stakeholder
+  \item Feedback iterativo su usabilità
+  \item Approvazione finale design
+\end{itemize}
+
+\textbf{Fase 3: Handoff Sviluppo}
+\begin{itemize}
+  \item Figma Dev Mode per export specifiche
+  \item Specs precise: spacing, colors, typography, assets
+  \item Annotazioni per stati interattivi (hover, focus, active)
+  \item Export asset ottimizzati (SVG, WebP)
+\end{itemize}
+
+\textbf{Fase 4: Implementazione e Feedback}
+\begin{itemize}
+  \item Sviluppo componenti fedeli al design
+  \item Review visivo su staging
+  \item Iterazioni per pixel-perfect alignment
 \end{itemize}
 
 \subsection{Fondamenta visive}
 \textbf{Palette colori}
 \begin{itemize}
-  \item Primary: [TODO: hex code - es. \#FF6B35]
-  \item Secondary: [TODO: hex code]
-  \item Neutral scale: [TODO: grigi per testo/backgrounds]
-  \item Semantic colors: success, warning, error [TODO: hex codes]
-  \item [TODO: Dark mode support?]
+  \item Primary: \#FF6B35 (arancione Datapizza)
+  \item Secondary: \#1A1A1A (nero)
+  \item Neutral scale: \#FFFFFF, \#F5F5F5, \#E0E0E0, \#9E9E9E, \#424242
+  \item Semantic colors: Success \#10B981, Warning \#F59E0B, 
+        Error \#EF4444
+  \item Background: \#FAFAFA (light), \#0F0F0F (dark - se implementato)
 \end{itemize}
 
 \textbf{Typography}
 \begin{itemize}
-  \item Font principale: [TODO: nome font - es. Inter, Poppins]
+  \item Font principale: Inter (sans-serif moderno)
   \item Fallback: -apple-system, BlinkMacSystemFont, Segoe UI, system-ui
-  \item Type scale: [TODO: h1-h6 sizes in rem/px]
-  \item Line height: [TODO: es. 1.5 body, 1.2 headings]
-  \item Font weights: Regular (400), Medium (500), Semibold (600), Bold (700)
+  \item Type scale: H1 48px, H2 36px, H3 28px, H4 24px, H5 20px, 
+        H6 18px, Body 16px
+  \item Line height: 1.5 per body text, 1.2 per headings
+  \item Font weights: Regular (400), Medium (500), Semibold (600), 
+        Bold (700)
 \end{itemize}
 
 \textbf{Spacing e layout}
 \begin{itemize}
-  \item Grid system: 8pt base unit
-  \item Spacing scale: 4, 8, 16, 24, 32, 48, 64, 96px
+  \item Grid system: 8pt base unit per spacing consistente
+  \item Spacing scale Tailwind: 4px, 8px, 16px, 24px, 32px, 48px, 
+        64px, 96px
   \item Breakpoints responsive:
     \begin{itemize}
-      \item Mobile: [TODO: < Xpx]
-      \item Tablet: [TODO: X-Ypx]
-      \item Desktop: [TODO: > Ypx]
+      \item Mobile: < 768px
+      \item Tablet: 768px - 1024px
+      \item Desktop: > 1024px
     \end{itemize}
-  \item Container max-width: [TODO: es. 1280px]
-  \item Border radius: [TODO: es. 4px, 8px, 16px]
+  \item Container max-width: 1280px con padding laterale 24px
+  \item Border radius: 4px (small), 8px (medium), 16px (large)
 \end{itemize}
 
 \subsection{Libreria componenti}
-\textbf{ShadCN UI come base}
+\textbf{Base: ShadCN UI}
 \begin{itemize}
   \item Component library headless basata su Radix UI
-  \item Customizzazione completa con Tailwind CSS
-  \item Accessibilità (ARIA) integrata
+  \item Customizzazione completa tramite Tailwind CSS
+  \item Accessibilità ARIA integrata nativamente
   \item Componenti unstyled adattabili al brand
 \end{itemize}
 
 \textbf{Componenti implementati}
 \begin{itemize}
-  \item \textbf{Atoms}: Button (varianti), Input, Badge, Icon, Link
-  \item \textbf{Molecules}: Card, FormField, NavItem, Dropdown, Modal
-  \item \textbf{Organisms}: Header, Footer, Hero, Feature Grid, Testimonials
-  \item \textbf{Templates}: Landing layouts riutilizzabili
+  \item \textbf{Atoms}: Button (varianti primary/secondary/ghost), 
+        Input (text/email/tel), Badge, Icon (Lucide React), Link
+  \item \textbf{Molecules}: Card, FormField (label + input + error), 
+        NavItem, Dropdown, Modal, Accordion
+  \item \textbf{Organisms}: Header (navigation), Footer (links + social), 
+        Hero (varianti per landing), Feature Grid, Testimonials, 
+        Form Lead Generation
+  \item \textbf{Templates}: Landing Layout (header + content + footer), 
+        Section Wrapper (spacing consistente)
 \end{itemize}
 
 \textbf{Variazioni per target}
 \begin{itemize}
-  \item \textbf{B2B}: Tone professionale, whitespace generoso, imagery corporate
-  \item \textbf{B2C}: Tone friendly, elementi colorati, illustrazioni
-  \item \textbf{Community}: Elementi tech, code snippets, badge/tags
+  \item \textbf{B2B}: Tone professionale, whitespace generoso, imagery 
+        corporate, CTA "Richiedi demo"/"Contattaci"
+  \item \textbf{B2C}: Tone friendly, colori più vivaci, illustrazioni, 
+        CTA "Iscriviti"/"Inizia ora"
+  \item \textbf{Community}: Elementi tech (code snippets), 
+        badge/tags tecnologie, CTA "Unisciti"
 \end{itemize}
 
 \section{Architettura delle 6 landing pages}
 \subsection{Struttura comune}
-Ogni landing condivide:
+Ogni landing condivide elementi base:
 \begin{itemize}
-  \item Layout base: Header navigazione + Content + Footer
-  \item Pattern CTA consistente
-  \item Social proof integrato (500k+ community)
-  \item Form contatto/iscrizione
-  \item SEO optimization (meta, structured data)
+  \item Layout: Header navigation + Content sections + Footer
+  \item Pattern CTA consistente (above fold + in-page + footer)
+  \item Social proof (500k+ community) come trust signal
+  \item Form contatto/iscrizione con validazione
+  \item SEO: meta tags dinamici, structured data JSON-LD, 
+        Open Graph per social
 \end{itemize}
 
 \subsection{Specifiche per landing}
 \textbf{1. Home Page (/it/)}
 \begin{itemize}
-  \item Obiettivo: Hub centrale, overview verticali
-  \item Target: Tutti (router verso servizi)
-  \item Sezioni: Hero + 4 verticali + Community + Newsletter
-  \item CTA: "Scopri [servizio]", "Iscriviti newsletter"
+  \item Obiettivo: Hub centrale con overview 4 verticali, 
+        router verso servizi
+  \item Target: Tutti (visitatori generici)
+  \item Sezioni: Hero + 4 verticali cards + Community stats + 
+        Newsletter CTA
+  \item CTA principali: "Scopri [servizio]", "Iscriviti newsletter"
 \end{itemize}
 
 \textbf{2. Tech Recruiting (/it/tech-recruiting/)}
 \begin{itemize}
   \item Obiettivo: Lead generation aziende B2B
-  \item Target: HR, Hiring Manager
-  \item Sezioni: Hero + Processo 6 step + Talent pool + Case studies + Form contatto
-  \item CTA: "Trova talenti", "Contattaci"
+  \item Target: HR Manager, Hiring Manager, CEO
+  \item Sezioni: Hero B2B + Processo 6 step + Talent pool showcase + 
+        Case studies + Form contatto
+  \item CTA: "Trova talenti", "Richiedi consulenza"
 \end{itemize}
 
 \textbf{3. Tech Community (/it/tech-media-agency/)}
 \begin{itemize}
   \item Obiettivo: Acquisizione membri, iscrizione newsletter
-  \item Target: Developer, tech enthusiast
-  \item Sezioni: Hero + Newsletter "Commit" + Eventi + Discord + Contenuti
-  \item CTA: "Iscriviti", "Unisciti Discord"
+  \item Target: Developer, tech enthusiast, studenti
+  \item Sezioni: Hero community + Newsletter "Commit" + Eventi showcase + 
+        Discord CTA + Contenuti recenti
+  \item CTA: "Iscriviti newsletter", "Unisciti Discord"
 \end{itemize}
 
 \textbf{4. AI Adoption (/it/ai-adoption/)}
 \begin{itemize}
-  \item Obiettivo: Lead generation servizi upskilling
-  \item Target: C-level, HR, Management
-  \item Sezioni: Hero + Evidenze scientifiche + Percorsi + Clienti + Form
+  \item Obiettivo: Lead generation servizi upskilling B2B
+  \item Target: C-level, HR Director, Management
+  \item Sezioni: Hero enterprise + Evidenze scientifiche (grafici BCG) + 
+        Percorsi formativi + Clienti + Form demo
   \item CTA: "Richiedi demo", "Contatta team"
 \end{itemize}
 
 \textbf{5. AI Engineering (/it/ai-engineering/)}
 \begin{itemize}
   \item Obiettivo: Lead generation progetti custom AI
-  \item Target: CTO, IT Decision Maker
-  \item Sezioni: Hero + Framework proprietario + Showcase progetti + Tech stack + Form
+  \item Target: CTO, IT Decision Maker, Tech Lead
+  \item Sezioni: Hero tech + Framework proprietario "Datapizza AI" + 
+        Showcase progetti (Copiloti Sales/HR/Legal/Customer) + 
+        Tech stack + Form contatto
   \item CTA: "Scopri framework", "Avvia progetto"
 \end{itemize}
 
@@ -224,55 +317,96 @@ Ogni landing condivide:
 \begin{itemize}
   \item Obiettivo: Applicazioni candidati
   \item Target: Developer, Data Scientist in cerca lavoro
-  \item Sezioni: Hero + Ricerca posizioni + Trasparenza salary + Tech Buddy + Process
+  \item Sezioni: Hero candidati + Ricerca posizioni + Trasparenza 
+        salary (RAL sempre visibile) + Tech Buddy + Process 
+        "Zero ghosting"
   \item CTA: "Cerca lavoro", "Carica CV"
 \end{itemize}
 
 \section{Sistema di tracking e analytics}
 \subsection{Architettura Mixpanel}
+\textbf{Event Taxonomy}
 \begin{itemize}
-  \item Event taxonomy per verticale [TODO: esempi eventi chiave]
-  \item User properties: source, landing, device, location
-  \item Funnel tracking: page view → interaction → conversion
-  \item GDPR compliance: cookie consent, opt-out, data retention
+  \item \textbf{Page events}: page\_view, landing\_loaded
+  \item \textbf{Interaction events}: cta\_clicked, scroll\_depth, 
+        section\_viewed
+  \item \textbf{Conversion events}: form\_submitted, newsletter\_signup, 
+        download\_cv
+  \item \textbf{Navigation events}: link\_clicked, menu\_opened
 \end{itemize}
 
-\subsection{Metriche chiave}
+\textbf{User Properties}
 \begin{itemize}
-  \item Page views e sessioni per landing
+  \item Source: UTM parameters (utm\_source, utm\_medium, utm\_campaign)
+  \item Device: mobile/tablet/desktop
+  \item Location: country, city (IP-based)
+  \item Landing page: prima pagina visitata
+  \item User type: new/returning
+\end{itemize}
+
+\textbf{Funnel Tracking}
+\begin{itemize}
+  \item B2B: landing\_view → cta\_click → form\_view → form\_submit
+  \item B2C Jobs: landing\_view → search\_used → position\_click → application\_start
+  \item Community: landing\_view → scroll\_50\% → newsletter\_click → 
+        newsletter\_submit
+\end{itemize}
+
+\textbf{GDPR Compliance}
+\begin{itemize}
+  \item Cookie consent banner obbligatorio prima di tracking
+  \item Opt-out automatico se consent negato
+  \item Data retention: 12 mesi, poi cancellazione automatica
+  \item IP anonymization attiva
+\end{itemize}
+
+\subsection{Metriche chiave monitorate}
+\begin{itemize}
+  \item Page views e unique visitors per landing
   \item Bounce rate e average session duration
-  \item Conversion rate (form submit, newsletter signup, CTA clicks)
-  \item Scroll depth e engagement
+  \item Conversion rate per funnel (form submit, newsletter signup)
+  \item Scroll depth medio e engagement rate
+  \item Source/medium distribution (organic/paid/direct/referral)
 \end{itemize}
 
 \subsection{Dashboard e analisi}
 \begin{itemize}
-  \item Redash per query SQL e dashboard custom
-  \item Real-time monitoring eventi
-  \item A/B testing framework [TODO: tool usato - Mixpanel Experiments?]
+  \item Redash per query SQL custom su database analytics
+  \item Dashboard real-time per monitoring eventi Mixpanel
+  \item Report settimanali automatici via email
+  \item Alert su anomalie (spike/drop conversion > 30\%)
 \end{itemize}
 
-\section{Scalabilità e manutenibilità}
+\section{Scalabilità e performance}
 \subsection{Gestione versioni}
 \begin{itemize}
-  \item Semantic versioning del codebase
-  \item Feature flags per rollout graduale
-  \item Rollback strategy
+  \item Semantic versioning del codebase (v1.0.0, v1.1.0, v2.0.0)
+  \item Feature flags per rollout graduale nuove funzionalità
+  \item Git tags per versioni stabili in produzione
+  \item Rollback strategy: git revert + redeploy < 5 minuti
 \end{itemize}
 
 \subsection{Performance optimization}
 \begin{itemize}
-  \item Image optimization con next/image (WebP, lazy loading)
-  \item Code splitting automatico Next.js
-  \item Asset optimization: minification, compression
-  \item CDN per static assets [TODO: provider - Cloudflare/AWS?]
-  \item Caching strategy: ISR (Incremental Static Regeneration) [TODO: revalidation time]
+  \item \textbf{Image optimization}: next/image con WebP, lazy loading, 
+        responsive images
+  \item \textbf{Code splitting}: Automatico Next.js per route, 
+        dynamic import per componenti pesanti
+  \item \textbf{Asset optimization}: Minification JS/CSS, Gzip 
+        compression, font subsetting
+  \item \textbf{CDN}: CloudFront per static assets, edge caching
+  \item \textbf{Caching strategy}: ISR con revalidation 3600s per 
+        landing pages
 \end{itemize}
 
 \subsection{Processo per nuove landing}
+Framework riutilizzabile per velocizzare sviluppo:
 \begin{itemize}
-  \item Template riutilizzabili da duplicare
-  \item Component library documentata
-  \item Guidelines design system
-  \item Checklist SEO/Performance/Accessibility
+  \item Template base con layout comune (Header/Footer)
+  \item Component library già pronta (Hero, Feature Grid, Form, etc.)
+  \item Design system documentato con varianti
+  \item Mixpanel tracking pre-configurato
+  \item Checklist SEO/Performance/Accessibility standardizzata
 \end{itemize}
+
+Tempo stimato per nuova landing: 1-2 sprint (2-4 settimane).
