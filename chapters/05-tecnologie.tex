@@ -1,152 +1,93 @@
 \chapter{Tecnologie}
 
-\section{Stack tecnologico frontend}
-\subsection{React e TypeScript}
+\section{Stack tecnologico landing pages}
+Il progetto di redesign delle landing pages si basa su uno stack moderno orientato a performance, SEO e developer experience. Le scelte tecnologiche sono state guidate dalla necessità di garantire caricamenti rapidi, indicizzazione ottimale e scalabilità futura.
+
+\subsection{Frontend}
+
+\textbf{Next.js 15 con React 19 e TypeScript 5.7}
+
+Il framework principale è Next.js 15.3, che si basa su React 19 e TypeScript 5.7:
+
 \begin{itemize}
-  \item React 18 per sviluppo componenti UI
-  \item TypeScript 5.x per type safety e migliore developer experience
-  \item Custom hooks per logica riutilizzabile
-  \item JSX/TSX per sintassi dichiarativa
+  \item \textbf{React 19}: Libreria JavaScript per costruire interfacce utente component-based. Permette di creare UI dichiarative, riutilizzabili e facilmente manutenibili attraverso il paradigma a componenti
+  
+  \item \textbf{TypeScript 5.7}: Superset di JavaScript che aggiunge type safety statico. Riduce drasticamente bug in produzione grazie al type checking in fase di sviluppo e migliora la developer experience con autocompletion e refactoring sicuro
+  
+  \item \textbf{Next.js 15}: Framework React che estende le funzionalità base con routing, rendering ottimizzato e tooling integrato
 \end{itemize}
 
-\subsection{Next.js}
+\textbf{Perché Next.js per landing pages}
+
+La scelta di Next.js rispetto a React vanilla si basa su vantaggi concreti per il progetto:
+
 \begin{itemize}
-  \item Next.js 14 con App Router per routing avanzato
-  \item Server-Side Rendering (SSR) e Static Site Generation (SSG)
-  \item Ottimizzazione automatica immagini con next/image
-  \item Supporto i18n nativo per /it/ e /en/
-  \item Code splitting automatico per performance
+  \item \textbf{Server-Side Rendering (SSR)}: Le landing pages vengono renderizzate server-side ad ogni richiesta, garantendo contenuto sempre aggiornato e SEO ottimale. Il server genera HTML completo prima di inviarlo al client, riducendo il time-to-interactive
+  
+  \item \textbf{SEO nativo}: Meta tags dinamici, sitemap XML automatico, structured data JSON-LD integrati out-of-the-box. SSR garantisce che crawler Google ricevano HTML completo immediatamente, fondamentale per indicizzazione e traffico organico
+  
+  \item \textbf{App Router multilingua}: Gestione nativa routing /it/ e /en/ con supporto i18n attraverso next-intl, permettendo espansione internazionale senza refactoring architetturale
+  
+  \item \textbf{Code splitting automatico}: Ogni route genera bundle JavaScript separati, riducendo il payload iniziale del 60\% rispetto a SPA tradizionale. Il browser carica solo il codice necessario per la pagina corrente
+  
+  \item \textbf{Image optimization}: Componente next/image con conversione WebP automatica, lazy loading nativo, srcset responsive e placeholder blur integrati. Riduce peso immagini del 70\% mantenendo qualità visiva
 \end{itemize}
 
 \subsection{Styling e UI}
-\textbf{Tailwind CSS}
+
+\textbf{Tailwind CSS 3.4 + ShadCN UI}
+
+Sistema di styling utility-first con component library accessibile:
+
 \begin{itemize}
-  \item Tailwind CSS 3.x per utility-first styling
-  \item Configurazione custom per palette Datapizza
-  \item Plugin typography per contenuti rich text
-  \item Purge CSS per ottimizzazione bundle produzione
+  \item \textbf{Tailwind CSS}: Framework CSS con classi utility per costruire UI direttamente nel markup. Zero runtime overhead (tutto compilato in CSS statico), configurazione custom per palette Datapizza, purge automatico rimuove CSS non utilizzato (riduzione 95\% bundle finale)
+  
+  \item \textbf{ShadCN UI (Radix UI)}: Component library basata su oltre 20 componenti Radix UI (@radix-ui/react-*) per accessibilità WCAG 2.1 integrata. Approccio copy-paste (codice nel progetto, non npm dependency) permette customizzazione completa mantenendo primitive accessibili
 \end{itemize}
 
-\textbf{ShadCN UI}
+\subsection{Librerie complementari}
+
+\textbf{Animazioni e interattività}
 \begin{itemize}
-  \item Component library basata su Radix UI
-  \item Accessibilità WCAG 2.1 integrata
-  \item Componenti headless customizzabili
-  \item Design tokens per consistenza visiva
+  \item Framer Motion 12.9 per animazioni fluide Hero sections e scroll effects
+  \item Three.js 0.177 + React Three Fiber per visualizzazioni 3D su landing AI Engineering
 \end{itemize}
 
-\subsection{State management}
+\textbf{Form e validazione}
 \begin{itemize}
-  \item React Query (TanStack Query) per API calls e caching
-  \item Server state management con automatic refetching
-  \item Optimistic updates per UX fluida
-  \item Gestione automatica loading/error states
+  \item React Hook Form 7.54 per gestione form performante senza re-render
+  \item Zod 3.24 per schema validation TypeScript-first su lead generation form
 \end{itemize}
 
-\section{Stack tecnologico backend}
-\subsection{Django e PostgreSQL}
+\subsection{Backend per dati dinamici}
+
+Alcune funzionalità landing richiedono backend Django:
 \begin{itemize}
-  \item Django 4.x per API REST
-  \item Django REST Framework per serialization
-  \item PostgreSQL 15 come database principale
-  \item ORM Django per query optimization
+  \item API REST per submit form lead generation (validazione server-side)
+  \item Integrazione newsletter "Commit" via Customer.io
+  \item Dati real-time opportunità Jobs da PostgreSQL 15
+  \item Tracking eventi Mixpanel server-side (fallback GDPR-compliant)
 \end{itemize}
 
-\subsection{Infrastructure}
-\begin{itemize}
-  \item AWS per cloud infrastructure
-  \item S3 per asset statici (immagini, font, media)
-  \item CloudFront CDN per distribuzione globale
-  \item EC2/ECS per application hosting
-\end{itemize}
+\textbf{Stack}: Django 4.x + PostgreSQL 15 (Python 3.9, Poetry, aiohttp per performance asincrone, boto3 per AWS integration)
 
-\section{Analytics e tracking}
-\subsection{Mixpanel}
-\begin{itemize}
-  \item Event tracking per comportamento utente
-  \item Funnel analysis e segmentazione
-  \item GDPR compliance con cookie consent
-  \item Real-time analytics dashboard
-\end{itemize}
+\section{Stack tecnologico aziendale}
+L'ecosistema Datapizza (Jobs, Company, gestionale) condivide stack unificato per coerenza tecnologica.
 
-\subsection{Redash}
-\begin{itemize}
-  \item Dashboard SQL per business intelligence
-  \item Visualizzazione dati e reportistica
-  \item Query scheduling per report automatici
-  \item Integrazione con PostgreSQL
-\end{itemize}
+\textbf{Frontend}: React 19 + TypeScript 5.7 su tutti i prodotti. React Query (TanStack Query) per state management server con caching intelligente e optimistic updates. TanStack Router in progressiva adozione per routing type-safe end-to-end.
 
-\section{Development tools}
-\subsection{IDE e editor}
-\begin{itemize}
-  \item Visual Studio Code come IDE principale
-  \item Cursor AI per coding assistance
-  \item ESLint e Prettier per code quality
-  \item TypeScript language server per intellisense
-\end{itemize}
+\textbf{Backend}: Django 4.x + PostgreSQL 15 come stack verticale Python (team expertise consolidata, ecosystem ricco per AI/ML). Python 3.9 con Poetry per dependency management, aiohttp per web server asincrono.
 
-\subsection{Design e collaboration}
-\begin{itemize}
-  \item Figma per design handoff e prototipazione
-  \item Figma Dev Mode per export CSS/React
-  \item Design system documentation in Figma
-\end{itemize}
+\textbf{Infrastructure}: AWS per cloud infrastructure. Landing pages deployate come container Docker su AWS ECS con immagini gestite tramite AWS ECR (Elastic Container Registry, region eu-south-1). S3 storage per asset statici, CloudFront CDN per distribuzione globale. Lambda serverless per integrazioni AI con scalabilità automatica. Gestione ambienti staging e production tramite configurazioni Docker separate (dettagli processo deploy in Cap. 8).
 
-\subsection{Version control e CI/CD}
-\begin{itemize}
-  \item Git per version control
-  \item GitHub per repository management e code review
-  \item GitHub Actions per CI/CD pipeline
-  \item Vercel per deployment automatizzato
-\end{itemize}
+\textbf{Analytics e Communication}: Mixpanel per event tracking GDPR compliant con funnel analysis. Customer.io per email automation newsletter "Commit" (500k+ iscritti) e transactional emails.
 
-\subsection{Database management}
-\begin{itemize}
-  \item DBeaver per query development e debugging
-  \item pgAdmin per PostgreSQL administration
-  \item Database migrations con Django
-\end{itemize}
+\section{Development tools e workflow}
 
-\subsection{Documentation}
-\begin{itemize}
-  \item Notion per knowledge base e documentazione
-  \item Markdown per documentation as code
-  \item Storybook per component documentation (considerato)
-\end{itemize}
+\textbf{IDE e AI assistance}: VS Code come IDE principale con Cursor AI (abbonamento premium team). Approccio AI-first per coding assistance, refactoring e debugging, con review rigorosa umana per qualità codice.
 
-\section{Tecnologie in altri progetti}
-Durante l'esperienza ho utilizzato le stesse tecnologie anche per:
-\begin{itemize}
-  \item Technical debt reduction su Jobs/Company platforms
-  \item Setup iniziale gestionale interno aziendale
-  \item Feature development con stack React/Django condiviso
-\end{itemize}
+\textbf{Version Control}: GitLab self-hosted (migrazione da GitHub durante periodo) per repository privato con maggiore sicurezza e ottimizzazione costi. Git workflow con feature branches e Merge Request con code review obbligatoria.
 
-Le competenze acquisite sul progetto principale sono state direttamente 
-trasferibili alle altre attività, garantendo coerenza tecnologica 
-nell'ecosistema aziendale.
+\textbf{CI/CD e Deploy}: GitLab CI per pipeline automatizzate build/test. Vercel per deploy automatico landing pages da Git push con preview deployments per ogni Merge Request.
 
-\section{Motivazioni delle scelte tecnologiche}
-\textbf{Next.js}: SEO nativo tramite SSR/SSG, performance ottimizzate 
-con code splitting automatico, developer experience eccellente con 
-hot reload e App Router.
-
-\textbf{TypeScript}: Type safety che riduce bug in produzione, migliore 
-refactoring grazie al type system, documentazione implicita del codice.
-
-\textbf{Tailwind CSS}: Rapid development senza context switching, 
-performance runtime ottimali (zero runtime overhead), design system 
-facilmente scalabile.
-
-\textbf{ShadCN UI}: Accessibilità built-in con Radix UI, customizzazione 
-completa del codice sorgente, componenti production-ready senza 
-dipendenze pesanti.
-
-\textbf{React Query}: Gestione server state semplificata, caching 
-intelligente che riduce chiamate API, developer tools eccellenti per 
-debugging.
-
-\textbf{Mixpanel}: Event tracking granulare senza rallentare il frontend, 
-GDPR compliance nativa, funnel analysis potenti per ottimizzazione 
-conversioni.
+\textbf{Documentation}: Notion per knowledge base aziendale (documentazione rilasci, onboarding, architecture decisions, runbook incident management).
