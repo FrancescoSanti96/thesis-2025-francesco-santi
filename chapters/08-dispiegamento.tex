@@ -1,221 +1,210 @@
 \chapter{Dispiegamento in opera}
 
-\section{Pipeline CI/CD}
-\subsection{Automazione build e deploy}
-Il processo di deploy è completamente automatizzato attraverso GitHub 
-Actions e Vercel:
+\section{Architettura deployment}
+Il deploy delle landing pages Next.js avviene tramite containerizzazione Docker con gestione immagini su AWS ECR.
 
+\subsection{Stack deployment}
 \begin{itemize}
-  \item \textbf{Trigger}: Push su branch \texttt{main} (production) o 
-        \texttt{staging}
-  \item \textbf{Build automatico}: Next.js build con ottimizzazioni 
-        produzione
-  \item \textbf{Testing pre-deploy}: ESLint, TypeScript check, build 
-        verification
-  \item \textbf{Deployment}: Deploy automatico su Vercel (production o 
-        preview)
-  \item \textbf{Notifiche}: Alert su Discord per esito deploy 
-        (success/failure)
+  \item \textbf{Next.js 15 rendering ibrido}: Combinazione SSR on-demand per pagine dinamiche e cache intelligente per contenuti statici. Strategia revalidation time-based (1 ora per dati esterni) e manual revalidation con \texttt{revalidatePath()} per contenuti che cambiano
+  \item \textbf{Docker}: Containerizzazione multi-stage per immagini ottimizzate
+  \item \textbf{AWS ECR}: Elastic Container Registry (region eu-south-1) per gestione immagini Docker
+  \item \textbf{CloudFront CDN}: Distribuzione globale asset statici da S3
 \end{itemize}
 
-\subsection{Stages della pipeline}
-La pipeline GitHub Actions esegue i seguenti step:
-
-\begin{enumerate}
-  \item \textbf{Checkout}: Clone del repository
-  \item \textbf{Setup Node.js}: Installazione Node.js 18 e dependencies
-  \item \textbf{Lint}: ESLint per code quality check
-  \item \textbf{Type Check}: TypeScript compiler per type errors
-  \item \textbf{Build}: Next.js build per verifica assenza errori
-  \item \textbf{Deploy Vercel}: Deploy automatico su Vercel (staging o 
-        production)
-  \item \textbf{Lighthouse CI}: Verifica performance score post-deploy
-  \item \textbf{Notification}: Alert su Discord con URL deploy e status
-\end{enumerate}
-
-Durata media pipeline: 3-5 minuti.
-
-\section{Hosting e infrastruttura}
-\subsection{Provider e configurazione}
-\begin{itemize}
-  \item \textbf{Hosting}: Vercel (Next.js native platform)
-  \item \textbf{Architettura}: Serverless con Edge Functions
-  \item \textbf{CDN}: Vercel Edge Network (distribuzione globale)
-  \item \textbf{Storage asset}: AWS S3 per immagini e media
-  \item \textbf{Database}: AWS RDS PostgreSQL per backend Django
-  \item \textbf{Backend API}: AWS EC2 per Django REST API
-\end{itemize}
-
-\subsection{Configurazione dominio}
-\begin{itemize}
-  \item Domain principale: \texttt{datapizza.tech}
-  \item Routing multilingua: \texttt{/it/} e \texttt{/en/}
-  \item Subdomain Jobs: \texttt{jobs.datapizza.tech}
-  \item SSL/TLS: Certificato automatico Let's Encrypt via Vercel
-  \item DNS: Configurazione A record e CNAME su Vercel DNS
-\end{itemize}
-
-\section{Gestione ambienti}
-\subsection{Ambienti di sviluppo}
-\textbf{Development (locale)}
-\begin{itemize}
-  \item Ambiente su macchina developer con \texttt{npm run dev}
-  \item Database locale PostgreSQL o Docker container
-  \item Hot reload Next.js per sviluppo rapido
-  \item Mock API con MSW (Mock Service Worker) per testing isolato
-  \item Environment variables in \texttt{.env.local}
-\end{itemize}
-
+\subsection{Ambienti}
 \textbf{Staging}
 \begin{itemize}
-  \item Ambiente pre-produzione per testing QA
-  \item Replica configurazione production (Vercel, AWS)
-  \item URL: \texttt{staging.datapizza.tech}
+  \item Ambiente pre-produzione per testing QA e UAT
+  \item Configurazione: \texttt{APP\_ENV=staging} con file \texttt{.env.stag}
   \item Database staging separato da production
-  \item Testing manual e UAT (User Acceptance Testing)
-  \item Mixpanel project separato per non inquinare dati production
+  \item Mixpanel project dedicato per evitare inquinamento dati production
 \end{itemize}
 
 \textbf{Production}
 \begin{itemize}
   \item Ambiente live accessibile agli utenti finali
-  \item URL: \texttt{datapizza.tech} e \texttt{jobs.datapizza.tech}
-  \item Performance monitoring attivo con Vercel Analytics
-  \item Backup automatizzati database ogni 24h
-  \item High availability: 99.9\% uptime SLA Vercel
+  \item URL: \texttt{datapizza.tech} (multilingua /it/ e /en/)
+  \item Configurazione: \texttt{APP\_ENV=production} con file \texttt{.env.prod}
+  \item Performance monitoring attivo con Mixpanel Analytics
+  \item Backup automatizzati database
 \end{itemize}
 
-\subsection{Variabili ambiente}
-Gestione configurazioni sensibili per ambiente:
+\section{Pipeline deployment}
 
+\subsection{Processo build e deploy staging}
+Il deployment su staging segue un processo automatizzato tramite script \texttt{deploy-stag.sh}:
+
+\textbf{Step 1: Build Next.js}
 \begin{itemize}
-  \item \textbf{API keys}: Mixpanel token, CookieYes ID, Mailchimp API key
-  \item \textbf{Database}: Connection string PostgreSQL (diverso per 
-        staging/prod)
-  \item \textbf{Backend API}: Base URL Django REST API
-  \item \textbf{Feature flags}: Booleani per abilitare/disabilitare 
-        features
-  \item \textbf{Tools}: Vercel Environment Variables per gestione 
-        secrets sicura
+  \item Esecuzione \texttt{pnpm build} per generare build produzione Next.js
+  \item Output ottimizzato con code splitting e tree shaking
+  \item Caricamento variabili ambiente da \texttt{.env.stag}
 \end{itemize}
 
-Nessuna variabile sensibile committata su Git (verificato con git-secrets).
+\textbf{Step 2: Docker Build Multi-Stage}
+Il Dockerfile multi-stage ottimizza dimensione finale immagine:
+\begin{enumerate}
+  \item \textbf{Stage dependencies}: Installazione solo production dependencies
+  \item \textbf{Stage builder}: Build Next.js con \texttt{pnpm build}
+  \item \textbf{Stage runner}: Immagine finale minimale con solo runtime necessario
+\end{enumerate}
 
-\section{Strategia di deploy}
-\subsection{Deploy progressivi}
+Benefici multi-stage:
 \begin{itemize}
-  \item \textbf{Rollout graduale}: Deploy landing per landing, non tutte 
-        insieme
-  \item \textbf{Preview deploys}: Ogni PR su GitHub genera preview URL 
-        Vercel unico
-  \item \textbf{Canary deployment}: Non implementato (complessità vs 
-        beneficio)
-  \item \textbf{Feature flags}: Usati per abilitare gradualmente nuove 
-        features
+  \item Riduzione significativa dimensione immagine (solo runtime, no dev dependencies)
+  \item Layer caching per build incrementali veloci
+  \item Security hardening (minimal attack surface)
 \end{itemize}
 
-Esempio rollout: Home Page → Recruiting → Community → AI Adoption → 
-AI Engineering → Jobs (1 landing per settimana).
+\textbf{Step 3: Tag e Push AWS ECR}
+\begin{itemize}
+  \item Tag immagine Docker con versione e ambiente (es. \texttt{landing:staging-v1.2.3})
+  \item Autenticazione AWS CLI con credenziali IAM
+  \item Push immagine su AWS ECR registry (region eu-south-1)
+  \item Gestione versioni immagini per possibilità di rollback
+\end{itemize}
+
+\textbf{Step 4: Deploy}
+\begin{itemize}
+  \item Deploy nuova immagine Docker dall'ECR registry
+  \item Container esposto su porta 80 con \texttt{next start}
+  \item Verifica funzionamento post-deploy
+\end{itemize}
+
+Durata media pipeline: 5-7 minuti (build 3min, Docker build 2min, push/deploy 2min).
+
+\subsection{Deployment production}
+Processo analogo a staging ma con validazioni aggiuntive:
+\begin{itemize}
+  \item Prerequisito: Deploy staging testato e approvato
+  \item Script \texttt{deploy-prod.sh} con variabili \texttt{.env.prod}
+  \item Manual approval richiesto prima di push ECR production
+  \item Rolling update ECS con zero-downtime deployment
+  \item Monitoring intensificato post-deploy (primi 30 minuti)
+\end{itemize}
+
+\section{Infrastruttura AWS}
+
+\subsection{Componenti principali}
+\textbf{AWS ECR (Elastic Container Registry)}
+\begin{itemize}
+  \item Registry privato per immagini Docker landing pages
+  \item Region: eu-south-1 (Milano) per latency ridotta
+  \item Vulnerability scanning abilitato per sicurezza immagini
+  \item Gestione versioni per rollback rapido
+\end{itemize}
+
+\textbf{AWS S3 + CloudFront CDN}
+\begin{itemize}
+  \item S3 bucket per asset statici (immagini, font, media)
+  \item CloudFront distribution per edge caching globale
+  \item Cache invalidation post-deploy nuovi asset
+  \item Configurazione TTL per ottimizzazione cache
+\end{itemize}
+
+\section{Variabili ambiente e configurazione}
+
+\subsection{Gestione secrets}
+\begin{itemize}
+  \item \textbf{AWS Secrets Manager}: Storage sicuro per API keys (Mixpanel, Customer.io, database credentials)
+  \item \textbf{Environment variables}: File \texttt{.env.stag} e \texttt{.env.prod} non committati su Git
+  \item \textbf{Docker build args}: Variabili build-time passate durante Docker build
+  \item \textbf{ECS task definition}: Variabili runtime iniettate da Secrets Manager
+\end{itemize}
+
+Nessuna variabile sensibile in chiaro nel codice (verificato con git-secrets e pre-commit hooks).
+
+\subsection{Configurazioni per ambiente}
+\textbf{Staging (\texttt{.env.stag})}
+\begin{itemize}
+  \item Database: Connection string PostgreSQL staging
+  \item API Backend: URL Django staging
+  \item Mixpanel: Project ID staging (dati separati da production)
+  \item Feature flags: Abilitazione features in beta testing
+\end{itemize}
+
+\textbf{Production (\texttt{.env.prod})}
+\begin{itemize}
+  \item Database: Connection string PostgreSQL production (read replica per query heavy)
+  \item API Backend: URL Django production con load balancer
+  \item Mixpanel: Project ID production
+  \item Feature flags: Solo features stabili abilitate
+\end{itemize}
+
+\section{Strategia deployment e rollback}
+
+\subsection{Deployment progressivo}
+\begin{itemize}
+  \item \textbf{Cache strategy Next.js}: Combinazione revalidation time-based (1 ora per dati esterni) e manual revalidation con \texttt{revalidatePath()} per contenuti dinamici (blog, admin actions)
+  \item \textbf{Rollout per landing}: Deploy landing page per landing page, non tutte insieme
+  \item \textbf{Feature flags}: Abilitazione graduale nuove funzionalità senza redeploy
+\end{itemize}
+
+Esempio rollout: Home → Recruiting → Community → AI Adoption → AI Engineering → Jobs (1 landing ogni 2-3 giorni).
 
 \subsection{Rollback strategy}
 In caso di problemi critici post-deploy:
 
 \begin{itemize}
-  \item \textbf{Rollback automatico}: Se Lighthouse CI score < 80, 
-        deploy bloccato
-  \item \textbf{Rollback manuale}: Git revert + redeploy in < 5 minuti
-  \item \textbf{Git tags}: Ogni deploy production taggato 
-        (es. \texttt{v1.2.3})
-  \item \textbf{Vercel rollback}: Rollback istantaneo a deployment 
-        precedente da dashboard
-  \item \textbf{Tempo medio rollback}: 3-5 minuti dall'identificazione 
-        issue
+  \item \textbf{Docker image rollback}: Redeploy immagine precedente da ECR registry
+  \item \textbf{Git rollback}: Git revert commit problematico + rebuild/redeploy
+  \item \textbf{Cache invalidation}: Uso di \texttt{revalidatePath()} per invalidare cache problematiche
+  \item \textbf{Database migrations}: Rollback gestito separatamente con Django migrations reverse
 \end{itemize}
 
-\subsection{Zero-downtime deployment}
+Tempo medio rollback: Variabile in base alla strategia (da pochi minuti per cache invalidation a 5-10 minuti per rebuild completo).
+
+\section{Monitoring e observability}
+
+\subsection{Logging e metriche}
 \begin{itemize}
-  \item Vercel garantisce zero-downtime nativo con atomic deployments
-  \item Nuovo deploy diventa live solo dopo build success completo
-  \item Vecchia versione rimane live durante build della nuova
-  \item Database migrations gestite separatamente da deploy frontend
-  \item Cache warming automatico Vercel Edge Network
+  \item Aggregazione log applicazione per debugging
+  \item Monitoring performance container Docker
+  \item Custom metrics: Mixpanel eventi, conversion funnel
+  \item Alerting su anomalie e threshold critici
 \end{itemize}
 
-\section{Automazioni e monitoring}
-
-\subsection{Automazioni deploy}
-\begin{itemize}
-  \item \textbf{Cache invalidation}: CloudFront cache clear automatico 
-        post-deploy
-  \item \textbf{Sitemap regeneration}: Update automatico 
-        \texttt{sitemap.xml} con nuovo deploy
-  \item \textbf{Webhook notifications}: Alert Discord con dettagli deploy 
-        (branch, commit, autore)
-  \item \textbf{Analytics tracking}: Verifica Mixpanel init corretto 
-        post-deploy
-  \item \textbf{Lighthouse CI}: Run automatico e report score su PR GitHub
-\end{itemize}
-
-\subsection{Monitoraggio post-deploy}
-\textbf{Error Tracking}
-\begin{itemize}
-  \item Vercel Error Tracking per runtime errors frontend
-  \item Alert real-time su Discord se error rate > 1\%
-  \item Source maps per debugging in produzione
-  \item Error rate threshold: se > 5\%, consideriamo rollback
-\end{itemize}
-
-\textbf{Performance Monitoring}
-\begin{itemize}
-  \item Vercel Analytics per Core Web Vitals real-user monitoring
-  \item Lighthouse CI per tracking performance nel tempo (trend)
-  \item API response time monitoring su backend Django
-  \item Dashboard Vercel per visualizzazione metriche real-time
-\end{itemize}
-
-\textbf{Analytics Real-Time}
+\subsection{Analytics post-deploy}
 \begin{itemize}
   \item Mixpanel live view per monitorare eventi post-deploy
   \item Verifica funnel conversione funzionanti correttamente
-  \item Monitoring traffico per landing page (spike detection)
-  \item Alert su anomalie metriche: spike > 200\% o drop > 50\% 
-        improvvisi
+  \item Monitoring traffico per landing page
+  \item Alert su anomalie metriche significative
 \end{itemize}
 
-\subsection{Health Checks}
+\section{Sicurezza deployment}
+
+\subsection{Security best practices}
 \begin{itemize}
-  \item Endpoint \texttt{/api/health} per status check automatico
-  \item Ping ogni 5 minuti da UptimeRobot per verifica uptime
-  \item Database connection check incluso in health endpoint
-  \item SLA uptime target: 99.9\% (massimo ~43 minuti downtime/mese)
-  \item Uptime effettivo raggiunto: 99.95\% (gennaio-giugno 2025)
+  \item \textbf{Container security}: Immagini Docker scannate per vulnerabilità tramite AWS ECR scanning
+  \item \textbf{Least privilege}: IAM roles con permessi minimi necessari per accesso AWS resources
+  \item \textbf{Secrets management}: AWS Secrets Manager per storage sicuro credenziali sensibili
+  \item \textbf{HTTPS enforcement}: Configurazione SSL/TLS per traffico encrypted
+  \item \textbf{Security headers}: CSP, HSTS, X-Frame-Options configurati su Next.js middleware
 \end{itemize}
 
-\section{Sicurezza e compliance}
+\subsection{Compliance GDPR}
 \begin{itemize}
-  \item \textbf{HTTPS enforcement}: Redirect automatico HTTP → HTTPS
-  \item \textbf{Security headers}: CSP (Content Security Policy), 
-        HSTS, X-Frame-Options, X-Content-Type-Options
-  \item \textbf{Rate limiting}: Vercel Edge Middleware per protezione 
-        API abuse
-  \item \textbf{GDPR compliance}: Cookie consent, opt-out tracking, 
-        IP anonymization
-  \item \textbf{Dependency scanning}: Dependabot GitHub per 
-        vulnerabilità dependencies
+  \item Cookie consent verificato funzionante post-deploy
+  \item Mixpanel IP anonymization attiva
+  \item Data retention policy configurata
+  \item Gestione privacy utenti conforme normativa
 \end{itemize}
 
 \section{Backup e disaster recovery}
+
+\subsection{Backup strategy}
 \begin{itemize}
-  \item \textbf{Backup database}: Automatici ogni 24h su AWS RDS, 
-        retention 30 giorni
-  \item \textbf{Git repository}: Backup automatico codice sorgente su 
-        GitHub
-  \item \textbf{Asset backup}: S3 versioning abilitato per rollback asset
-  \item \textbf{Recovery Time Objective (RTO)}: < 15 minuti per ripristino 
-        completo
-  \item \textbf{Recovery Point Objective (RPO)}: Massimo 24h di dati 
-        persi (1 backup/giorno)
+  \item \textbf{Database}: Backup regolari database con retention configurata
+  \item \textbf{Container images}: ECR mantiene versioni immagini Docker per rollback
+  \item \textbf{Git repository}: Backup automatico codice sorgente su GitLab self-hosted
+  \item \textbf{Asset S3}: Versioning abilitato per rollback file modificati
 \end{itemize}
 
-Test disaster recovery effettuato: ripristino completo da backup in 
-12 minuti (sotto target RTO).
+\subsection{Disaster recovery}
+\begin{itemize}
+  \item Procedura DR documentata per ripristino servizio
+  \item Backup database utilizzabile per restore in caso di failure
+  \item Rollback rapido a versioni precedenti container tramite ECR
+  \item Testing periodico procedure recovery per validare efficacia
+\end{itemize}

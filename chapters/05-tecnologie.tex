@@ -22,15 +22,15 @@ Il framework principale è Next.js 15.3, che si basa su React 19 e TypeScript 5.
 La scelta di Next.js rispetto a React vanilla si basa su vantaggi concreti per il progetto:
 
 \begin{itemize}
-  \item \textbf{Server-Side Rendering (SSR)}: Le landing pages vengono renderizzate server-side ad ogni richiesta, garantendo contenuto sempre aggiornato e SEO ottimale. Il server genera HTML completo prima di inviarlo al client, riducendo il time-to-interactive
+  \item \textbf{Rendering ibrido}: Next.js 15 permette di combinare SSR on-demand per pagine dinamiche (form, autenticazione) con cache intelligente per contenuti statici. Implementata strategia di revalidation time-based (1 ora per dati esterni) e manual revalidation con \texttt{revalidatePath()} per contenuti che cambiano (blog, admin actions)
   
   \item \textbf{SEO nativo}: Meta tags dinamici, sitemap XML automatico, structured data JSON-LD integrati out-of-the-box. SSR garantisce che crawler Google ricevano HTML completo immediatamente, fondamentale per indicizzazione e traffico organico
   
   \item \textbf{App Router multilingua}: Gestione nativa routing /it/ e /en/ con supporto i18n attraverso next-intl, permettendo espansione internazionale senza refactoring architetturale
   
-  \item \textbf{Code splitting automatico}: Ogni route genera bundle JavaScript separati, riducendo il payload iniziale del 60\% rispetto a SPA tradizionale. Il browser carica solo il codice necessario per la pagina corrente
+  \item \textbf{Code splitting automatico}: Ogni route genera bundle JavaScript separati, riducendo significativamente il payload iniziale rispetto a SPA tradizionale. Il browser carica solo il codice necessario per la pagina corrente
   
-  \item \textbf{Image optimization}: Componente next/image con conversione WebP automatica, lazy loading nativo, srcset responsive e placeholder blur integrati. Riduce peso immagini del 70\% mantenendo qualità visiva
+  \item \textbf{Image optimization}: Componente next/image con conversione WebP automatica, lazy loading nativo, srcset responsive e placeholder blur integrati. Ottimizzazione significativa del peso immagini mantenendo qualità visiva
 \end{itemize}
 
 \subsection{Styling e UI}
@@ -78,7 +78,7 @@ L'ecosistema Datapizza (Jobs, Company, gestionale) condivide stack unificato per
 
 \textbf{Backend}: Django 4.x + PostgreSQL 15 come stack verticale Python (team expertise consolidata, ecosystem ricco per AI/ML). Python 3.9 con Poetry per dependency management, aiohttp per web server asincrono.
 
-\textbf{Infrastructure}: AWS per cloud infrastructure. Landing pages deployate come container Docker su AWS ECS con immagini gestite tramite AWS ECR (Elastic Container Registry, region eu-south-1). S3 storage per asset statici, CloudFront CDN per distribuzione globale. Lambda serverless per integrazioni AI con scalabilità automatica. Gestione ambienti staging e production tramite configurazioni Docker separate (dettagli processo deploy in Cap. 8).
+\textbf{Infrastructure}: AWS per cloud infrastructure. Landing pages deployate come container Docker con immagini gestite tramite AWS ECR (Elastic Container Registry, region eu-south-1). S3 storage per asset statici, CloudFront CDN per distribuzione globale. Lambda serverless per integrazioni AI con scalabilità automatica. Gestione ambienti staging e production tramite configurazioni Docker separate (dettagli processo deploy in Cap. 8).
 
 \textbf{Analytics e Communication}: Mixpanel per event tracking GDPR compliant con funnel analysis. Customer.io per email automation newsletter "Commit" (500k+ iscritti) e transactional emails.
 
