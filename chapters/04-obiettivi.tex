@@ -1,100 +1,40 @@
 \chapter{Obiettivi}
 
 \section{Obiettivi del progetto}
-Il progetto di redesign delle landing pages aveva l'obiettivo di 
-trasformare la presenza web aziendale da un'unica pagina generica a 
-un ecosistema di landing specializzate, risolvendo le problematiche 
-identificate nel capitolo precedente.
+Il progetto di redesign delle landing pages aveva l'obiettivo di trasformare la presenza web aziendale da un'unica pagina generica a un ecosistema di landing specializzate, risolvendo le problematiche identificate nel capitolo precedente.
 
-\subsection{Obiettivi principali}
+\subsection{Obiettivi strategici e di business}
+
 \textbf{Posizionamento e differenziazione}
 \begin{itemize}
-  \item Creare value proposition specifiche per ciascun verticale 
-        (AI Engineering, AI Adoption, Tech Recruiting, Community)
-  \item Separare comunicazione B2B enterprise da quella B2C candidati
-  \item Posizionare Datapizza come "AI Transformation Company" 
-        attraverso contenuti mirati
+  \item Creare value proposition specifiche per ciascun verticale (AI Engineering, AI Adoption, Tech Recruiting, Community)
+  \item Separare la comunicazione B2B enterprise da quella B2C candidati
+  \item Consolidare l'identità aziendale come "AI Transformation Company"
 \end{itemize}
 
-\textbf{Performance e scalabilità}
+\textbf{Marketing data-driven e conversione}
 \begin{itemize}
-  \item Raggiungere Lighthouse Performance Score superiore a 90
-  \item Ottimizzare Core Web Vitals: FCP < 2s, LCP < 2.5s, CLS < 0.1
-  \item Implementare architettura modulare riutilizzabile per future 
-        landing pages
+  \item Implementare tracking avanzato GDPR-compliant per customer journey completi
+  \item Creare funnel di conversione misurabili per ottimizzazione continua
+  \item Fornire analytics (Mixpanel + Redash) per decisioni marketing informate
+  \item Migliorare conversion rate complessivo per verticale
+  \item Aumentare lead qualificati B2B e iscrizioni newsletter community
+  \item Ridurre bounce rate attraverso customer journey ottimizzati
 \end{itemize}
 
-\textbf{User experience}
+\textbf{Supporto strategia commerciale}
 \begin{itemize}
-  \item Progettare customer journey ottimizzati per ciascun target
-  \item Garantire responsive design mobile-first per tutti i dispositivi
-  \item Implementare accessibilità WCAG 2.1 livello AA
+  \item Fornire canale primario acquisizione lead per team sales
+  \item Abilitare campagne marketing con tracking ROI accurato
 \end{itemize}
 
-\subsection{Obiettivi secondari}
-\textbf{Tracking e analytics}
-\begin{itemize}
-  \item Implementare tracking eventi utente con Mixpanel 
-        GDPR-compliant
-  \item Creare funnel di conversione per misurare efficacia per 
-        verticale
-  \item Abilitare segmentazione utenti e dashboard analytics con Redash
-\end{itemize}
+\section{Obiettivi tecnici}
 
-\textbf{SEO e integrazione}
-\begin{itemize}
-  \item Ottimizzare struttura URL, meta tags e structured data (JSON-LD)
-  \item Integrare seamlessly con piattaforme esistenti (Jobs, Company)
-  \item Collegare newsletter "Commit" e Discord community
-\end{itemize}
+\subsection{Architettura e scalabilità}
+Costruire un'architettura frontend moderna basata su design system modulare (ShadCN UI + Tailwind CSS) con componenti riutilizzabili e supporto multilingua (/it/, /en/). L'obiettivo era creare un applicativo scalabile, con codice condiviso e riutilizzato.
 
-\section{Criteri di successo}
-Gli obiettivi erano misurabili attraverso KPI definiti a priori:
+\subsection{Performance e user experience}
+Ottimizzare i tempi di caricamento attraverso code splitting, lazy loading e ottimizzazione immagini, garantendo esperienza fluida su tutti i dispositivi. Implementare accessibilità WCAG 2.1 AA per utenti con disabilità (screen reader, keyboard navigation, contrasto colori).
 
-\subsection{Metriche di performance tecnica}
-\begin{itemize}
-  \item Lighthouse Performance Score > 90
-  \item First Contentful Paint < 2 secondi
-  \item Largest Contentful Paint < 2.5 secondi
-  \item Cumulative Layout Shift < 0.1
-  \item Time to Interactive < 3 secondi
-\end{itemize}
-
-\subsection{Metriche di business}
-\begin{itemize}
-  \item Miglioramento conversion rate per landing B2B
-  \item Aumento iscrizioni newsletter "Commit"
-  \item Riduzione bounce rate rispetto alla situazione iniziale
-  \item Incremento tempo medio sessione e scroll depth
-  \item Crescita interazioni con CTA principali
-\end{itemize}
-
-\subsection{Metriche di qualità}
-\begin{itemize}
-  \item Zero errori critici in produzione post-deploy
-  \item Accessibilità WCAG 2.1 AA compliance al 100\%
-  \item Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
-  \item Mobile responsiveness su tutti i breakpoints
-\end{itemize}
-
-\section{Vincoli e limitazioni}
-Il progetto operava entro vincoli definiti che ne hanno influenzato 
-l'esecuzione:
-
-\subsection{Vincoli tecnici}
-\begin{itemize}
-  \item Compatibilità con stack esistente (Django backend, AWS 
-        infrastructure)
-  \item Budget performance per hosting e CDN
-  \item Timeline: sviluppo in sprint bisettimanali (gennaio-giugno 2025)
-  \item Risorse: 1 Software Engineer principale (70\% frontend, 
-        30\% backend)
-\end{itemize}
-
-\subsection{Vincoli di compliance}
-\begin{itemize}
-  \item Conformità GDPR per tracking utenti EU
-  \item Cookie consent management obbligatorio
-  \item Privacy policy aggiornata per nuovi sistemi di tracking
-  \item Data retention policies per analytics
-\end{itemize}
+\subsection{Tracking e analytics}
+Integrare Mixpanel con event taxonomy strutturata (page view, interaction, conversion) per tracciare comportamenti utente. Configurare funnel di conversione specifici per verticale (B2B, B2C, Community) con compliance GDPR (cookie consent, IP anonymization).
