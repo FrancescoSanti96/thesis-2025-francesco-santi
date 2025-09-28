@@ -1,10 +1,10 @@
 \chapter{Progettazione}
 
-La fase di progettazione ha avuto l’obiettivo di tradurre i requisiti individuati
-nei capitoli precedenti in un’architettura scalabile, accessibile e coerente con
-l’identità aziendale. In questa sezione vengono presentate le decisioni
-architetturali chiave, il processo metodologico adottato e l’organizzazione
-dell’ecosistema di landing pages.
+La fase di progettazione ha avuto l'obiettivo di tradurre i requisiti individuati
+nei capitoli precedenti in un'architettura scalabile, accessibile e coerente con
+l'identità aziendale. In questa sezione vengono presentate le decisioni
+architetturali chiave, il processo metodologico adottato e l'organizzazione
+dell'ecosistema di landing pages.
 
 \section{Decisioni architetturali}
 Il punto di partenza era una landing page unica, insufficiente per comunicare i
@@ -12,20 +12,25 @@ diversi verticali aziendali e raccogliere dati utili a livello di marketing. La
 progettazione ha quindi introdotto tre scelte fondamentali:
 
 \begin{itemize}
-  \item \textbf{Architettura multi-landing}: adozione di un monorepo con sei
-  route dedicate, così da garantire posizionamento SEO, riuso di componenti
-  comuni e semplicità di manutenzione.
-  \item \textbf{Strategia di rendering}: adozione di pagine statiche con
-  aggiornamento incrementale (SSG + ISR), che consente di bilanciare performance,
-  costi e necessità di aggiornamento dei contenuti.
-  \item \textbf{Design system condiviso}: definizione di una libreria di
-  componenti accessibili e riutilizzabili, costruita su linee guida visive
-  aziendali.
+  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js con sei
+  route dedicate (/it/, /it/tech-recruiting/, /it/ai-adoption/, etc.), così da garantire 
+  posizionamento SEO ottimale, riuso di componenti comuni e semplicità di manutenzione. 
+  
+  \item \textbf{Strategia di rendering}: adozione di Static Site Generation (SSG) 
+  con Incremental Static Regeneration (ISR, revalidation 1 ora), che consente di 
+  bilanciare performance, costi infrastruttura e 
+  necessità di aggiornamento contenuti. Scelta motivata da requisiti performance 
+  critici per conversioni e traffico organico, con HTML statico servito da CDN 
+  per crawler Google.
+  
+  \item \textbf{Design system condiviso}: definizione di una libreria di componenti 
+  accessibili basata su ShadCN UI (Radix UI primitives) e Tailwind CSS, costruita 
+  su linee guida visive aziendali. Garantisce accessibilità WCAG 2.1 AA nativa, 
+  customizzazione completa e riutilizzo del codice UI tra le landing.
 \end{itemize}
 
-\section{Metodologia di progettazione e collaborazione}
-Il progetto di redesign è stato organizzato come una \textbf{macro-release annuale},
-considerata strategica per l’azienda. La fase di progettazione non si è limitata
+\section{Metodologia di progettazione e collaborazione} Il progetto di redesign è stato organizzato come una \textbf{macro-release annuale},
+considerata strategica per l'azienda. La fase di progettazione non si è limitata
 alla definizione di scelte tecniche, ma ha previsto un percorso strutturato di
 analisi, collaborazione e validazione:
 
@@ -41,74 +46,115 @@ analisi, collaborazione e validazione:
   \item \textbf{Approccio Agile}: gestione del lavoro in sprint bisettimanali,
   con daily standup, retrospettive e momenti di confronto dedicati alla revisione
   della qualità.
-  \item \textbf{Progettazione responsive}: attenzione fin dall’inizio alle tre
+  \item \textbf{Progettazione responsive}: attenzione fin dall'inizio alle tre
   principali dimensioni di visualizzazione (desktop, tablet e mobile), per
   garantire una user experience coerente e ottimizzata.
 \end{itemize}
 
 Questa metodologia ha consentito di ridurre i rischi, migliorare la qualità
 finale e assicurare che le landing rispondessero realmente ai bisogni degli utenti
-e dell’azienda.
+e dell'azienda.
 
-\section{Processo di design}
+\section{Processo di design e design system}
 Il design system è stato sviluppato in stretta collaborazione con il team UX/UI,
 a partire da wireframe validati con il product team fino a mockup
-high–fidelity realizzati in Figma. Il processo ha incluso:
+high-fidelity realizzati in Figma. Il processo ha incluso:
 
 \begin{itemize}
   \item definizione di design tokens comuni (colori, tipografia, spaziatura),
-  condivisi tra Figma e configurazioni di progetto;
-  \item creazione di componenti modulari con varianti responsive, per garantire
-  consistenza visiva su desktop e mobile;
-  \item handoff strutturato verso lo sviluppo, con esportazione automatica di
-  specifiche e asset ottimizzati.
+  condivisi tra Figma e configurazioni Tailwind CSS di progetto;
+  \item creazione di componenti modulari con varianti responsive, per garantire 
+  consistenza visiva e riutilizzo tra le 6 landing pages;
 \end{itemize}
 
-Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza
-tra design e implementazione e abilitare una rapida iterazione.
+L'architettura componenti ha permesso di standardizzare elementi ricorrenti garantendo il riutilizzo di molto del codice UI tra le diverse landing.
+
+Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza tra design e implementazione e abilitare una rapida iterazione.
 
 \section{Architettura delle landing pages}
-L’ecosistema è stato progettato con una struttura comune di base
-(\textit{header}, \textit{hero}, sezioni contenuto, \textit{footer}) e con
-personalizzazioni per target specifici:
+L'ecosistema è stato progettato con una struttura comune di base
+(\textit{navbar}, \textit{footer}) e con
+personalizzazioni specifiche per target:
+
+\subsection{Strategia di differenziazione}
+Ogni landing è stata progettata con tone of voice e UX mirati:
 
 \begin{itemize}
-  \item \textbf{B2B enterprise}: tone of voice consulenziale, layout pulito,
-  form di contatto avanzati;
-  \item \textbf{B2C candidati}: stile diretto e colorato, call-to-action
-  immediate, esperienza mobile–first;
-  \item \textbf{Community}: linguaggio informale e tech-savvy, elementi visuali
-  orientati alla cultura developer.
+  \item \textbf{B2B enterprise} (Recruiting, AI Adoption, AI Engineering): tone of voice 
+  consulenziale, layout pulito con whitespace generoso, form di contatto avanzati con 
+  campi aziendali, CTA orientate a demo/consulenza ("Richiedi demo", "Contatta team");
+  
+  \item \textbf{B2C candidati} (Jobs): stile diretto e colorato, call-to-action
+  immediate ("Cerca lavoro", "Candidati ora"), esperienza mobile-first (58\% utenti 
+  da mobile), trasparenza salary con RAL sempre visibile;
+  
+  \item \textbf{Community} (Tech Community): linguaggio informale e tech-savvy, elementi 
+  visuali orientati alla cultura developer, CTA engagement per Discord e newsletter 
+  "Commit", social proof con 500k+ iscritti.
 \end{itemize}
 
-Tra le landing principali si distinguono la Home Page, come hub di accesso ai
-verticali, la sezione AI Engineering dedicata al framework proprietario, e la
-Jobs Platform con funzionalità di ricerca e matching.
+% [INSERIRE IMMAGINE 1: Hero Variants]
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{images/hero-comparison.png}
+  \caption{Hero component - Varianti per target: B2B (Recruiting), B2C (Jobs), Community}
+  \label{fig:hero-variants}
+\end{figure}
+
+\subsection{Landing principali}
+Tra le landing principali si distinguono:
+
+\begin{itemize}
+  \item \textbf{Home Page} (/it/): hub centrale con overview dei 4 verticali e routing 
+  intelligente verso servizi specifici;
+  \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework proprietario 
+  "Datapizza AI" con gallery progetti (Copiloti Sales/HR/Legal/Customer), target CTO 
+  e IT Decision Makers;
+  \item \textbf{Jobs Platform} (/jobs/): ricerca posizioni con filtri avanzati 
+  (tech stack, location, RAL), Tech Buddy matching e zero ghosting policy.
+\end{itemize}
+
+% [INSERIRE IMMAGINE 2: AI Engineering Mockup]
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{images/aiengineering-desktop.png}
+  \caption{Landing AI Engineering - Mockup finale desktop con framework showcase}
+  \label{fig:ai-engineering}
+\end{figure}
 
 \section{Tracking e misurabilità}
-Il sistema di tracking è stato progettato nativamente nell’architettura per
-supportare funnel di conversione specifici per ogni verticale. L’integrazione con
-Mixpanel consente di tracciare page view, interazioni e conversioni, con
-attributi relativi al tipo di utente e alla sorgente di traffico.
+Il sistema di tracking è stato progettato per migliorare l'implementazione 
+precedentemente presente, supportando funnel di conversione specifici per ogni 
+verticale. L'integrazione con Mixpanel consente di tracciare page view, 
+interazioni e conversioni con granularità maggiore rispetto alla soluzione unica 
+precedente.
 
-Particolare attenzione è stata data alla conformità normativa:
-consenso esplicito tramite cookie banner, anonimizzazione degli indirizzi IP,
-meccanismi di opt–out e data retention limitata a 12 mesi.
-
-\section{Scalabilità e riuso}
-Per supportare l’aggiunta di nuove landing è stato predisposto un framework
-riutilizzabile che comprende:
-
+\subsection{Event taxonomy e funnel}
+L'architettura tracking implementa una tassonomia strutturata di eventi:
 \begin{itemize}
-  \item template base già dotato di layout, componenti e tracking integrato;
-  \item checklist di verifica su SEO, performance, accessibilità e funnel;
-  \item documentazione del design system a supporto dello sviluppo.
+  \item \textbf{Page events}: page\_view, landing\_loaded
+  \item \textbf{Interaction events}: cta\_clicked, scroll\_depth, section\_viewed
+  \item \textbf{Conversion events}: form\_submitted, newsletter\_signup
 \end{itemize}
 
-Grazie a questo approccio, la creazione di una nuova landing può essere stimata
-in 1–2 sprint, mantenendo consistenza con l’ecosistema esistente.
+Il tracking permette di analizzare funnel di conversione differenziati per verticale:
+\begin{itemize}
+  \item \textbf{B2B}: landing\_view → cta\_click → form\_view → form\_submit
+  \item \textbf{B2C Jobs}: landing\_view → search\_used → position\_click → application\_start
+  \item \textbf{Community}: landing\_view → scroll\_50\% → newsletter\_click → newsletter\_submit
+\end{itemize}
+
+Questa segmentazione consente analisi specifiche per ottimizzazione delle 
+conversioni e identificazione dei punti di drop-off nel customer journey.
+
+\subsection{GDPR compliance}
+Particolare attenzione è stata data alla conformità normativa europea con 
+approccio privacy-by-design: consenso esplicito tramite cookie banner prima 
+di inizializzazione Mixpanel, anonimizzazione automatica degli indirizzi IP 
+e gestione opt-out utente.
 
 \bigskip
 In sintesi, la progettazione ha permesso di definire una base solida dal punto di
-vista tecnico e metodologico, che ha guidato lo sviluppo e il dispiegamento
-presentati nei capitoli successivi.
+vista tecnico e metodologico, con decisioni architetturali motivate e framework 
+scalabile, che ha guidato lo sviluppo e il dispiegamento presentati nei capitoli 
+successivi.

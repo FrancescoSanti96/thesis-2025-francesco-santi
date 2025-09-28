@@ -32,108 +32,78 @@ e social proof aziendali.
 Sono seguite le pagine \textbf{Tech Recruiting} e \textbf{Community}, rispettivamente orientate a lead generation B2B e alla crescita della community.  
 Successivamente sono state realizzate \textbf{AI Adoption} e \textbf{AI Engineering}, focalizzate sui servizi enterprise, e infine la \textbf{Jobs Platform}, progettata mobile–first con ricerca avanzata e trasparenza salariale.  
 
-\section{Implementazione tecnica}
+\section{Implementazione architettura}
+Come progettato nel capitolo precedente, l'implementazione ha seguito le decisioni 
+architetturali chiave: monorepo Next.js con 6 route dedicate, SSG con ISR per 
+performance ottimali, e design system basato su ShadCN UI.
+
 Dal punto di vista tecnico, lo sviluppo ha previsto tre aree principali:
 
-\textbf{Architettura componenti} – è stata realizzata una libreria secondo i
-principi Atomic Design (atoms, molecules, organisms, templates), così da
-garantire consistenza e riuso.  
+\textbf{Architettura componenti} – è stata realizzata una libreria di componenti 
+riutilizzabili con TypeScript per garantire consistenza e riuso tra le 6 landing pages.
 
 \textbf{Routing e rendering} – le landing sono state generate staticamente
 (SSG) con revalidazione oraria (ISR), con gestione automatica di meta tags e
-sitemap per l’ottimizzazione SEO.  
+sitemap per l'ottimizzazione SEO.  
 
-\textbf{Tracking e compliance} – l’SDK di Mixpanel è stato integrato con un
-custom hook che assicura tracking coerente su tutti i componenti. Il sistema è
-GDPR-compliant: inizializzazione solo dopo consenso esplicito, anonimizzazione
-IP e retention limitata a 12 mesi.
+\textbf{Tracking e compliance} – l'SDK di Mixpanel è stato integrato con 
+inizializzazione condizionale dopo consenso esplicito e anonimizzazione IP 
+per conformità GDPR.
 
 \section{Sfide affrontate e soluzioni}
-Durante lo sviluppo sono emerse alcune difficoltà rilevanti:
+Durante lo sviluppo sono emerse diverse difficoltà tecniche risolte con 
+soluzioni specifiche:
 
-\textbf{Compliance GDPR} – inizialmente Mixpanel si avviava prima del consenso
-utente. La soluzione è stata il caricamento lazy dopo accettazione, con hook
-dedicato e anonimizzazione IP. Questo ha garantito il 100\% di conformità e un
-opt-in rate del 65\%.  
+\textbf{Cross-browser compatibility} – Safari mostrava incompatibilità con 
+regex JavaScript per validazione form. La soluzione è stata implementare 
+validazione alternativa con Zod schema per garantire funzionamento uniforme 
+su tutti i browser.
 
 \textbf{Performance con contenuti ricchi} – la landing AI Engineering, con
-gallery e grafici, aveva LCP oltre 4s. Ottimizzazione immagini (WebP), lazy
-loading e dynamic import hanno ridotto il tempo a 1.8s, migliorando il
-Lighthouse Score a 94/100.  
+gallery e componenti interattivi, presentava tempi di caricamento elevati. 
+Ottimizzazione immagini (WebP), lazy loading e dynamic import hanno migliorato 
+significativamente le performance, raggiungendo i target Lighthouse prefissati.  
 
-\textbf{Validazione form cross-browser} – i form mostravano errori incoerenti
-tra Chrome, Safari e Firefox. L’adozione di Zod e React Hook Form ha uniformato
-la gestione, riducendo il tasso di errori dal 15\% al 3\%.
+\textbf{Bundle optimization} – il bundle iniziale risultava eccessivamente 
+pesante. L'implementazione di code splitting automatico per route e dynamic 
+import per componenti pesanti ha ridotto il payload iniziale, migliorando 
+First Contentful Paint.
 
-\section{Esempio di codice significativo}
-Segue un esempio di componente \textit{Hero}, progettato per essere riutilizzato
-su tutte le landing con varianti per target B2B, B2C e Community:
+\textbf{Tracking inconsistente} – eventi Mixpanel non venivano tracciati 
+correttamente su dispositivi iOS in modalità Private Browsing. Implementazione 
+graceful degradation e fallback per tracking senza localStorage ha risolto 
+la problematica.
 
-\begin{lstlisting}[language=JavaScript, caption=Hero Component con varianti]
-// components/organisms/Hero.tsx
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+\section{Esempio implementazione}
+Segue un esempio di implementazione tecnica significativa per il progetto:
 
-type HeroVariant = 'b2b' | 'b2c' | 'community';
-
-interface HeroProps {
-  variant: HeroVariant;
-  title: string;
-  description: string;
-  ctaPrimary: { label: string; href: string };
-  ctaSecondary?: { label: string; href: string };
-  image?: string;
-}
-
-export function Hero({
-  variant, title, description,
-  ctaPrimary, ctaSecondary, image
-}: HeroProps) {
-  const styles = {
-    b2b: 'bg-white text-gray-900',
-    b2c: 'bg-gradient-to-r from-orange-500 to-red-600 text-white',
-    community: 'bg-gray-900 text-white'
-  };
-
-  return (
-    <section className={cn('py-20 px-6', styles[variant])}>
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
-        <div className="flex flex-col justify-center">
-          <h1 className="text-5xl font-bold mb-6">{title}</h1>
-          <p className="text-xl mb-8 opacity-90">{description}</p>
-          <div className="flex gap-4">
-            <Button size="lg" asChild>
-              <a href={ctaPrimary.href}>{ctaPrimary.label}</a>
-            </Button>
-            {ctaSecondary && (
-              <Button size="lg" variant="outline" asChild>
-                <a href={ctaSecondary.href}>{ctaSecondary.label}</a>
-              </Button>
-            )}
-          </div>
-        </div>
-        {image && (
-          <div className="relative h-[400px]">
-            <Image src={image} alt={title} fill
-                   className="object-cover rounded-lg" />
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
+\begin{lstlisting}[language=JavaScript, caption=Custom hook per tracking]
+// hooks/use-mixpanel.ts
+const track = useCallback((event: string, properties?: Record<string, any>) => {
+  // Implementation details
+}, []);
 \end{lstlisting}
 
-Questo esempio mostra l’approccio component-based riutilizzabile, con
-tipizzazione TypeScript, responsive design e accessibilità garantita.
+Questo esempio illustra l'approccio adottato per garantire tracking consistente 
+e GDPR-compliant attraverso hook personalizzati riutilizzabili.
 
 \section{Testing e qualità}
 Il progetto è stato sottoposto a una strategia di quality assurance che ha
 incluso test manuali su staging, validazione cross-browser e responsive,
 verifica accessibilità WCAG 2.1 AA, monitoraggio performance con Lighthouse CI e
 controlli regressivi su ogni landing.  
+
 La qualità del codice è stata mantenuta tramite ESLint, Prettier, typing
-rigoroso con TypeScript e code review obbligatorie.  
+rigoroso con TypeScript e code review obbligatorie su ogni Pull Request.
+
+Testing specifico ha incluso:
+\begin{itemize}
+  \item Validazione funnel di conversione su ambiente staging
+  \item Test cross-browser su Chrome, Safari, Firefox
+  \item Responsive testing su dispositivi mobile e tablet
+  \item Performance audit con Core Web Vitals monitoring
+  \item Accessibilità con screen reader e keyboard navigation
+\end{itemize}
 
 \bigskip
 In sintesi, lo sviluppo ha tradotto la progettazione in un ecosistema di landing
