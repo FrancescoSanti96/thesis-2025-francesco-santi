@@ -1,412 +1,114 @@
 \chapter{Progettazione}
 
-\section{Metodologia e organizzazione del lavoro}
-\subsection{Approccio Agile}
-Il progetto è stato sviluppato seguendo metodologia Agile con:
+La fase di progettazione ha avuto l’obiettivo di tradurre i requisiti individuati
+nei capitoli precedenti in un’architettura scalabile, accessibile e coerente con
+l’identità aziendale. In questa sezione vengono presentate le decisioni
+architetturali chiave, il processo metodologico adottato e l’organizzazione
+dell’ecosistema di landing pages.
+
+\section{Decisioni architetturali}
+Il punto di partenza era una landing page unica, insufficiente per comunicare i
+diversi verticali aziendali e raccogliere dati utili a livello di marketing. La
+progettazione ha quindi introdotto tre scelte fondamentali:
+
 \begin{itemize}
-  \item Sprint bisettimanali con obiettivi definiti e demo finale
-  \item Daily standup (15 min) per allineamento quotidiano
-  \item Sprint planning per prioritizzazione backlog
-  \item Sprint retrospettive per miglioramento continuo
-  \item One-to-one periodici per feedback personalizzato
+  \item \textbf{Architettura multi-landing}: adozione di un monorepo con sei
+  route dedicate, così da garantire posizionamento SEO, riuso di componenti
+  comuni e semplicità di manutenzione.
+  \item \textbf{Strategia di rendering}: adozione di pagine statiche con
+  aggiornamento incrementale (SSG + ISR), che consente di bilanciare performance,
+  costi e necessità di aggiornamento dei contenuti.
+  \item \textbf{Design system condiviso}: definizione di una libreria di
+  componenti accessibili e riutilizzabili, costruita su linee guida visive
+  aziendali.
 \end{itemize}
 
-Strumenti utilizzati:
+\section{Metodologia di progettazione e collaborazione}
+Il progetto di redesign è stato organizzato come una \textbf{macro-release annuale},
+considerata strategica per l’azienda. La fase di progettazione non si è limitata
+alla definizione di scelte tecniche, ma ha previsto un percorso strutturato di
+analisi, collaborazione e validazione:
+
 \begin{itemize}
-  \item \textbf{Jira}: gestione task, sprint planning, burndown charts
-  \item \textbf{Discord/Google Meet}: comunicazione sincrona team
-  \item \textbf{Figma}: design handoff, collaborazione designer-dev
-  \item \textbf{Notion}: documentazione tecnica e knowledge base
+  \item \textbf{Analisi iniziale}: revisione delle soluzioni esistenti e
+  identificazione dei pattern da mantenere o eliminare.
+  \item \textbf{Collaborazione interfunzionale}: raccolta dei requisiti in
+  incontri con i team di prodotto, marketing e design, così da garantire
+  allineamento tra esigenze di business e soluzioni tecniche.
+  \item \textbf{Iterazioni e feedback}: rilascio preliminare delle nuove landing
+  a un gruppo ristretto di stakeholder interni, con raccolta feedback e successive
+  ottimizzazioni.
+  \item \textbf{Approccio Agile}: gestione del lavoro in sprint bisettimanali,
+  con daily standup, retrospettive e momenti di confronto dedicati alla revisione
+  della qualità.
+  \item \textbf{Progettazione responsive}: attenzione fin dall’inizio alle tre
+  principali dimensioni di visualizzazione (desktop, tablet e mobile), per
+  garantire una user experience coerente e ottimizzata.
 \end{itemize}
 
-\subsection{Struttura del team}
-Il team di prodotto era composto da:
+Questa metodologia ha consentito di ridurre i rischi, migliorare la qualità
+finale e assicurare che le landing rispondessero realmente ai bisogni degli utenti
+e dell’azienda.
+
+\section{Processo di design}
+Il design system è stato sviluppato in stretta collaborazione con il team UX/UI,
+a partire da wireframe validati con il product team fino a mockup
+high–fidelity realizzati in Figma. Il processo ha incluso:
+
 \begin{itemize}
-  \item 1 UX/UI Designer - Progettazione esperienza utente e wireframe
-  \item 1 Product Designer - Definizione requisiti e user stories
-  \item 1 Tech Lead (Giuseppe Renna, referente diretto) - Leadership 
-        tecnica, code review, decisioni architetturali
-  \item 1 AI Engineer - Sviluppo soluzioni AI e integrazione modelli
-  \item 4 Software Engineer - Sviluppo frontend e backend
+  \item definizione di design tokens comuni (colori, tipografia, spaziatura),
+  condivisi tra Figma e configurazioni di progetto;
+  \item creazione di componenti modulari con varianti responsive, per garantire
+  consistenza visiva su desktop e mobile;
+  \item handoff strutturato verso lo sviluppo, con esportazione automatica di
+  specifiche e asset ottimizzati.
 \end{itemize}
 
-\textbf{Ruolo personale:} Software Engineer con responsabilità 70\% 
-frontend (React, Next.js, UI) e 30\% backend (Django, API).
+Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza
+tra design e implementazione e abilitare una rapida iterazione.
 
-\textbf{Collaborazione:} Interazione diretta con designer per handoff 
-Figma, code review peer con altri engineer, allineamento quotidiano 
-con Tech Lead.
+\section{Architettura delle landing pages}
+L’ecosistema è stato progettato con una struttura comune di base
+(\textit{header}, \textit{hero}, sezioni contenuto, \textit{footer}) e con
+personalizzazioni per target specifici:
 
-\subsection{Workflow di sviluppo}
 \begin{itemize}
-  \item \textbf{Version control}: Git con GitHub per repository
-  \item \textbf{Branching strategy}: Feature branches con merge su main 
-        tramite Pull Request
-  \item \textbf{Code review}: PR obbligatoria con almeno 1 approvazione 
-        prima di merge
-  \item \textbf{CI/CD}: GitHub Actions per testing automatico e deploy
-  \item \textbf{Ambienti}: Development (locale), Staging, Production
-  \item \textbf{Testing}: Manuale su staging prima di deploy production
+  \item \textbf{B2B enterprise}: tone of voice consulenziale, layout pulito,
+  form di contatto avanzati;
+  \item \textbf{B2C candidati}: stile diretto e colorato, call-to-action
+  immediate, esperienza mobile–first;
+  \item \textbf{Community}: linguaggio informale e tech-savvy, elementi visuali
+  orientati alla cultura developer.
 \end{itemize}
 
-\subsection{Timeline del progetto}
+Tra le landing principali si distinguono la Home Page, come hub di accesso ai
+verticali, la sezione AI Engineering dedicata al framework proprietario, e la
+Jobs Platform con funzionalità di ricerca e matching.
+
+\section{Tracking e misurabilità}
+Il sistema di tracking è stato progettato nativamente nell’architettura per
+supportare funnel di conversione specifici per ogni verticale. L’integrazione con
+Mixpanel consente di tracciare page view, interazioni e conversioni, con
+attributi relativi al tipo di utente e alla sorgente di traffico.
+
+Particolare attenzione è stata data alla conformità normativa:
+consenso esplicito tramite cookie banner, anonimizzazione degli indirizzi IP,
+meccanismi di opt–out e data retention limitata a 12 mesi.
+
+\section{Scalabilità e riuso}
+Per supportare l’aggiunta di nuove landing è stato predisposto un framework
+riutilizzabile che comprende:
+
 \begin{itemize}
-  \item \textbf{Gennaio 2025}: Onboarding, analisi codebase esistente, 
-        technical debt reduction iniziale
-  \item \textbf{Febbraio 2025}: Progettazione architettura landing pages, 
-        setup Next.js, design system base
-  \item \textbf{Marzo 2025}: Sviluppo Home Page e prime landing 
-        specializzate (Recruiting, Community)
-  \item \textbf{Aprile 2025}: Sviluppo landing AI (Engineering, Adoption), 
-        Jobs platform, integrazione Mixpanel
-  \item \textbf{Maggio 2025}: Testing, ottimizzazione performance, 
-        SEO optimization, fix bug
-  \item \textbf{Giugno 2025}: Deploy production graduale, monitoring, 
-        iterazioni post-launch
+  \item template base già dotato di layout, componenti e tracking integrato;
+  \item checklist di verifica su SEO, performance, accessibilità e funnel;
+  \item documentazione del design system a supporto dello sviluppo.
 \end{itemize}
 
-\section{Analisi dei requisiti}
-\subsection{Requisiti funzionali}
-\begin{itemize}
-  \item Sistema di routing per 6 landing pages specializzate 
-        (/it/ e /en/)
-  \item Tracking eventi utente con Mixpanel GDPR-compliant
-  \item Form di lead generation differenziati per verticale
-  \item Integrazione newsletter "Commit" con sistema iscrizione
-  \item Supporto multilingua italiano/inglese
-  \item Responsive design mobile-first
-\end{itemize}
+Grazie a questo approccio, la creazione di una nuova landing può essere stimata
+in 1–2 sprint, mantenendo consistenza con l’ecosistema esistente.
 
-\subsection{Requisiti non funzionali}
-\begin{itemize}
-  \item \textbf{Performance}: Core Web Vitals ottimizzati 
-        (FCP < 2s, LCP < 2.5s, CLS < 0.1)
-  \item \textbf{SEO}: Struttura semantica, sitemap XML, meta tags 
-        dinamici, structured data JSON-LD
-  \item \textbf{Accessibilità}: Conformità WCAG 2.1 livello AA, 
-        navigazione keyboard, screen reader support
-  \item \textbf{Scalabilità}: Architettura modulare per futuri 
-        verticali, componenti riutilizzabili
-  \item \textbf{Sicurezza}: HTTPS enforcement, security headers 
-        (CSP, HSTS), protezione XSS
-  \item \textbf{Manutenibilità}: Design system documentato, 
-        convenzioni codifica chiare, testing coverage
-\end{itemize}
-
-\section{Architettura frontend}
-\subsection{Stack tecnologico}
-\begin{itemize}
-  \item \textbf{Framework}: Next.js 14 con App Router
-  \item \textbf{Rendering}: Static Site Generation (SSG) per landing 
-        pages, Incremental Static Regeneration (ISR) per aggiornamenti
-  \item \textbf{Styling}: Tailwind CSS per utility-first styling
-  \item \textbf{Componenti}: ShadCN UI customizzato su Radix UI
-  \item \textbf{State}: React Query per server state, React hooks per 
-        UI state
-  \item \textbf{Type safety}: TypeScript strict mode
-\end{itemize}
-
-\subsection{Architettura applicativa}
-L'architettura si articola su layer separati:
-
-\textbf{Presentation Layer}
-\begin{itemize}
-  \item Pages Next.js per routing (/it/, /en/)
-  \item Layout condivisi (Header, Footer)
-  \item Componenti UI atomici e composti
-\end{itemize}
-
-\textbf{Business Logic Layer}
-\begin{itemize}
-  \item Custom hooks per logica riutilizzabile
-  \item Utilities e helper functions
-  \item Form validation con Zod
-\end{itemize}
-
-\textbf{Data Layer}
-\begin{itemize}
-  \item API integration con React Query
-  \item Mixpanel events tracking
-  \item Form submission handlers
-\end{itemize}
-
-\textbf{Infrastructure Layer}
-\begin{itemize}
-  \item Next.js routing con App Router
-  \item Build e deploy su Vercel
-  \item CDN e asset optimization
-\end{itemize}
-
-\subsection{Pattern architetturali}
-\begin{itemize}
-  \item \textbf{Component composition}: Riutilizzo tramite composizione 
-        invece di ereditarietà
-  \item \textbf{Atomic Design}: Organizzazione componenti in 
-        atoms → molecules → organisms → templates
-  \item \textbf{Container/Presentational}: Separazione logica (hooks) 
-        da presentazione (JSX)
-  \item \textbf{Custom hooks}: Astrazione business logic condivisa
-  \item \textbf{Server/Client Components}: Next.js 14 App Router per 
-        ottimizzazione rendering
-\end{itemize}
-
-\section{Design system e collaborazione}
-\subsection{Processo di design e handoff}
-Collaborazione strutturata tra sviluppo e design:
-
-\textbf{Fase 1: Design in Figma}
-\begin{itemize}
-  \item Wireframe low-fidelity per validazione struttura
-  \item Mockup high-fidelity con brand identity
-  \item Prototipi interattivi per testing UX
-  \item Varianti responsive (mobile, tablet, desktop)
-\end{itemize}
-
-\textbf{Fase 2: Design Review}
-\begin{itemize}
-  \item Sessioni di validazione con stakeholder
-  \item Feedback iterativo su usabilità
-  \item Approvazione finale design
-\end{itemize}
-
-\textbf{Fase 3: Handoff Sviluppo}
-\begin{itemize}
-  \item Figma Dev Mode per export specifiche
-  \item Specs precise: spacing, colors, typography, assets
-  \item Annotazioni per stati interattivi (hover, focus, active)
-  \item Export asset ottimizzati (SVG, WebP)
-\end{itemize}
-
-\textbf{Fase 4: Implementazione e Feedback}
-\begin{itemize}
-  \item Sviluppo componenti fedeli al design
-  \item Review visivo su staging
-  \item Iterazioni per pixel-perfect alignment
-\end{itemize}
-
-\subsection{Fondamenta visive}
-\textbf{Palette colori}
-\begin{itemize}
-  \item Primary: \#FF6B35 (arancione Datapizza)
-  \item Secondary: \#1A1A1A (nero)
-  \item Neutral scale: \#FFFFFF, \#F5F5F5, \#E0E0E0, \#9E9E9E, \#424242
-  \item Semantic colors: Success \#10B981, Warning \#F59E0B, 
-        Error \#EF4444
-  \item Background: \#FAFAFA (light), \#0F0F0F (dark - se implementato)
-\end{itemize}
-
-\textbf{Typography}
-\begin{itemize}
-  \item Font principale: Inter (sans-serif moderno)
-  \item Fallback: -apple-system, BlinkMacSystemFont, Segoe UI, system-ui
-  \item Type scale: H1 48px, H2 36px, H3 28px, H4 24px, H5 20px, 
-        H6 18px, Body 16px
-  \item Line height: 1.5 per body text, 1.2 per headings
-  \item Font weights: Regular (400), Medium (500), Semibold (600), 
-        Bold (700)
-\end{itemize}
-
-\textbf{Spacing e layout}
-\begin{itemize}
-  \item Grid system: 8pt base unit per spacing consistente
-  \item Spacing scale Tailwind: 4px, 8px, 16px, 24px, 32px, 48px, 
-        64px, 96px
-  \item Breakpoints responsive:
-    \begin{itemize}
-      \item Mobile: < 768px
-      \item Tablet: 768px - 1024px
-      \item Desktop: > 1024px
-    \end{itemize}
-  \item Container max-width: 1280px con padding laterale 24px
-  \item Border radius: 4px (small), 8px (medium), 16px (large)
-\end{itemize}
-
-\subsection{Libreria componenti}
-\textbf{Base: ShadCN UI}
-\begin{itemize}
-  \item Component library headless basata su Radix UI
-  \item Customizzazione completa tramite Tailwind CSS
-  \item Accessibilità ARIA integrata nativamente
-  \item Componenti unstyled adattabili al brand
-\end{itemize}
-
-\textbf{Componenti implementati}
-\begin{itemize}
-  \item \textbf{Atoms}: Button (varianti primary/secondary/ghost), 
-        Input (text/email/tel), Badge, Icon (Lucide React), Link
-  \item \textbf{Molecules}: Card, FormField (label + input + error), 
-        NavItem, Dropdown, Modal, Accordion
-  \item \textbf{Organisms}: Header (navigation), Footer (links + social), 
-        Hero (varianti per landing), Feature Grid, Testimonials, 
-        Form Lead Generation
-  \item \textbf{Templates}: Landing Layout (header + content + footer), 
-        Section Wrapper (spacing consistente)
-\end{itemize}
-
-\textbf{Variazioni per target}
-\begin{itemize}
-  \item \textbf{B2B}: Tone professionale, whitespace generoso, imagery 
-        corporate, CTA "Richiedi demo"/"Contattaci"
-  \item \textbf{B2C}: Tone friendly, colori più vivaci, illustrazioni, 
-        CTA "Iscriviti"/"Inizia ora"
-  \item \textbf{Community}: Elementi tech (code snippets), 
-        badge/tags tecnologie, CTA "Unisciti"
-\end{itemize}
-
-\section{Architettura delle 6 landing pages}
-\subsection{Struttura comune}
-Ogni landing condivide elementi base:
-\begin{itemize}
-  \item Layout: Header navigation + Content sections + Footer
-  \item Pattern CTA consistente (above fold + in-page + footer)
-  \item Social proof (500k+ community) come trust signal
-  \item Form contatto/iscrizione con validazione
-  \item SEO: meta tags dinamici, structured data JSON-LD, 
-        Open Graph per social
-\end{itemize}
-
-\subsection{Specifiche per landing}
-\textbf{1. Home Page (/it/)}
-\begin{itemize}
-  \item Obiettivo: Hub centrale con overview 4 verticali, 
-        router verso servizi
-  \item Target: Tutti (visitatori generici)
-  \item Sezioni: Hero + 4 verticali cards + Community stats + 
-        Newsletter CTA
-  \item CTA principali: "Scopri [servizio]", "Iscriviti newsletter"
-\end{itemize}
-
-\textbf{2. Tech Recruiting (/it/tech-recruiting/)}
-\begin{itemize}
-  \item Obiettivo: Lead generation aziende B2B
-  \item Target: HR Manager, Hiring Manager, CEO
-  \item Sezioni: Hero B2B + Processo 6 step + Talent pool showcase + 
-        Case studies + Form contatto
-  \item CTA: "Trova talenti", "Richiedi consulenza"
-\end{itemize}
-
-\textbf{3. Tech Community (/it/tech-media-agency/)}
-\begin{itemize}
-  \item Obiettivo: Acquisizione membri, iscrizione newsletter
-  \item Target: Developer, tech enthusiast, studenti
-  \item Sezioni: Hero community + Newsletter "Commit" + Eventi showcase + 
-        Discord CTA + Contenuti recenti
-  \item CTA: "Iscriviti newsletter", "Unisciti Discord"
-\end{itemize}
-
-\textbf{4. AI Adoption (/it/ai-adoption/)}
-\begin{itemize}
-  \item Obiettivo: Lead generation servizi upskilling B2B
-  \item Target: C-level, HR Director, Management
-  \item Sezioni: Hero enterprise + Evidenze scientifiche (grafici BCG) + 
-        Percorsi formativi + Clienti + Form demo
-  \item CTA: "Richiedi demo", "Contatta team"
-\end{itemize}
-
-\textbf{5. AI Engineering (/it/ai-engineering/)}
-\begin{itemize}
-  \item Obiettivo: Lead generation progetti custom AI
-  \item Target: CTO, IT Decision Maker, Tech Lead
-  \item Sezioni: Hero tech + Framework proprietario "Datapizza AI" + 
-        Showcase progetti (Copiloti Sales/HR/Legal/Customer) + 
-        Tech stack + Form contatto
-  \item CTA: "Scopri framework", "Avvia progetto"
-\end{itemize}
-
-\textbf{6. Jobs Platform (/jobs/)}
-\begin{itemize}
-  \item Obiettivo: Applicazioni candidati
-  \item Target: Developer, Data Scientist in cerca lavoro
-  \item Sezioni: Hero candidati + Ricerca posizioni + Trasparenza 
-        salary (RAL sempre visibile) + Tech Buddy + Process 
-        "Zero ghosting"
-  \item CTA: "Cerca lavoro", "Carica CV"
-\end{itemize}
-
-\section{Sistema di tracking e analytics}
-\subsection{Architettura Mixpanel}
-\textbf{Event Taxonomy}
-\begin{itemize}
-  \item \textbf{Page events}: page\_view, landing\_loaded
-  \item \textbf{Interaction events}: cta\_clicked, scroll\_depth, 
-        section\_viewed
-  \item \textbf{Conversion events}: form\_submitted, newsletter\_signup, 
-        download\_cv
-  \item \textbf{Navigation events}: link\_clicked, menu\_opened
-\end{itemize}
-
-\textbf{User Properties}
-\begin{itemize}
-  \item Source: UTM parameters (utm\_source, utm\_medium, utm\_campaign)
-  \item Device: mobile/tablet/desktop
-  \item Location: country, city (IP-based)
-  \item Landing page: prima pagina visitata
-  \item User type: new/returning
-\end{itemize}
-
-\textbf{Funnel Tracking}
-\begin{itemize}
-  \item B2B: landing\_view → cta\_click → form\_view → form\_submit
-  \item B2C Jobs: landing\_view → search\_used → position\_click → application\_start
-  \item Community: landing\_view → scroll\_50\% → newsletter\_click → 
-        newsletter\_submit
-\end{itemize}
-
-\textbf{GDPR Compliance}
-\begin{itemize}
-  \item Cookie consent banner obbligatorio prima di tracking
-  \item Opt-out automatico se consent negato
-  \item Data retention: 12 mesi, poi cancellazione automatica
-  \item IP anonymization attiva
-\end{itemize}
-
-\subsection{Metriche chiave monitorate}
-\begin{itemize}
-  \item Page views e unique visitors per landing
-  \item Bounce rate e average session duration
-  \item Conversion rate per funnel (form submit, newsletter signup)
-  \item Scroll depth medio e engagement rate
-  \item Source/medium distribution (organic/paid/direct/referral)
-\end{itemize}
-
-\subsection{Dashboard e analisi}
-\begin{itemize}
-  \item Redash per query SQL custom su database analytics
-  \item Dashboard real-time per monitoring eventi Mixpanel
-  \item Report settimanali automatici via email
-  \item Alert su anomalie (spike/drop conversion > 30\%)
-\end{itemize}
-
-\section{Scalabilità e performance}
-\subsection{Gestione versioni}
-\begin{itemize}
-  \item Semantic versioning del codebase (v1.0.0, v1.1.0, v2.0.0)
-  \item Feature flags per rollout graduale nuove funzionalità
-  \item Git tags per versioni stabili in produzione
-  \item Rollback strategy: git revert + redeploy < 5 minuti
-\end{itemize}
-
-\subsection{Performance optimization}
-\begin{itemize}
-  \item \textbf{Image optimization}: next/image con WebP, lazy loading, 
-        responsive images
-  \item \textbf{Code splitting}: Automatico Next.js per route, 
-        dynamic import per componenti pesanti
-  \item \textbf{Asset optimization}: Minification JS/CSS, Gzip 
-        compression, font subsetting
-  \item \textbf{CDN}: CloudFront per static assets, edge caching
-  \item \textbf{Caching strategy}: ISR con revalidation 3600s per 
-        landing pages
-\end{itemize}
-
-\subsection{Processo per nuove landing}
-Framework riutilizzabile per velocizzare sviluppo:
-\begin{itemize}
-  \item Template base con layout comune (Header/Footer)
-  \item Component library già pronta (Hero, Feature Grid, Form, etc.)
-  \item Design system documentato con varianti
-  \item Mixpanel tracking pre-configurato
-  \item Checklist SEO/Performance/Accessibility standardizzata
-\end{itemize}
-
-Tempo stimato per nuova landing: 1-2 sprint (2-4 settimane).
+\bigskip
+In sintesi, la progettazione ha permesso di definire una base solida dal punto di
+vista tecnico e metodologico, che ha guidato lo sviluppo e il dispiegamento
+presentati nei capitoli successivi.
