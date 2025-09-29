@@ -29,7 +29,7 @@ progettazione ha quindi introdotto tre scelte fondamentali:
   customizzazione completa e riutilizzo del codice UI tra le landing.
 \end{itemize}
 
-\section{Metodologia di progettazione e collaborazione} Il progetto di redesign è stato organizzato come una \textbf{macro-release annuale},
+\section{Metodologia di progettazione e collaborazione} Il progetto di redesign è stato organizzato come una \textbf{macro-release trimestrale},
 considerata strategica per l'azienda. La fase di progettazione non si è limitata
 alla definizione di scelte tecniche, ma ha previsto un percorso strutturato di
 analisi, collaborazione e validazione:
@@ -72,54 +72,42 @@ L'architettura componenti ha permesso di standardizzare elementi ricorrenti gara
 Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza tra design e implementazione e abilitare una rapida iterazione.
 
 \section{Architettura delle landing pages}
-L'ecosistema è stato progettato con una struttura comune di base
-(\textit{navbar}, \textit{footer}) e con
-personalizzazioni specifiche per target:
-
-\subsection{Strategia di differenziazione}
+L'ecosistema è stato progettato con una struttura comune di base (\textit{navbar}, 
+\textit{footer}) e con personalizzazioni specifiche per ciascun verticale. 
 Ogni landing è stata progettata con tone of voice e UX mirati:
 
 \begin{itemize}
-  \item \textbf{B2B enterprise} (Recruiting, AI Adoption, AI Engineering): tone of voice 
-  consulenziale, layout pulito con whitespace generoso, form di contatto avanzati con 
-  campi aziendali, CTA orientate a demo/consulenza ("Richiedi demo", "Contatta team");
+  \item \textbf{Home Page} (/it/): hub centrale con overview dei 4 verticali e 
+  routing intelligente verso servizi specifici. Target: visitatori generici.
   
-  \item \textbf{B2C candidati} (Jobs): stile diretto e colorato, call-to-action
-  immediate ("Cerca lavoro", "Candidati ora"), esperienza mobile-first (58\% utenti 
-  da mobile), trasparenza salary con RAL sempre visibile;
+  \item \textbf{Tech Recruiting} (/it/tech-recruiting/): tone of voice 
+  consulenziale B2B, layout pulito, form di contatto avanzati con campi aziendali, 
+  CTA orientate a demo ("Richiedi demo", "Contatta team"). Target: aziende in 
+  cerca di talenti tech.
   
-  \item \textbf{Community} (Tech Community): linguaggio informale e tech-savvy, elementi 
-  visuali orientati alla cultura developer, CTA engagement per Discord e newsletter 
-  "Commit", social proof con 500k+ iscritti.
+  \item \textbf{Tech Community} (/it/tech-community/): linguaggio informale, 
+  elementi visuali orientati alla cultura developer, CTA engagement per newsletter 
+  "Commit", social proof con 500k+ iscritti. Target: developer e tech enthusiast.
+  
+  \item \textbf{AI Adoption} (/it/ai-adoption/): tone professionale B2B enterprise, 
+  focus upskilling organizzativo e trasformazione interna, case studies aziendali, 
+  CTA consulenza personalizzata. Target: HR e management.
+  
+  \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework 
+  proprietario "Datapizza AI" con gallery progetti (Copiloti Sales/HR/Legal/Customer), 
+  CTA demo tecnica. Target: CTO e IT Decision Makers.
+  
+  \item \textbf{Jobs Platform} (/jobs/): stile diretto e colorato B2C, 
+  call-to-action immediate ("Cerca lavoro", "Candidati ora"), esperienza 
+  mobile-first, trasparenza salary con RAL sempre visibile, Tech Buddy matching 
+  e zero ghosting policy. Target: candidati in cerca di opportunità tech.
 \end{itemize}
 
-% [INSERIRE IMMAGINE 1: Hero Variants]
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.9\textwidth]{images/hero-comparison.png}
-  \caption{Hero component - Varianti per target: B2B (Recruiting), B2C (Jobs), Community}
-  \label{fig:hero-variants}
-\end{figure}
-
-\subsection{Landing principali}
-Tra le landing principali si distinguono:
-
-\begin{itemize}
-  \item \textbf{Home Page} (/it/): hub centrale con overview dei 4 verticali e routing 
-  intelligente verso servizi specifici;
-  \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework proprietario 
-  "Datapizza AI" con gallery progetti (Copiloti Sales/HR/Legal/Customer), target CTO 
-  e IT Decision Makers;
-  \item \textbf{Jobs Platform} (/jobs/): ricerca posizioni con filtri avanzati 
-  (tech stack, location, RAL), Tech Buddy matching e zero ghosting policy.
-\end{itemize}
-
-% [INSERIRE IMMAGINE 2: AI Engineering Mockup]
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{images/aiengineering-desktop.png}
-  \caption{Landing AI Engineering - Mockup finale desktop con framework showcase}
-  \label{fig:ai-engineering}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{chapters/figures/screenMockup.png}
+    \caption{Schermata del sistema dopo il refactoring.}
+    \label{fig:refactoring}
 \end{figure}
 
 \section{Tracking e misurabilità}
