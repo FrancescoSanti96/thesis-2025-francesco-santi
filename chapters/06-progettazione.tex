@@ -16,12 +16,17 @@ progettazione ha quindi introdotto tre scelte fondamentali:
   route dedicate (/it/, /it/tech-recruiting/, /it/ai-adoption/, etc.), così da garantire 
   posizionamento SEO ottimale, riuso di componenti comuni e semplicità di manutenzione. 
   
-  \item \textbf{Strategia di rendering}: adozione di Static Site Generation (SSG) 
-  con Incremental Static Regeneration (ISR, revalidation 1 ora), che consente di 
-  bilanciare performance, costi infrastruttura e 
-  necessità di aggiornamento contenuti. Scelta motivata da requisiti performance 
-  critici per conversioni e traffico organico, con HTML statico servito da CDN 
-  per crawler Google.
+  \item \textbf{Strategia di rendering ibrida}: il sistema combina tre approcci 
+  differenziati per tipo di contenuto. Le 8 landing pages principali utilizzano 
+  Server-Side Rendering (SSR) on-demand per garantire contenuti i18n dinamici e 
+  HTML completo per crawler. I blog post implementano Static Site Generation (SSG) 
+  con pre-generazione degli slug in fase di build. Le chiamate API al backend Django 
+  adottano Incremental Static Regeneration (ISR) con revalidation a 1 ora, 
+  implementando pattern Stale-While-Revalidate per ridurre dipendenze da uptime 
+  backend. CloudFront CDN distribuisce asset statici globalmente, mentre next/image 
+  ottimizza automaticamente immagini con lazy loading e conversione WebP. Questa 
+  architettura bilancia SEO (HTML completo server-side), performance (cache CDN), 
+  e flessibilità contenuti multilingua.
   
   \item \textbf{Design system condiviso}: definizione di una libreria di componenti 
   accessibili basata su ShadCN UI (Radix UI primitives) e Tailwind CSS, costruita 
@@ -29,7 +34,8 @@ progettazione ha quindi introdotto tre scelte fondamentali:
   customizzazione completa e riutilizzo del codice UI tra le landing.
 \end{itemize}
 
-\section{Metodologia di progettazione e collaborazione} Il progetto di redesign è stato organizzato come una \textbf{macro-release trimestrale},
+\section{Metodologia di progettazione e collaborazione} 
+Il progetto di redesign è stato organizzato come una \textbf{macro-release trimestrale},
 considerata strategica per l'azienda. La fase di progettazione non si è limitata
 alla definizione di scelte tecniche, ma ha previsto un percorso strutturato di
 analisi, collaborazione e validazione:
@@ -71,6 +77,13 @@ L'architettura componenti ha permesso di standardizzare elementi ricorrenti gara
 
 Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza tra design e implementazione e abilitare una rapida iterazione.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/figures/design-system.pdf}
+    \caption{Esempi di componenti principali del design system.}
+    \label{fig:design-system}
+\end{figure}
+
 \section{Architettura delle landing pages}
 L'ecosistema è stato progettato con una struttura comune di base (\textit{navbar}, 
 \textit{footer}) e con personalizzazioni specifiche per ciascun verticale. 
@@ -82,23 +95,23 @@ Ogni landing è stata progettata con tone of voice e UX mirati:
   
   \item \textbf{Tech Recruiting} (/it/tech-recruiting/): tone of voice 
   consulenziale B2B, layout pulito, form di contatto avanzati con campi aziendali, 
-  CTA orientate a demo ("Richiedi demo", "Contatta team"). Target: aziende in 
+  CTA orientate a demo (``Richiedi demo'', ``Contatta team''). Target: aziende in 
   cerca di talenti tech.
   
   \item \textbf{Tech Community} (/it/tech-community/): linguaggio informale, 
   elementi visuali orientati alla cultura developer, CTA engagement per newsletter 
-  "Commit", social proof con 500k+ iscritti. Target: developer e tech enthusiast.
+  ``Commit'', social proof con 500k+ iscritti. Target: developer e tech enthusiast.
   
   \item \textbf{AI Adoption} (/it/ai-adoption/): tone professionale B2B enterprise, 
   focus upskilling organizzativo e trasformazione interna, case studies aziendali, 
   CTA consulenza personalizzata. Target: HR e management.
   
   \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework 
-  proprietario "Datapizza AI" con gallery progetti (Copiloti Sales/HR/Legal/Customer), 
+  proprietario ``Datapizza AI'' con gallery progetti (Copiloti Sales/HR/Legal/Customer), 
   CTA demo tecnica. Target: CTO e IT Decision Makers.
   
   \item \textbf{Jobs Platform} (/jobs/): stile diretto e colorato B2C, 
-  call-to-action immediate ("Cerca lavoro", "Candidati ora"), esperienza 
+  call-to-action immediate (``Cerca lavoro'', ``Candidati ora''), esperienza 
   mobile-first, trasparenza salary con RAL sempre visibile, Tech Buddy matching 
   e zero ghosting policy. Target: candidati in cerca di opportunità tech.
 \end{itemize}
@@ -106,15 +119,15 @@ Ogni landing è stata progettata con tone of voice e UX mirati:
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1.1\textwidth]{chapters/figures/mockup.pdf}
-    \caption{Schermata mockup desktop jobs.}
-    \label{fig:refactoring}
+    \caption{Mockup desktop della Jobs Platform.}
+    \label{fig:jobs-desktop}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1.1\textwidth]{chapters/figures/mockup2.pdf}
-    \caption{Schermata mockup mobile AI eng.}
-    \label{fig:refactoring}
+    \caption{Mockup mobile della landing AI Engineering.}
+    \label{fig:ai-eng-mobile}
 \end{figure}
 
 \section{Tracking e misurabilità}
@@ -134,9 +147,9 @@ L'architettura tracking implementa una tassonomia strutturata di eventi:
 
 Il tracking permette di analizzare funnel di conversione differenziati per verticale:
 \begin{itemize}
-  \item \textbf{B2B}: landing\_view → cta\_click → form\_view → form\_submit
-  \item \textbf{B2C Jobs}: landing\_view → search\_used → position\_click → application\_start
-  \item \textbf{Community}: landing\_view → scroll\_50\% → newsletter\_click → newsletter\_submit
+  \item \textbf{B2B}: landing\_view $\rightarrow$ cta\_click $\rightarrow$ form\_view $\rightarrow$ form\_submit
+  \item \textbf{B2C Jobs}: landing\_view $\rightarrow$ search\_used $\rightarrow$ position\_click $\rightarrow$ application\_start
+  \item \textbf{Community}: landing\_view $\rightarrow$ scroll\_50\% $\rightarrow$ newsletter\_click $\rightarrow$ newsletter\_submit
 \end{itemize}
 
 Questa segmentazione consente analisi specifiche per ottimizzazione delle 
