@@ -12,21 +12,24 @@ diversi verticali aziendali e raccogliere dati utili a livello di marketing. La
 progettazione ha quindi introdotto tre scelte fondamentali:
 
 \begin{itemize}
-  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js con sei
-  route dedicate (/it/, /it/tech-recruiting/, /it/ai-adoption/, etc.), così da garantire 
-  posizionamento SEO ottimale, riuso di componenti comuni e semplicità di manutenzione. 
+  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js con sei landing pages dedicate per i verticali aziendali (/it/home, /it/tech-recruiting/, 
+/it/ai-adoption/, /it/ai-engineering/, /it/tech-media-agency/, /it/jobs/). Il sistema 
+include inoltre pagine preesistenti come blog tecnico e pagina contatti, 
+re-integrate nell'architettura unificata. Questa struttura garantisce posizionamento 
+SEO ottimale, riuso di componenti comuni e semplicità di manutenzione.
   
   \item \textbf{Strategia di rendering ibrida}: il sistema combina tre approcci 
-  differenziati per tipo di contenuto. Le 8 landing pages principali utilizzano 
-  Server-Side Rendering (SSR) on-demand per garantire contenuti i18n dinamici e 
-  HTML completo per crawler. I blog post implementano Static Site Generation (SSG) 
-  con pre-generazione degli slug in fase di build. Le chiamate API al backend Django 
-  adottano Incremental Static Regeneration (ISR) con revalidation a 1 ora, 
-  implementando pattern Stale-While-Revalidate per ridurre dipendenze da uptime 
-  backend. CloudFront CDN distribuisce asset statici globalmente, mentre next/image 
-  ottimizza automaticamente immagini con lazy loading e conversione WebP. Questa 
-  architettura bilancia SEO (HTML completo server-side), performance (cache CDN), 
-  e flessibilità contenuti multilingua.
+differenziati per tipo di contenuto. Le 6 landing pages principali dei verticali 
+aziendali utilizzano Server-Side Rendering (SSR) on-demand per garantire contenuti 
+i18n dinamici e HTML completo per crawler. Il blog preesistente, re-integrato nel 
+monorepo, implementa Static Site Generation (SSG) con pre-generazione degli slug 
+degli articoli in fase di build. Le chiamate API al backend Django adottano 
+Incremental Static Regeneration (ISR) con revalidation a 1 ora, implementando 
+pattern Stale-While-Revalidate per ridurre dipendenze da uptime backend. CloudFront 
+CDN distribuisce asset statici globalmente, mentre next/image ottimizza 
+automaticamente immagini con lazy loading e conversione WebP. Questa architettura 
+bilancia SEO (HTML completo server-side), performance (cache CDN), e flessibilità 
+contenuti multilingua.
   
   \item \textbf{Design system condiviso}: definizione di una libreria di componenti 
   accessibili basata su ShadCN UI (Radix UI primitives) e Tailwind CSS, costruita 
@@ -70,7 +73,7 @@ high-fidelity realizzati in Figma. Il processo ha incluso:
   \item definizione di design tokens comuni (colori, tipografia, spaziatura),
   condivisi tra Figma e configurazioni Tailwind CSS di progetto;
   \item creazione di componenti modulari con varianti responsive, per garantire 
-  consistenza visiva e riutilizzo tra le 6 landing pages;
+consistenza visiva e riutilizzo tra le 6 landing pages principali;
 \end{itemize}
 
 L'architettura componenti ha permesso di standardizzare elementi ricorrenti garantendo il riutilizzo di molto del codice UI tra le diverse landing.
@@ -87,48 +90,37 @@ Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza 
 \section{Architettura delle landing pages}
 L'ecosistema è stato progettato con una struttura comune di base (\textit{navbar}, 
 \textit{footer}) e con personalizzazioni specifiche per ciascun verticale. 
-Ogni landing è stata progettata con tone of voice e UX mirati:
+Ogni landing è stata progettata con registro linguistico e UX mirati per target 
+specifici:
 
 \begin{itemize}
-  \item \textbf{Home Page} (/it/): hub centrale con overview dei 4 verticali e 
-  routing intelligente verso servizi specifici. Target: visitatori generici.
+  \item \textbf{Home Page} (/it/): pagina principale con panoramica generale 
+  dei 4 verticali e routing intelligente verso servizi specifici. Target: 
+  visitatori generici.
   
-  \item \textbf{Tech Recruiting} (/it/tech-recruiting/): tone of voice 
-  consulenziale B2B, layout pulito, form di contatto avanzati con campi aziendali, 
-  CTA orientate a demo (``Richiedi demo'', ``Contatta team''). Target: aziende in 
-  cerca di talenti tech.
+  \item \textbf{Tech Recruiting} (/it/tech-recruiting/): registro linguistico 
+  consulenziale business-to-business (B2B), layout pulito, form di contatto 
+  avanzati con campi aziendali, CTA orientate a demo (``Richiedi demo'', 
+  ``Contatta team''). Target: aziende in cerca di talenti tech.
   
-  \item \textbf{Tech Community} (/it/tech-community/): linguaggio informale, 
+  \item \textbf{Tech Community} (/it/tech-media-agency/): linguaggio informale, 
   elementi visuali orientati alla cultura developer, CTA engagement per newsletter 
   ``Commit'', social proof con 500k+ iscritti. Target: developer e tech enthusiast.
   
-  \item \textbf{AI Adoption} (/it/ai-adoption/): tone professionale B2B enterprise, 
-  focus upskilling organizzativo e trasformazione interna, case studies aziendali, 
-  CTA consulenza personalizzata. Target: HR e management.
+  \item \textbf{AI Adoption} (/it/ai-adoption/): registro linguistico professionale 
+  B2B enterprise, focus upskilling organizzativo e trasformazione interna, case 
+  studies aziendali, CTA consulenza personalizzata. Target: HR e management.
   
   \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework 
   proprietario ``Datapizza AI'' con gallery progetti (Copiloti Sales/HR/Legal/Customer), 
   CTA demo tecnica. Target: CTO e IT Decision Makers.
   
-  \item \textbf{Jobs Platform} (/jobs/): stile diretto e colorato B2C, 
-  call-to-action immediate (``Cerca lavoro'', ``Candidati ora''), esperienza 
-  mobile-first, trasparenza salary con RAL sempre visibile, Tech Buddy matching 
-  e zero ghosting policy. Target: candidati in cerca di opportunità tech.
+  \item \textbf{Jobs Platform} (/jobs/): stile diretto e colorato 
+  business-to-consumer (B2C), call-to-action immediate (``Cerca lavoro'', 
+  ``Candidati ora''), esperienza mobile-first, trasparenza salary con RAL sempre 
+  visibile, Tech Buddy matching e zero ghosting policy. Target: candidati in cerca 
+  di opportunità tech.
 \end{itemize}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.1\textwidth]{chapters/figures/mockup.pdf}
-    \caption{Mockup desktop della Jobs Platform.}
-    \label{fig:jobs-desktop}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.1\textwidth]{chapters/figures/mockup2.pdf}
-    \caption{Mockup mobile della landing AI Engineering.}
-    \label{fig:ai-eng-mobile}
-\end{figure}
 
 \section{Tracking e misurabilità}
 Il sistema di tracking è stato progettato per migliorare l'implementazione 
