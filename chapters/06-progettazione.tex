@@ -19,9 +19,15 @@ re-integrate nell'architettura unificata. Questa struttura garantisce posizionam
 SEO ottimale, riuso di componenti comuni e semplicità di manutenzione.
   
   \item \textbf{Strategia di rendering ibrida}: il sistema combina tre approcci 
-differenziati per tipo di contenuto. Le 6 landing pages principali dei verticali 
-aziendali utilizzano Server-Side Rendering (SSR) on-demand per garantire contenuti 
-i18n dinamici e HTML completo per crawler. Il blog preesistente, re-integrato nel 
+differenziati per tipo di contenuto. Per le 6 landing pages principali dei 
+verticali aziendali è implementata un'architettura basata su React Server 
+Components (RSC) con pattern "Server-First with Selective Hydration": i contenuti 
+statici (hero sections, testi, layout) sono Server Components senza overhead 
+JavaScript client-side, mentre componenti interattivi specifici (form di contatto, 
+animazioni scroll, tracking analytics) sono marcati come Client Components e 
+subiscono hydration solo dove necessario. Questo approccio garantisce HTML 
+completo per crawler, metriche Core Web Vitals ottimizzate, bundle JavaScript 
+ridotto e Time-to-Interactive migliorato rispetto a SPA tradizionale.  Il blog preesistente, re-integrato nel 
 monorepo, implementa Static Site Generation (SSG) con pre-generazione degli slug 
 degli articoli in fase di build. Le chiamate API al backend Django adottano 
 Incremental Static Regeneration (ISR) con revalidation a 1 ora, implementando 
@@ -122,14 +128,14 @@ specifici:
   di opportunità tech.
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.1\textwidth]{chapters/figures/mockup.pdf}
     \caption{Mockup desktop della Jobs Platform.}
     \label{fig:jobs-desktop}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.1\textwidth]{chapters/figures/mockup2.pdf}
     \caption{Mockup mobile della landing AI Engineering.}
