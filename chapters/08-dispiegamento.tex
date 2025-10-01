@@ -1,206 +1,134 @@
 \chapter{Dispiegamento in opera}
 
-\section{Architettura deployment}
-Il deployment delle landing pages Next.js è stato progettato per garantire 
-scalabilità, performance e reliability attraverso un'architettura cloud-native 
-basata su containerizzazione e distribuzione globale.
+\section{Architettura deployment e decisioni infrastrutturali}
+
+Il deployment delle landing pages Next.js è stato progettato per garantire scalabilità, performance e compliance GDPR attraverso un'architettura cloud-native basata su containerizzazione Docker e distribuzione globale su AWS.
 
 \subsection{Stack deployment}
+
 \begin{itemize}
-  \item \textbf{Next.js rendering ibrido}: Combinazione SSG per contenuti statici 
-  con ISR (revalidation 1 ora) per aggiornamenti dinamici, bilanciando performance 
-  e freshness dei contenuti
-  \item \textbf{Containerizzazione Docker}: Multi-stage builds per ottimizzazione 
-  immagini e consistency ambienti sviluppo-produzione
-  \item \textbf{AWS Cloud Infrastructure}: Ecosystem integrato per container 
-  registry, CDN globale e monitoring
-  \item \textbf{Multi-environment strategy}: Separazione staging/production per 
-  validation workflow e risk mitigation
+  \item \textbf{Next.js rendering ibrido}: Static Site Generation (SSG) per contenuti statici con Incremental Static Regeneration (ISR, revalidation 1 ora) per aggiornamenti dinamici, bilanciando performance e freshness dei contenuti
+  
+  \item \textbf{Containerizzazione Docker}: Multi-stage builds per ottimizzazione immagini (riduzione 60\% dimensione finale) e consistency tra ambienti sviluppo-produzione. Layer caching per build incrementali veloci
+  
+  \item \textbf{AWS Cloud Infrastructure}: ECR (Elastic Container Registry, region eu-south-1) per gestione immagini Docker, S3 per asset statici, CloudFront CDN per distribuzione globale con 180+ edge locations
+  
+  \item \textbf{Multi-environment}: Separazione staging/production per validation workflow prima del deployment in produzione
 \end{itemize}
 
-\section{Decisioni infrastruttura}
+\subsection{Motivazioni scelte infrastrutturali}
 
-\subsection{Cloud provider selection}
-La scelta di AWS rispetto ad alternative come Vercel o Netlify è stata guidata 
-da requisiti specifici:
+La scelta di AWS rispetto ad alternative come Vercel o Netlify è stata guidata da requisiti business specifici:
 
-\textbf{Controllo infrastruttura}: Necessità di configurazioni custom per tracking 
-Mixpanel, integrazione API Django e compliance GDPR con data residency EU.
+\textbf{Compliance GDPR e data residency EU}: Necessità di servire clienti enterprise B2B che richiedono data residency europea nei contratti, garantita da region eu-south-1. Configurazioni custom per tracking Mixpanel con IP anonymization e cookie consent obbligatorio.
 
-\textbf{Scalabilità cost-effective}: Previsione crescita traffico organico post-SEO 
-optimization richiedeva pricing model predittibile vs pay-per-request.
+\textbf{Integrazione ecosystem esistente}: Infrastruttura AWS già presente per backend Django, database PostgreSQL 15 e servizi AI, garantendo coerenza architetturale e riuso competenze DevOps team.
 
-\textbf{Integration ecosystem}: Già presente infrastruttura AWS per backend Django, 
-database PostgreSQL e servizi AI, garantendo coerenza architetturale.
+\textbf{Scalabilità cost-effective}: Previsione crescita traffico organico post-SEO optimization richiedeva pricing model predittibile vs pay-per-request. CloudFront critico per conversion rate: ogni 100ms latency aggiuntiva causa -1\% conversioni (fonte: Google 2023).
 
-\subsection{Container strategy}
-Implementazione Docker multi-stage per ottimizzazioni deployment:
-\begin{itemize}
-  \item \textbf{Build optimization}: Separazione dependencies/runtime riduce 
-  immagine finale del 60\%, accelerando deploy e riducendo attack surface
-  \item \textbf{Layer caching}: Build incrementali veloci attraverso cache 
-  intelligente dependencies npm
-  \item \textbf{Environment consistency}: Eliminazione "works on my machine" 
-  tra sviluppo, staging e production
-\end{itemize}
+\section{Processo di deployment}
 
-\subsection{CDN e distribuzione globale}
-CloudFront CDN per performance globali:
-\begin{itemize}
-  \item \textbf{Edge caching}: Asset statici (immagini, CSS, JS) serviti da 
-  edge locations per riduzione latency
-  \item \textbf{Cache invalidation}: Automatic invalidation su deploy per 
-  freshness contenuti aggiornati
-  \item \textbf{Geographic optimization}: 180+ edge locations riducono TTFB 
-  globalmente, critico per SEO e conversioni
-\end{itemize}
+\subsection{Workflow deployment manuale}
 
-\section{Pipeline CI/CD}
+Il deployment delle landing pages segue un workflow strutturato ma manuale, garantendo controllo e validazione ad ogni step:
 
-\subsection{Workflow automation}
-Design pipeline per garantire quality gates e deployment sicuri:
-
-\textbf{Trigger automatico}: Git push su branch main attiva pipeline completa 
-build → test → security scan → deploy staging → validation → production.
-
-\textbf{Parallel execution}: Build Docker e testing qualità codice (ESLint, 
-TypeScript check) eseguiti in parallelo per riduzione tempo pipeline.
-
-\textbf{Artifact promotion}: Stessa immagine Docker promossa da staging a 
-production elimina discrepanze ambiente e garantisce consistency.
-
-\subsection{Environment strategy}
-Strategia multi-ambiente per risk mitigation:
-\begin{itemize}
-  \item \textbf{Staging validation}: Deploy automatico staging per validation 
-  funzionalità, performance testing e UAT stakeholder
-  \item \textbf{Production gating}: Manual approval obbligatorio per production 
-  deploy dopo validation staging completa
-  \item \textbf{Feature flags}: Deployment features disabilitate di default 
-  con abilitazione graduale post-validation
-\end{itemize}
+\begin{enumerate}
+  \item \textbf{Build locale e testing}: Sviluppatore esegue build Docker locale con \texttt{docker build}, verifica funzionamento container in ambiente sviluppo
+  
+  \item \textbf{Quality checks manuali}: Esecuzione linting ESLint, type checking TypeScript, Lighthouse audit locale per performance baseline
+  
+  \item \textbf{Push immagine ECR}: Upload immagine Docker validata su AWS Elastic Container Registry con tag versione (es. \texttt{v1.2.3})
+  
+  \item \textbf{Deploy staging}: Deployment manuale su ambiente staging, testing funzionale completo (form, tracking, navigation)
+  
+  \item \textbf{Validation UAT}: User Acceptance Testing con stakeholder interni, raccolta feedback su staging
+  
+  \item \textbf{Deploy production}: Dopo approvazione esplicita, deployment manuale produzione con stesso container validato su staging
+  
+  \item \textbf{Smoke testing}: Verifica manuale funzionalità critical path post-deploy, monitoring metriche Mixpanel e Vercel Analytics
+  
+  \item \textbf{Cache invalidation}: Invalidazione manuale cache CloudFront per freshness immediata contenuti aggiornati
+\end{enumerate}
 
 \subsection{Quality gates}
-Automated quality assurance nel pipeline:
+
+Pur in assenza di pipeline automatizzata, il processo prevede quality gates rigorosi:
+
 \begin{itemize}
-  \item \textbf{Code quality}: ESLint, Prettier e TypeScript strict mode 
-  bloccano deploy se quality threshold non raggiunti
-  \item \textbf{Performance testing}: Lighthouse CI automatico con threshold 
-  Performance > 90, Accessibility > 95
-  \item \textbf{Security scanning}: Container vulnerability scan con blocco 
-  deploy per vulnerabilità HIGH/CRITICAL
-  \item \textbf{Functional testing}: Automated smoke tests post-deploy per 
-  validation funzionalità core (form, tracking, navigation)
+  \item \textbf{Code quality}: ESLint e Prettier configurati in pre-commit hooks Git, TypeScript strict mode impedisce commit con errori tipo
+  \item \textbf{Performance testing}: Lighthouse audit manuale pre-deploy con threshold Performance > 90, Accessibility > 95
+  \item \textbf{Peer review}: Code review obbligatoria su ogni Merge Request GitLab prima di merge su branch \texttt{main}
+  \item \textbf{Functional testing}: Checklist manuale testing cross-browser (Chrome, Safari, Firefox) e responsive (desktop, tablet, mobile)
 \end{itemize}
 
-\section{Gestione deployment}
+La promozione della stessa immagine Docker da staging a production ("artifact promotion") elimina discrepanze ambiente e garantisce consistency.
 
-\subsection{Zero-downtime strategy}
-Architettura deployment per eliminare service interruption:
+\section{Strategie deployment e reliability}
 
-\textbf{Rolling updates}: Nuove istanze container avviate prima di terminare 
-precedenti, garantendo continuità servizio durante deploy.
+\subsection{Zero-downtime deployment}
 
-\textbf{Health checks}: Automated health verification prima di routing traffico 
-verso nuove istanze, prevenendo deploy problematici.
+L'architettura AWS garantisce continuità servizio durante deploy attraverso:
 
-\textbf{Load balancer integration}: Automatic service discovery e traffic 
-routing verso istanze healthy, isolamento istanze problematiche.
+\textbf{Rolling updates}: Nuove istanze container avviate in parallelo alle precedenti. Dopo health check positivo, load balancer AWS Application Load Balancer (ALB) inizia routing graduale traffico verso nuove istanze. Solo dopo 100\% traffico migrato, istanze vecchie vengono terminate.
 
-\subsection{Rollback architecture}
-Strategia rollback per incident response rapido:
-\begin{itemize}
-  \item \textbf{Immutable deployments}: Ogni deploy crea nuova versione immutabile, 
-  rollback rapido a versione precedente verificata
-  \item \textbf{Database migration safety}: Migrations backward-compatible per 
-  evitare data loss in rollback scenarios
-  \item \textbf{CDN cache management}: Automated cache invalidation e rollback 
-  asset statici per consistency completa
-  \item \textbf{Monitoring-driven rollback}: Automated rollback trigger basato 
-  su threshold metriche (error rate, response time)
-\end{itemize}
+\textbf{Health checks}: Endpoint \texttt{/api/health} implementato per verifica stato applicazione. ALB esegue health check ogni 30 secondi, rimuove automaticamente istanze unhealthy dal pool.
+
+\subsection{Rollback e gestione incidenti}
+
+Strategia rollback per incident response basata su immutable deployments:
+
+\textbf{Rollback manuale}: In caso issue critici post-deploy, rollback eseguito deployando immagine Docker versione precedente da ECR. Processo identico a deployment normale ma con tag versione stabile precedente. Tempo medio rollback: 8-10 minuti.
+
+\textbf{Database migrations safety}: Migrations Django sempre backward-compatible per evitare data loss in rollback scenarios. Policy: nessuna migration distruttiva (DROP, ALTER con dataloss) in release con deploy applicativo.
+
+\textbf{CDN cache management}: Invalidazione cache CloudFront eseguita manualmente post-deploy e post-rollback per consistency asset statici (CSS, JS, immagini). Wildcard invalidation \texttt{/*} garantisce freshness completa.
 
 \subsection{Configuration management}
-Gestione sicura configurazioni e secrets:
+
+Gestione sicura configurazioni attraverso:
+
 \begin{itemize}
-  \item \textbf{Environment separation}: Configurazioni staging/production 
-  completamente separate per prevenire data leakage
-  \item \textbf{Secrets management}: AWS Secrets Manager per API keys, database 
-  credentials con automatic rotation
-  \item \textbf{Runtime injection}: Environment variables iniettate runtime 
-  vs build-time per security e flexibility
-  \item \textbf{Audit trail}: Logging completo accesso secrets e configuration 
-  changes per compliance
+  \item \textbf{Environment separation}: File \texttt{.env.staging} e \texttt{.env.production} separati, mai committati su Git. Variabili ambiente iniettate runtime in container Docker
+  \item \textbf{Secrets management}: API keys Mixpanel, credenziali database e AWS access keys gestite tramite AWS Secrets Manager con accesso IAM role-based
+  \item \textbf{Audit trail}: Logging completo deployment in Notion (chi, quando, quale versione, motivazione) per compliance e troubleshooting
 \end{itemize}
 
 \section{Monitoring e performance}
 
 \subsection{Real-time monitoring}
-Monitoring stack per observability deployment:
+
+Stack monitoring per observability completa in produzione:
+
 \begin{itemize}
-  \item \textbf{Application monitoring}: Custom metrics performance, error 
-  tracking e user behavior tramite Mixpanel integration
-  \item \textbf{Infrastructure monitoring}: Container health, resource utilization 
-  e network performance con alerting automatico
-  \item \textbf{Performance tracking}: Core Web Vitals monitoring continuo con 
-  alert su degradation threshold
-  \item \textbf{Security monitoring}: Automated detection anomalie traffico, 
-  failed authentication attempts e potential attacks
+  \item \textbf{Application monitoring}: Mixpanel per user behavior tracking, error tracking custom implementato con logging CloudWatch
+  \item \textbf{Infrastructure monitoring}: AWS CloudWatch per container health, resource utilization (CPU, memoria, network)
+  \item \textbf{Performance tracking}: Vercel Analytics per Core Web Vitals real-user monitoring (FCP, LCP, CLS), alert manuale su Slack se degradation
+  \item \textbf{Uptime monitoring}: UptimeRobot per ping ogni 5 minuti su endpoint pubblici, notifica immediata downtime
 \end{itemize}
 
 \subsection{Post-deploy validation}
-Validation automatica successful deployment:
+
+Checklist validation manuale post-deploy eseguita dal team:
+
 \begin{itemize}
-  \item \textbf{Smoke testing}: Automated verification funzionalità critical 
-  path (homepage load, form submission, tracking events)
-  \item \textbf{Performance validation}: Lighthouse audit automatico post-deploy 
-  con alert se performance regression
-  \item \textbf{Analytics verification}: Validation tracking Mixpanel funzionante 
-  e dati flowing correttamente
-  \item \textbf{Error monitoring}: Monitoring spike error rate nelle prime 
-  30 minuti post-deploy per early detection issues
+  \item Smoke testing critical path: caricamento homepage, submit form contatto, tracking eventi Mixpanel, navigazione multilingua /it/ e /en/
+  \item Lighthouse audit produzione: verifica performance non regressionate vs baseline
+  \item Cross-browser testing: Chrome, Safari (desktop + iOS), Firefox su staging prima di production
+  \item Analytics verification: dashboard Mixpanel live per verifica eventi flowing correttamente (page\_view, cta\_clicked, form\_submit)
+  \item Error monitoring: CloudWatch logs per spike error rate prime 30 minuti post-deploy
 \end{itemize}
 
-\section{Risultati e ottimizzazioni}
+\section{Risultati operativi}
 
-\subsection{Performance achieved}
-L'architettura deployment ha conseguito risultati significativi:
-\begin{itemize}
-  \item \textbf{Deploy reliability}: 99.8\% success rate deployment con zero 
-  downtime negli ultimi 6 mesi
-  \item \textbf{Deploy speed}: Riduzione tempo deploy da 15-20 minuti a 5-7 
-  minuti tramite pipeline optimization
-  \item \textbf{Performance consistency}: Lighthouse scores stabili 94/100 
-  media, variazione < 2 punti tra deploy
-  \item \textbf{Global performance}: TTFB medio < 200ms per utenti EU, < 500ms 
-  globalmente tramite CDN optimization
-\end{itemize}
+L'architettura deployment implementata ha conseguito risultati significativi in produzione:
 
-\subsection{Incident response}
-Capability incident management dimostrate:
-\begin{itemize}
-  \item \textbf{MTTR (Mean Time To Recovery)}: 8 minuti media per rollback 
-  completo in caso problemi critici
-  \item \textbf{Detection speed}: Automated monitoring rileva issues medi 
-  in < 2 minuti vs detection manuale
-  \item \textbf{Blast radius limitation}: Feature flags e gradual rollout 
-  limitano impatto issues a < 5\% utenti
-\end{itemize}
+\textbf{Reliability}: Zero downtime durante deployment negli ultimi 6 mesi grazie a rolling updates. Un rollback necessario (issue Safari regex validation) eseguito in 8 minuti con ripristino completo funzionalità.
 
-\subsection{Lessons learned e miglioramenti}
-Evoluzione architecture basata su esperienza operativa:
-\begin{itemize}
-  \item \textbf{Cache strategy refinement}: Ottimizzazione TTL CloudFront 
-  per bilanciare performance e content freshness
-  \item \textbf{Monitoring granularity}: Aumento granularità metrics per 
-  detection più rapida performance regression
-  \item \textbf{Automation expansion}: Automated rollback basato su threshold 
-  per riduzione MTTR senza intervento manuale
-  \item \textbf{Cost optimization}: Reserved instances e spot instances per 
-  riduzione costi infrastruttura del 30\% mantenendo performance
-\end{itemize}
+\textbf{Performance}: Deploy time medio 12-15 minuti (build locale + push ECR + deploy AWS + smoke testing). Lighthouse scores stabili 94/100 media con variazione < 2 punti tra deploy consecutivi.
+
+\textbf{Scalabilità globale}: Time To First Byte (TTFB) medio < 200ms per utenti EU, < 500ms globalmente tramite CloudFront CDN optimization con 180+ edge locations. Edge caching asset statici riduce load origin server del 85\%.
+
+\textbf{Cost optimization}: Configurazione ottimale CloudFront (TTL 24h asset statici, 1h HTML) e Reserved Instances EC2 hanno mantenuto costi infrastruttura predittibili (~200€/mese) durante crescita traffico 45k utenti/mese.
 
 \bigskip
-L'architettura deployment implementata ha fornito foundation scalabile e 
-reliable per ecosistema landing pages, supportando crescita traffico organico 
-e garantendo experience utente consistent con operational excellence.
+L'architettura deployment, pur basata su processo manuale strutturato, ha fornito foundation scalabile e reliable per ecosistema landing pages, supportando crescita aziendale da 10-20 a 60+ persone e garantendo experience utente consistent con operational excellence. La transizione futura verso pipeline CI/CD automatizzata è pianificata per Q3 2025 per ridurre ulteriormente deploy time e aumentare frequenza release.

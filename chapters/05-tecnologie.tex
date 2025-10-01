@@ -90,9 +90,10 @@ L'ecosistema Datapizza (Jobs, Company, gestionale) condivide stack unificato per
 
 \textbf{Project Management}: Jira per task tracking, sprint planning e gestione backlog. Workflow Agile con sprint bisettimanali, story points estimation e burndown charts per monitoring avanzamento.
 
-\textbf{CI/CD e Deploy}: GitLab CI per pipeline automatizzate build/test e deploy 
-automatico su AWS tramite Docker container. Preview deployments per ogni 
-Merge Request tramite ambienti staging dedicati.
+\textbf{Deploy}: Processo deployment strutturato con build Docker locale, push 
+su AWS ECR (Elastic Container Registry) e deploy manuale su ambienti staging e 
+production. Workflow validazione rigoroso prima di ogni release in produzione 
+(dettagli processo in Cap. 7).
 
 \textbf{Communication}: Discord e Google Meet per daily standup e sincronizzazione team. Google Workspace per produttività e condivisione documenti.
 
