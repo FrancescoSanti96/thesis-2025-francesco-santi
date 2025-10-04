@@ -1,249 +1,96 @@
 \chapter{Conclusioni e sviluppi futuri}
 
 \section{Sintesi dei risultati}
-Il progetto di redesign delle landing pages ha trasformato con successo 
-la presenza web di Datapizza da un'unica pagina generica a un 
-ecosistema di 6 landing specializzate, rispondendo alle esigenze di 
-un'azienda cresciuta da 10 a più di 60 persone con quattro verticali 
-in continuo mutamento.
+Il progetto di redesign delle landing pages ha trasformato la presenza web di Datapizza
+da un'unica pagina generica a un ecosistema di sei landing specializzate. 
+Questo ha permesso di posizionare chiaramente i verticali aziendali, differenziare i messaggi
+per target specifici e introdurre strumenti concreti di marketing data-driven.
 
-\subsection{Risultati tecnici}
+L'architettura realizzata ha dimostrato efficacia su tre dimensioni principali:
 \begin{itemize}
-  \item \textbf{Performance}: Lighthouse score medio 94/100 (range 92-96), 
-        +29 punti vs baseline. Core Web Vitals tutti "Good": FCP 1.4s, 
-        LCP 2.1s, CLS 0.04
-  \item \textbf{Architettura scalabile}: Design system modulare con 
-        componenti riutilizzabili basati su ShadCN UI e Tailwind CSS. 
-        Framework pronto per nuove landing in 2-4 settimane
-  \item \textbf{Tracking avanzato}: Mixpanel GDPR-compliant con 95k 
-        eventi/mese, funnel analysis per verticale, dashboard Redash 
-        per BI
-  \item \textbf{Technical debt}: Riduzione 15\% bundle size (850KB → 
-        420KB) attraverso refactoring, cleanup dependencies, code splitting
-  \item \textbf{Accessibilità}: WCAG 2.1 AA compliance 100\%, 
-        Lighthouse Accessibility 98/100
+  \item \textbf{Tecnica}: sistema scalabile e performante, design system modulare, 
+        possibilità di sviluppare nuove landing in 2--4 settimane.
+  \item \textbf{Business}: incremento di lead qualificati, funnel misurabili per verticale,
+        riduzione del bounce rate e posizionamento credibile come \textit{AI Transformation Company}.
+  \item \textbf{Operativa}: framework di tracking avanzato, capace di abilitare decisioni di marketing informate
+        e ottimizzazioni continue delle conversioni.
 \end{itemize}
 
-\subsection{Impatto business}
+\section{Crescita professionale}
+Il progetto ha rappresentato un passaggio chiave nella mia formazione,
+permettendo di integrare le conoscenze apprese in ambito universitario con la gestione
+di un prodotto reale in un contesto dinamico e competitivo.
+
+Le principali competenze sviluppate includono:
 \begin{itemize}
-  \item Posizionamento chiaro come "AI Transformation Company" attraverso 
-        landing dedicate per AI Engineering e AI Adoption
-  \item Lead generation: 4.4k lead totali/mese (680 B2B qualified, 
-        2.8k newsletter, 920 job applications)
-  \item Conversion rate: B2B 4.5\%, B2C Jobs 5\%, Community newsletter 24\%
-  \item Bounce rate ridotto da 68\% a 42\% (-38\% relativo)
-  \item Abilitazione campagne marketing mirate per verticale con 
-        tracking ROI
-  \item Framework scalabile pronto per supportare crescita futura e 
-        nuovi verticali
+  \item \textbf{Autonomia e ownership}: gestione completa del ciclo di vita software, 
+        dalla raccolta dei requisiti fino al deploy e al monitoring.
+  \item \textbf{Problem solving avanzato}: gestione rapida di criticità tecniche 
+        (GDPR compliance, compatibilità cross-browser, ottimizzazione delle performance).
+  \item \textbf{Collaborazione interfunzionale}: interazione continua con team 
+        multidisciplinare (designer, product manager, altri developer) e demo 
+        interne per validation funzionalità.
+  \item \textbf{Approccio data-driven}: sviluppo orientato alle metriche di conversione
+        e miglioramento basato su analytics reali.
+  \item \textbf{Padronanza tecnologie moderne}: esperienza pratica approfondita 
+        su stack altamente richiesto nel mercato (React, Next.js, TypeScript, 
+        AWS, Docker), con responsabilità dirette su codebase production.
 \end{itemize}
 
-\section{Bilancio dell'esperienza formativa}
-L'esperienza in Datapizza ha rappresentato un percorso di crescita 
-professionale completo, bilanciando il progetto principale (70-80\%) 
-con contributi trasversali (20-30\%) che hanno arricchito le competenze 
-acquisite.
-
-\subsection{Competenze tecniche}
-\textbf{Stack moderno full-stack}
-\begin{itemize}
-  \item Frontend: React 18, Next.js 14 App Router, TypeScript 5, 
-        Tailwind CSS - padronanza da setup a produzione
-  \item Backend: Django 4, PostgreSQL 15, Django REST Framework - 
-        sviluppo API e ottimizzazione query
-  \item DevOps: GitHub Actions CI/CD, Vercel deployment, monitoring 
-        produzione
-  \item Analytics: Mixpanel event tracking, Redash dashboards - 
-        implementazione completa e data analysis
-\end{itemize}
-
-\textbf{Best practices professionali}
-\begin{itemize}
-  \item Architettura scalabile e design pattern (Atomic Design, 
-        component composition, custom hooks)
-  \item Performance optimization (code splitting, lazy loading, image 
-        optimization, CDN)
-  \item Accessibilità (WCAG 2.1 AA, screen reader testing, keyboard 
-        navigation)
-  \item GDPR compliance per tracking utenti EU (cookie consent, 
-        opt-out, IP anonymization)
-\end{itemize}
-
-\subsection{Competenze trasversali}
-\begin{itemize}
-  \item \textbf{Metodologia Agile}: Sprint planning, daily standup, 
-        retrospettive - esperienza pratica in team strutturato 8+ persone
-  \item \textbf{Comunicazione}: Collaborazione con designer (Figma 
-        handoff), product manager (user stories), stakeholder aziendali 
-        (demo)
-  \item \textbf{Product mindset}: Decisioni orientate a impatto business 
-        e metriche conversione, non solo eleganza tecnica
-  \item \textbf{Problem solving}: Gestione autonoma problemi tecnici 
-        complessi (GDPR compliance, performance, cross-browser) e 
-        hotfix produzione
-  \item \textbf{Code review}: Peer review quotidiana e contributo a 
-        standard qualitativi team
-\end{itemize}
-
-\subsection{Contributi oltre il progetto principale}
-\begin{itemize}
-  \item Technical debt reduction su piattaforme Jobs e Company: 
-        standardizzazione API con React Query, migrazione UI ShadCN, 
-        -15\% bundle size
-  \item Setup iniziale gestionale interno aziendale: architettura base, 
-        routing, convenzioni sviluppo condivise
-  \item Feature development con tracciamento impatto utente: A/B 
-        testing implicito via Mixpanel, iterazioni data-driven
-  \item Customer support continuativo: bug fixing, quality assurance, 
-        assistenza tecnica pre/post deploy
-\end{itemize}
-
-Queste attività hanno permesso di acquisire visione end-to-end del 
-ciclo di vita prodotto e versatilità su codebase diverse.
+Accanto al progetto principale, i contributi trasversali a Datapizza Jobs, Company
+e al gestionale interno hanno fornito una base di crescita significativa su frontend, 
+backend e concetti trasversali allo sviluppo software. L'ambiente stimolante, 
+caratterizzato da continui scambi, feedback costruttivi e code review rigorose, 
+ha accelerato l'apprendimento ben oltre quanto possibile in contesto accademico.
 
 \section{Limiti e criticità}
-\subsection{Limitazioni del lavoro svolto}
+Nonostante i risultati raggiunti, il lavoro presenta alcune considerazioni:
 \begin{itemize}
-  \item A/B testing non implementato in modo sistematico: manca 
-        framework automatizzato per variant testing (considerato ma 
-        deprioritizzato per timeline)
-  \item CMS headless non integrato: contenuti landing pages gestiti via 
-        codice, richiede deploy per modifiche copy (trade-off 
-        accettato per semplicità)
-  \item Metriche conversion rate baseline incomplete: no tracking 
-        pre-redesign, impossibile quantificare miglioramento esatto 
-        (solo stime qualitative)
-  \item Timeline ristretta: alcune ottimizzazioni performance e SEO 
-        avanzate posticipate per priorità business (es. prerendering 
-        avanzato, service worker)
-  \item Multilingua: supporto /en/ implementato ma contenuti non 
-        completamente tradotti (80\% IT, 20\% EN al momento rilascio)
-\end{itemize}
-
-\subsection{Sfide affrontate}
-\begin{itemize}
-  \item GDPR compliance: complessità normativa europea richiesta 
-        iterazioni multiple per cookie consent e tracking opt-out 
-        (risolto con CookieYes + refactor Mixpanel init)
-  \item Cross-browser compatibility: Safari regex validation e iOS 
-        Private Browsing causato issue tracking (risolto con Zod 
-        schema validation + graceful degradation)
-  \item Performance con contenuti rich: Immagini high-res e Chart.js 
-        causato LCP > 4s (risolto con WebP conversion, lazy loading, 
-        dynamic import)
-  \item Cross-team coordination: Allineamento designer-developer in 
-        sprint serrati richiesta comunicazione intensa (mitigato con 
-        daily sync e Figma collaboration)
-  \item Legacy codebase: Necessità bilanciare innovazione con 
-        compatibilità sistemi esistenti (approccio incrementale, no 
-        big bang rewrite)
+  \item A/B testing: pattern già utilizzato in altri prodotti aziendali, 
+        potrebbe essere implementato sulle landing per confronti tra verticali 
+        o validazione iterazioni future.
+  \item Dipendenza infrastrutturale: scelte architetturali iniziali vincolano 
+        evoluzioni future, trade-off normale nella progettazione software che 
+        richiede manutenzione continua.
+  \item Timeline ristretta: focus su delivery ha limitato tempo per ottimizzazioni 
+        avanzate deployment e studi approfonditi su edge cases.
 \end{itemize}
 
 \section{Sviluppi futuri}
-\subsection{Roadmap tecnica landing pages}
-\textbf{Breve termine (3-6 mesi)}
+
+Il progetto landing pages rappresenta una macro-release in un ecosistema software 
+più ampio. Gli sviluppi futuri variano in base alle priorità aziendali e ai diversi 
+prodotti su cui il team lavora.
+
+\subsection{Evoluzione landing pages}
 \begin{itemize}
-  \item Implementazione A/B testing automatizzato con Vercel Edge 
-        Middleware o framework dedicato per ottimizzazione conversioni
-  \item Integrazione CMS headless (Contentful o Strapi) per gestione 
-        contenuti senza deploy frontend
-  \item Espansione tracking: Heatmap (Hotjar/Microsoft Clarity), 
-        session recording per UX insights approfonditi
-  \item Performance: Ulteriore ottimizzazione TTI < 2s, implementazione 
-        prerendering avanzato, service worker per offline support
-  \item Multilingua: Completamento traduzioni EN, espansione a altre 
-        lingue EU (ES, FR, DE)
+  \item Rilascio nuovo verticale aziendale con approccio iterativo: collaborazione 
+        più frequente con team design/product per micro-iterazioni continue e 
+        aggiustamenti rapidi.
+  \item Espansione tracking con heatmap e session recording per ottimizzazione 
+        conversioni data-driven.
+  \item Completamento traduzioni multilingua per espansione mercati internazionali.
 \end{itemize}
 
-\textbf{Medio termine (6-12 mesi)}
+\subsection{Evoluzione ecosistema tecnico}
 \begin{itemize}
-  \item Personalizzazione contenuti basata su user segmentation 
-        Mixpanel (returning vs new, source, industry)
-  \item Progressive Web App (PWA): Service worker, offline mode, 
-        installabilità mobile per esperienza app-like
-  \item AI-powered recommendations: Contenuti dinamici basati su 
-        comportamento utente e ML models
-  \item Internazionalizzazione avanzata: Localizzazione contenuti 
-        beyond traduzione (date formats, currency, regional examples)
-  \item Video integration: Explainer video per verticali AI, 
-        testimonial video clienti
+  \item Transizione verso architettura monorepo: attualmente in valutazione per 
+        condivisione codice tra progetti (Jobs, Company, landing pages).
+  \item Component library condivisa: estrazione componenti riutilizzabili come 
+        package interno npm per consistency cross-prodotti.
+  \item Integrazione CMS headless: gestione contenuti senza deploy, già in 
+        roadmap per autonomia team marketing.
 \end{itemize}
 
-\subsection{Evoluzione architetturale}
-\begin{itemize}
-  \item Migrazione completa a Next.js 15+ con latest features (se App 
-        Router evolve significativamente)
-  \item Edge computing per performance globali: Edge Functions per 
-        personalization logic, distributed rendering
-  \item Component library pubblicata come package npm interno 
-        \texttt{@datapizza/ui} per riuso cross-progetti
-  \item Storybook deployment: Documentazione interattiva design system 
-        per designer e developer
-  \item Micro-frontend architecture: Considerare per scalabilità 
-        estrema se team cresce > 20 developer
-\end{itemize}
+\section{Riflessione finale}
+L'esperienza in Datapizza ha confermato che la progettazione software non è solo
+un esercizio tecnico, ma uno strumento per generare valore concreto per il business.
+Ho maturato competenze tecnologiche avanzate e, soprattutto, un mindset orientato al prodotto:
+comprendere non solo \textit{come} realizzare una soluzione, ma anche \textit{perché}
+e quale impatto produce.
 
-\subsection{Altre iniziative aziendali}
-\begin{itemize}
-  \item Completamento gestionale interno con moduli CRM/ERP integrati 
-        (lavoro iniziato, da finalizzare)
-  \item Evoluzione piattaforme Jobs/Company con AI matching avanzato 
-        (skill similarity, culture fit prediction)
-  \item Integrazione verticali AI (Engineering/Adoption) con prodotti 
-        esistenti (cross-sell automation)
-  \item Dashboard unificata clienti enterprise: Single pane of glass 
-        per tutti i servizi Datapizza
-\end{itemize}
-
-\section{Riflessione personale}
-L'esperienza in Datapizza ha superato le aspettative formative iniziali, 
-offrendo l'opportunità di lavorare su un progetto strategico con impatto 
-reale su un'azienda in rapida crescita (da 10-20 a 60+ persone in 3 anni).
-
-Il progetto landing pages non è stato solo un esercizio tecnico, ma 
-un'esperienza completa di product development: dalla comprensione del 
-problema business, alla progettazione architetturale, fino al deployment 
-e monitoring in produzione con utenti reali. Lavorare in un contesto 
-Agile strutturato, con sprint bisettimanali, daily standup e 
-responsabilità dirette su codebase production, ha accelerato la crescita 
-professionale ben oltre quanto possibile in ambiente accademico.
-
-La cultura aziendale orientata all'innovazione e la possibilità di 
-contribuire attivamente a decisioni tecniche (scelta librerie, 
-architettura, design patterns) hanno permesso di sviluppare quel 
-"product mindset" che distingue uno sviluppatore da un ingegnere del 
-software completo. La partecipazione a code review quotidiane, la 
-gestione di hotfix in produzione sotto pressione, e l'interazione 
-continua con team cross-funzionali (design, product, sales) hanno 
-consolidato competenze tecniche e soft skill in egual misura.
-
-Un aspetto particolarmente formativo è stato affrontare problemi reali 
-con vincoli reali: GDPR compliance non è un esercizio accademico quando 
-rischi multe, performance optimization non è opzionale quando gli utenti 
-abbandonano per LCP > 3s, accessibilità non è una checkbox quando devi 
-garantire WCAG 2.1 AA per utenti con disabilità visive. Questi vincoli 
-hanno insegnato pragmatismo e prioritizzazione, competenze essenziali 
-per lavorare efficacemente in ambiente professionale.
-
-L'opportunità di contribuire oltre al progetto principale (technical 
-debt, gestionale interno, feature development) ha ampliato la visione 
-d'insieme del ciclo di vita software e della complessità gestionale di 
-un'azienda tech moderna. Questo ha permesso di apprezzare le 
-interdipendenze tra progetti, l'importanza della manutenibilità del 
-codice legacy, e il valore della documentazione tecnica per onboarding 
-futuri colleghi.
-
-Questa esperienza rappresenta una base solida per la carriera 
-professionale futura, con competenze immediatamente spendibili nel 
-mercato tech moderno (React/Next.js ecosystem, cloud deployment, 
-analytics integration) e una comprensione profonda di come la tecnologia 
-generi valore di business concreto. Il passaggio da studente a 
-professionista è avvenuto non solo attraverso l'acquisizione di skill 
-tecniche, ma soprattutto attraverso l'interiorizzazione di responsabilità, 
-autonomia decisionale, e ownership sui risultati - aspetti che nessun 
-corso universitario può replicare completamente.
-
-Il rapporto di lavoro continua a tempo pieno anche dopo la conclusione 
-del periodo formativo documentato in questa tesi (3 gennaio - 20 giugno 
-2025), segno che il contributo è stato ritenuto di valore dall'azienda 
-e che la crescita professionale è ancora in corso.
+La prosecuzione del rapporto lavorativo a tempo pieno dopo il periodo documentato
+testimonia la rilevanza del contributo fornito. Questa esperienza rappresenta una base solida
+per la carriera professionale, con competenze immediatamente spendibili e la consapevolezza
+che l'ingegneria del software è chiamata a bilanciare rigore tecnico e pragmatismo,
+per generare innovazione sostenibile.
