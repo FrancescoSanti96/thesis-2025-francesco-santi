@@ -1,100 +1,199 @@
 \chapter{Tecnologie}
 
 \section{Stack tecnologico landing pages}
-Il progetto di redesign delle landing pages si basa su uno stack moderno orientato a performance, SEO e developer experience. Le scelte tecnologiche sono state guidate dalla necessità di garantire caricamenti rapidi, indicizzazione ottimale e scalabilità futura.
+Il progetto di redesign delle landing pages si basa su uno stack moderno 
+orientato a performance, SEO e developer experience. Le scelte tecnologiche 
+sono state guidate dalla necessità di garantire caricamenti rapidi, 
+indicizzazione ottimale sui motori di ricerca e scalabilità futura.
 
 \subsection{Frontend}
 
-\textbf{Next.js 15 con React 19 e TypeScript 5.7}
+Il framework principale è Next.js 15.3, che si basa su React 19 e TypeScript 
+5.7. Queste tecnologie erano già utilizzate nel progetto preesistente e sono 
+state mantenute durante il redesign per coerenza con l'intero ecosistema 
+tecnologico aziendale.
 
-Il framework principale è Next.js 15.3, che si basa su React 19 e TypeScript 5.7:
+\paragraph{React 19}
+React è la libreria JavaScript per costruire interfacce utente component-based, 
+utilizzata in tutti i prodotti Datapizza (Jobs, Company, gestionale). Questa 
+coerenza garantisce riutilizzo di componenti, competenze consolidate del team e 
+facilita l'onboarding di nuovi sviluppatori. L'approccio component-based permette 
+di creare UI modulari e riutilizzabili attraverso paradigma dichiarativo, 
+facilitando manutenzione e scalabilità del codice.
 
-\begin{itemize}
-  \item \textbf{React 19}: Libreria JavaScript per costruire interfacce utente component-based. Permette di creare UI dichiarative, riutilizzabili e facilmente manutenibili attraverso il paradigma a componenti
-  
-  \item \textbf{TypeScript 5.7}: Superset di JavaScript che aggiunge type safety statico. Riduce drasticamente bug in produzione grazie al type checking in fase di sviluppo e migliora la developer experience con autocompletion e refactoring sicuro
-  
-  \item \textbf{Next.js 15}: Framework React che estende le funzionalità base con routing, rendering ottimizzato e tooling integrato
-\end{itemize}
+Uno degli aspetti che rende React particolarmente efficiente è l'uso del Virtual 
+DOM, una rappresentazione virtuale dell'interfaccia. Quando qualcosa cambia 
+nell'applicazione, React identifica automaticamente solo le parti effettivamente 
+modificate e aggiorna esclusivamente quelle, evitando di ricaricare elementi 
+inutilmente. Questo approccio migliora significativamente le performance 
+percepite dall'utente. Gli Hooks permettono di gestire stato e logica in 
+componenti funzionali, semplificando il codice e la riutilizzabilità della 
+logica applicativa.
 
-\textbf{Perché Next.js per landing pages}
+\paragraph{TypeScript 5.7}
+A supporto di React, il progetto utilizza TypeScript 5.7, un superset di 
+JavaScript che aggiunge type safety statico, ormai standard per applicazioni 
+moderne in contesti production. L'adozione di TypeScript riduce drasticamente i 
+bug in produzione grazie al type checking in fase di sviluppo: errori comuni 
+come accesso a proprietà inesistenti o passaggio di parametri errati vengono 
+intercettati dal compilatore prima del deployment. In un contesto production 
+come le landing pages, dove bug critici impattano direttamente le conversioni, 
+TypeScript è fondamentale per minimizzare errori.
 
-La scelta di Next.js rispetto a React vanilla si basa su vantaggi concreti per il progetto:
+TypeScript migliora significativamente il lavoro in team rendendo il codice più 
+strutturato e auto-documentato. L'autocompletion intelligente negli IDE e il 
+refactoring sicuro automatizzato accelerano lo sviluppo e riducono il tempo di 
+onboarding di nuovi sviluppatori sul codebase.
 
-\begin{itemize}
-  \item \textbf{Rendering ibrido}: Next.js 15 permette di combinare SSR on-demand per pagine dinamiche (form, autenticazione) con cache intelligente per contenuti statici. Implementata strategia di revalidation time-based (1 ora per dati esterni) e manual revalidation con \texttt{revalidatePath()} per contenuti che cambiano (blog, admin actions)
-  
-  \item \textbf{SEO nativo}: Meta tags dinamici, sitemap XML automatico, structured data JSON-LD integrati out-of-the-box. SSR garantisce che crawler Google ricevano HTML completo immediatamente, fondamentale per indicizzazione e traffico organico
-  
-  \item \textbf{App Router multilingua}: Gestione nativa routing /it/ e /en/ con supporto i18n attraverso next-intl, permettendo espansione internazionale senza refactoring architetturale
-  
-  \item \textbf{Code splitting automatico}: Ogni route genera bundle JavaScript separati, riducendo significativamente il payload iniziale rispetto a SPA tradizionale. Il browser carica solo il codice necessario per la pagina corrente
-  
-  \item \textbf{Image optimization}: Componente next/image con conversione WebP automatica, lazy loading nativo, srcset responsive e placeholder blur integrati. Ottimizzazione significativa del peso immagini mantenendo qualità visiva
-\end{itemize}
+\paragraph{Next.js 15}
+Next.js è il framework React che fornisce le funzionalità essenziali per landing 
+pages SEO-oriented. La scelta di Next.js rispetto a React vanilla si basa su 
+tre vantaggi fondamentali per il progetto.
+
+Il rendering ibrido combina Server-Side Rendering per pagine dinamiche con 
+contenuti statici memorizzati in cache che possono essere aggiornati 
+periodicamente senza rigenerare l'intero sito (Incremental Static Regeneration). 
+Questo approccio ottimizza sia i tempi di caricamento che l'aggiornamento dei 
+contenuti. Il SEO nativo garantisce che i motori di ricerca ricevano HTML 
+completo immediatamente, fondamentale per indicizzazione e traffico organico. 
+Il code splitting automatico suddivide il codice in bundle separati per ogni 
+route, riducendo il payload iniziale dell'applicazione.
+
+Next.js supporta nativamente la configurazione multilingua, estesa in questo 
+progetto tramite la libreria next-intl per gestire i percorsi dedicati (/it/ e 
+/en/). Il componente next/image ottimizza automaticamente le immagini 
+convertendole in formato WebP, caricandole solo quando visibili sullo schermo 
+(lazy loading) e adattandole alle diverse dimensioni di dispositivo, riducendo 
+il peso delle immagini principali mantenendo qualità visiva.
 
 \subsection{Styling e UI}
 
-\textbf{Tailwind CSS 3.4 + ShadCN UI}
+Per garantire coerenza visiva con l'identità aziendale, il sistema di styling 
+si basa su Tailwind CSS 3.4 con component library ShadCN UI. Tailwind CSS 
+permette di costruire interfacce utilizzando classi predefinite direttamente nel 
+codice HTML, senza necessità di scrivere file CSS separati. Tutte le classi 
+vengono compilate in CSS statico durante la fase di build, garantendo che 
+nessun codice aggiuntivo venga eseguito nel browser.
 
-Sistema di styling utility-first con component library accessibile:
-
-\begin{itemize}
-  \item \textbf{Tailwind CSS}: Framework CSS con classi utility per costruire UI direttamente nel markup. Zero runtime overhead (tutto compilato in CSS statico), configurazione custom per palette Datapizza, purge automatico rimuove CSS non utilizzato (riduzione 95\% bundle finale)
-  
-  \item \textbf{ShadCN UI (Radix UI)}: Component library basata su oltre 20 componenti Radix UI (@radix-ui/react-*) per accessibilità WCAG 2.1 integrata. Approccio copy-paste (codice nel progetto, non npm dependency) permette customizzazione completa mantenendo primitive accessibili
-\end{itemize}
+ShadCN UI fornisce componenti accessibili basati su Radix UI con conformità agli 
+standard di accessibilità WCAG 2.1 integrata. A differenza di una libreria 
+installabile tradizionale, ShadCN UI genera componenti direttamente nel progetto 
+tramite CLI, permettendo pieno controllo sul codice e garantendo accessibilità 
+nativa attraverso le primitive di Radix UI.
 
 \subsection{Librerie complementari}
 
-\textbf{Animazioni e interattività}
-\begin{itemize}
-  \item Framer Motion 12.9 per animazioni fluide Hero sections e scroll effects
-  \item Three.js 0.177 + React Three Fiber per visualizzazioni 3D su landing AI Engineering
-\end{itemize}
-
-\textbf{Form e validazione}
-\begin{itemize}
-  \item React Hook Form 7.54 per gestione form performante senza re-render
-  \item Zod 3.24 per schema validation TypeScript-first su lead generation form
-\end{itemize}
+Per animazioni e interattività avanzate, il progetto utilizza Framer Motion per 
+animazioni fluide nelle sezioni principali (Hero sections) e Three.js con React 
+Three Fiber per visualizzazioni 3D sulla landing AI Engineering. La gestione dei 
+form si basa su React Hook Form per performance ottimali e Zod per validazione 
+dello schema dati con supporto TypeScript integrato sui form di acquisizione 
+lead.
 
 \subsection{Backend per dati dinamici}
 
-Alcune funzionalità landing richiedono backend Django:
-\begin{itemize}
-  \item API REST per submit form lead generation (validazione server-side)
-  \item Integrazione newsletter "Commit" via Customer.io
-  \item Dati real-time opportunità Jobs da PostgreSQL 15
-  \item Tracking eventi Mixpanel server-side (fallback GDPR-compliant)
-\end{itemize}
-
-\textbf{Stack}: Django 4.x + PostgreSQL 15 (Python 3.9, Poetry, aiohttp per performance asincrone, boto3 per AWS integration)
+Alcune funzionalità delle landing pages necessitano di un backend per 
+elaborazioni più complesse. Il backend Django gestisce l'invio dei form con 
+validazione lato server per garantire sicurezza, l'integrazione con il servizio 
+di email automation Customer.io per la newsletter "Commit", il recupero in tempo 
+reale delle opportunità lavorative dal database PostgreSQL, e il tracking degli 
+eventi utente tramite Mixpanel con conformità GDPR. Lo stack si basa su Django 
+4.x con PostgreSQL 15 e Python 3.9.
 
 \section{Stack tecnologico aziendale}
-L'ecosistema Datapizza (Jobs, Company, gestionale) condivide stack unificato per coerenza tecnologica.
 
-\textbf{Frontend}: React 19 + TypeScript 5.7 su tutti i prodotti. React Query (TanStack Query) per state management server con caching intelligente e optimistic updates. TanStack Router in progressiva adozione per routing type-safe end-to-end.
+L'ecosistema Datapizza (Jobs, Company, gestionale) condivide uno stack 
+unificato per garantire coerenza tecnologica e riutilizzo di competenze tra 
+prodotti. La Tabella~\ref{tab:stack-aziendale} fornisce una panoramica 
+completa delle tecnologie adottate a livello aziendale.
 
-\textbf{Backend}: Django 4.x + PostgreSQL 15 come stack verticale Python (team expertise consolidata, ecosystem ricco per AI/ML). Python 3.9 con Poetry per dependency management, aiohttp per web server asincrono.
+\begin{table}[h]
+\centering
+\caption{Stack tecnologico aziendale}
+\label{tab:stack-aziendale}
+\begin{tabular}{|l|l|p{6.5cm}|}
+\hline
+\textbf{Layer} & \textbf{Tecnologie} & \textbf{Note} \\
+\hline
+Frontend & React 19, TypeScript 5.7 & Base comune tutti i prodotti \\
+\hline
+Frontend & React Query & State management server-side \\
+\hline
+Frontend & TanStack Router & Routing type-safe (CRM) \\
+\hline
+Backend & Django 4.x, PostgreSQL 15 & Stack verticale Python \\
+\hline
+Infrastructure & AWS (eu-south-1) & Cloud provider \\
+\hline
+Infrastructure & Docker, AWS ECR & Containerizzazione \\
+\hline
+Infrastructure & S3, CloudFront & Storage e distribuzione globale \\
+\hline
+Infrastructure & Lambda & Integrazioni AI serverless \\
+\hline
+Tools & Mixpanel & Analytics GDPR-compliant \\
+\hline
+Tools & Customer.io & Email automation (500k+ iscritti) \\
+\hline
+\end{tabular}
+\end{table}
 
-\textbf{Infrastructure}: AWS per cloud infrastructure. Landing pages deployate come container Docker con immagini gestite tramite AWS ECR (Elastic Container Registry, region eu-south-1). S3 storage per asset statici, CloudFront CDN per distribuzione globale. Lambda serverless per integrazioni AI con scalabilità automatica. Gestione ambienti staging e production tramite configurazioni Docker separate (dettagli processo deploy in Cap. 8).
+\subsection{Motivazioni architetturali}
 
-\textbf{Analytics e Communication}: Mixpanel per event tracking GDPR compliant con funnel analysis. Customer.io per email automation newsletter "Commit" (500k+ iscritti) e transactional emails.
+Lo stack è stato selezionato per tre obiettivi principali. Sul frontend, React 
+con TypeScript garantisce coerenza tecnologica tra tutti i prodotti aziendali, 
+permettendo riutilizzo di componenti UI e competenze condivise del team. React 
+Query gestisce la sincronizzazione dei dati con il server attraverso un sistema 
+di cache intelligente, riducendo le chiamate ripetute alle API e migliorando la 
+velocità percepita dall'utente. TanStack Router, adottato progressivamente sul 
+gestionale CRM, fornisce routing type-safe con validazione statica dei percorsi.
+
+Sul backend, Django con PostgreSQL costituisce lo stack verticale Python, 
+scelto per la consolidata expertise del team e l'ecosistema ricco di librerie 
+per intelligenza artificiale e machine learning.
+
+L'infrastruttura AWS fornisce scalabilità automatica e conformità GDPR 
+attraverso data center localizzati in Europa (region eu-south-1). Le landing 
+pages sono distribuite come container Docker gestiti tramite AWS Elastic 
+Container Registry, con S3 per l'archiviazione di immagini e file statici, e 
+CloudFront CDN per distribuzione globale dei contenuti. AWS Lambda gestisce le 
+integrazioni AI serverless con scalabilità automatica in base al carico.
 
 \section{Development tools e workflow}
 
-\textbf{IDE e AI assistance}: VS Code come IDE principale con Cursor AI (abbonamento premium team). Approccio AI-first per coding assistance, refactoring e debugging, con review rigorosa umana per qualità codice.
+Il team utilizza una suite integrata di strumenti per garantire efficienza, 
+qualità del codice e collaborazione efficace. La Tabella~\ref{tab:dev-tools} 
+riassume le principali tecnologie adottate.
 
-\textbf{Version Control}: GitLab self-hosted (migrazione da GitHub durante periodo) per repository privato con maggiore sicurezza e ottimizzazione costi. Git workflow con feature branches e Merge Request con code review obbligatoria.
+\begin{table}[h]
+\centering
+\caption{Strumenti di sviluppo e workflow}
+\label{tab:dev-tools}
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Categoria} & \textbf{Tecnologia} & \textbf{Utilizzo} \\
+\hline
+IDE & VS Code + Cursor AI & Editor principale con AI assistance \\
+\hline
+Version Control & GitLab self-hosted & Repository privato, Merge Request \\
+\hline
+Project Management & Jira & Task tracking, sprint planning \\
+\hline
+Deployment & Docker + AWS ECR & Containerizzazione e registry \\
+\hline
+Communication & Discord, Google Meet & Daily standup, sync team \\
+\hline
+Documentation & Notion & Knowledge base, onboarding \\
+\hline
+\end{tabular}
+\end{table}
 
-\textbf{Project Management}: Jira per task tracking, sprint planning e gestione backlog. Workflow Agile con sprint bisettimanali, story points estimation e burndown charts per monitoring avanzamento.
-
-\textbf{Deploy}: Processo deployment strutturato con build Docker locale, push 
-su AWS ECR (Elastic Container Registry) e deploy manuale su ambienti staging e 
-production. Workflow validazione rigoroso prima di ogni release in produzione 
-(dettagli processo in Cap. 7).
-
-\textbf{Communication}: Discord e Google Meet per daily standup e sincronizzazione team. Google Workspace per produttività e condivisione documenti.
-
-\textbf{Documentation}: Notion per knowledge base aziendale (documentazione rilasci, onboarding, architecture decisions, runbook incident management).
+Il workflow di sviluppo segue approccio Agile con sprint bisettimanali. Il 
+codice viene sviluppato su branch Git dedicati per ogni nuova funzionalità 
+(feature branches), e ogni modifica richiede Merge Request su GitLab con 
+revisione del codice (code review) obbligatoria da parte di almeno un 
+collega prima dell'integrazione nel branch principale. Jira traccia le user 
+stories con stima della complessità in story points, mentre grafici di 
+avanzamento (burndown charts) monitorano il progresso di ogni sprint. La 
+documentazione tecnica è centralizzata su Notion per garantire accessibilità 
+rapida a tutto il team.
