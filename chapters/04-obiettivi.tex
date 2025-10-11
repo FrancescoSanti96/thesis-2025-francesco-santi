@@ -1,40 +1,85 @@
 \chapter{Obiettivi}
 
-\section{Obiettivi del progetto}
-Il progetto di redesign delle landing pages aveva l'obiettivo di trasformare la presenza web aziendale da un'unica pagina generica a un ecosistema di landing specializzate, risolvendo le problematiche identificate nel capitolo precedente.
+\section{Obiettivi strategici e di business}
+Il progetto di redesign delle landing pages aveva l'obiettivo di 
+trasformare la presenza web aziendale da un'unica pagina generica a un 
+ecosistema di landing specializzate, risolvendo le problematiche 
+identificate nel capitolo precedente.
 
-\subsection{Obiettivi strategici e di business}
+\paragraph{Posizionamento e differenziazione}
+Un primo obiettivo strategico riguardava il posizionamento chiaro dei 
+quattro verticali aziendali. Era necessario creare value proposition 
+specifiche per AI Engineering, AI Adoption, Tech Recruiting e Community, 
+separando nettamente la comunicazione verso clienti B2B enterprise da 
+quella rivolta a candidati B2C. Questo avrebbe permesso di consolidare 
+l'identità aziendale come "AI Transformation Company" attraverso messaggi 
+mirati e coerenti per ciascun target.
 
-\textbf{Posizionamento e differenziazione}
+\paragraph{Marketing data-driven e conversione}
+Per abilitare decisioni basate sui dati concreti, era necessario 
+implementare un sistema di tracking strutturato e GDPR-compliant. 
+Gli obiettivi specifici in quest'area erano:
+
 \begin{itemize}
-  \item Creare value proposition specifiche per ciascun verticale (AI Engineering, AI Adoption, Tech Recruiting, Community)
-  \item Separare la comunicazione business-to-business (B2B) enterprise da quella business-to-consumer (B2C) candidati
-  \item Consolidare l'identità aziendale come "AI Transformation Company"
-\end{itemize} 
-
-\textbf{Marketing data-driven e conversione}
-\begin{itemize}
-  \item Implementare tracking avanzato GDPR-compliant per customer journey completi
-  \item Creare funnel di conversione misurabili per ottimizzazione continua
-  \item Fornire analytics (Mixpanel + Redash) per decisioni marketing informate
-  \item Migliorare conversion rate complessivo per verticale
-  \item Aumentare lead qualificati B2B e iscrizioni newsletter community
-  \item Ridurre bounce rate attraverso customer journey ottimizzati
+  \item Implementare tracking avanzato per customer journey completi, 
+        tracciando ogni interazione utente dall'arrivo sulla landing 
+        fino alla conversione
+  
+  \item Creare funnel di conversione misurabili per ottimizzazione 
+        continua, differenziati per ciascun verticale
+  
+  \item Integrare strumenti analytics (Mixpanel e Redash) per fornire 
+        al team marketing dati concreti su cui basare le decisioni
+  
+  \item Migliorare il conversion rate complessivo attraverso 
+        l'ottimizzazione iterativa basata sui dati raccolti
+  
+  \item Aumentare i lead qualificati B2B per i servizi enterprise e 
+        le iscrizioni alla newsletter community
+  
+  \item Ridurre il bounce rate attraverso customer journey ottimizzati 
+        per ciascun tipo di utente
 \end{itemize}
 
-\textbf{Supporto strategia commerciale}
-\begin{itemize}
-  \item Fornire canale primario acquisizione contatti qualificati (lead) per team sales
-  \item Abilitare campagne marketing con tracking ROI accurato
-\end{itemize}
+\paragraph{Supporto strategia commerciale}
+Le nuove landing dovevano diventare il canale primario di acquisizione 
+contatti qualificati per il team sales, abilitando campagne marketing con 
+tracking ROI accurato. L'obiettivo era fornire visibilità completa 
+sull'efficacia di ogni verticale e permettere l'allocazione ottimale del 
+budget marketing basata su dati misurabili.
 
 \section{Obiettivi tecnici}
+Gli obiettivi tecnici erano orientati a costruire un'infrastruttura 
+solida, performante e scalabile per supportare gli obiettivi di business.
 
 \subsection{Architettura e scalabilità}
-Costruire un'architettura frontend moderna basata su design system modulare (ShadCN UI + Tailwind CSS) con componenti riutilizzabili e supporto multilingua (/it/, /en/). L'obiettivo era creare un applicativo scalabile, con codice condiviso e riutilizzato.
+L'obiettivo architetturale principale era costruire un sistema frontend 
+moderno basato su un design system modulare. La scelta di ShadCN UI e 
+Tailwind CSS come fondamenta permetteva di creare componenti riutilizzabili 
+e mantenere consistenza visiva tra tutte le landing. L'architettura doveva 
+supportare il multilingua attraverso percorsi dedicati (/it/ e /en/) e 
+garantire la scalabilità futura: ogni nuova landing page doveva poter 
+riutilizzare la maggior parte del codice esistente, riducendo 
+significativamente i tempi di sviluppo per futuri verticali.
 
 \subsection{Performance e user experience}
-Ottimizzare i tempi di caricamento attraverso code splitting, lazy loading e ottimizzazione immagini, garantendo esperienza fluida su tutti i dispositivi. Implementare accessibilità WCAG 2.1 AA per utenti con disabilità (screen reader, keyboard navigation, contrasto colori).
+Dal punto di vista delle performance, l'obiettivo era garantire 
+caricamenti rapidi attraverso tecniche di ottimizzazione come code 
+splitting, lazy loading e compressione delle immagini. L'esperienza 
+doveva essere fluida su tutti i dispositivi (desktop, tablet, mobile). 
+
+Particolare attenzione era richiesta per l'accessibilità: conformità 
+agli standard WCAG 2.1 livello AA per supportare utenti con disabilità 
+attraverso screen reader, navigazione da tastiera e contrasto colori 
+adeguato.
 
 \subsection{Tracking e analytics}
-Integrare Mixpanel con event taxonomy strutturata (page view, interaction, conversion) per tracciare comportamenti utente. Configurare funnel di conversione specifici per verticale (B2B, B2C, Community) con compliance GDPR (cookie consent, IP anonymization).
+L'obiettivo sul fronte analytics era integrare Mixpanel con una event 
+taxonomy strutturata per categorizzare i comportamenti utente in tre 
+categorie principali: page view (visualizzazioni), interaction 
+(interazioni con elementi della pagina) e conversion (azioni di valore 
+come submit form o iscrizione newsletter). Ogni verticale doveva avere 
+funnel di conversione specifici e misurabili, differenziati per tipo di 
+utente (B2B enterprise, B2C candidati, Community). La compliance GDPR 
+era un requisito non negoziabile, garantita attraverso cookie consent 
+esplicito e anonimizzazione degli indirizzi IP.
