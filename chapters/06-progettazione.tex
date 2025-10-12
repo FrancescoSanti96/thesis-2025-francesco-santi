@@ -12,30 +12,32 @@ diversi verticali aziendali e raccogliere dati utili a livello di marketing. La
 progettazione ha quindi introdotto tre scelte fondamentali:
 
 \begin{itemize}
-  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js con sei landing pages dedicate per i verticali aziendali (/it/home, /it/tech-recruiting/, 
-/it/ai-adoption/, /it/ai-engineering/, /it/tech-media-agency/, /it/jobs/). Il sistema 
-include inoltre pagine preesistenti come blog tecnico e pagina contatti, 
-re-integrate nell'architettura unificata. Questa struttura garantisce posizionamento 
-SEO ottimale, riuso di componenti comuni e semplicità di manutenzione.
+  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js 
+  con sei landing pages dedicate per i verticali aziendali (/it/home, 
+  /it/tech-recruiting/, /it/ai-adoption/, /it/ai-engineering/, 
+  /it/tech-media-agency/, /it/jobs/). Il sistema include inoltre pagine 
+  preesistenti come blog tecnico e pagina contatti, re-integrate 
+  nell'architettura unificata. Questa struttura garantisce posizionamento 
+  SEO ottimale, riuso di componenti comuni e semplicità di manutenzione.
   
   \item \textbf{Strategia di rendering ibrida}: il sistema combina tre approcci 
-differenziati per tipo di contenuto. Per le 6 landing pages principali dei 
-verticali aziendali è implementata un'architettura basata su React Server 
-Components (RSC) con pattern "Server-First with Selective Hydration": i contenuti 
-statici (hero sections, testi, layout) sono Server Components senza overhead 
-JavaScript client-side, mentre componenti interattivi specifici (form di contatto, 
-animazioni scroll, tracking analytics) sono marcati come Client Components e 
-subiscono hydration solo dove necessario. Questo approccio garantisce HTML 
-completo per crawler, metriche Core Web Vitals ottimizzate, bundle JavaScript 
-ridotto e Time-to-Interactive migliorato rispetto a SPA tradizionale.  Il blog preesistente, re-integrato nel 
-monorepo, implementa Static Site Generation (SSG) con pre-generazione degli slug 
-degli articoli in fase di build. Le chiamate API al backend Django adottano 
-Incremental Static Regeneration (ISR) con revalidation a 1 ora, implementando 
-pattern Stale-While-Revalidate per ridurre dipendenze da uptime backend. CloudFront 
-CDN distribuisce asset statici globalmente, mentre next/image ottimizza 
-automaticamente immagini con lazy loading e conversione WebP. Questa architettura 
-bilancia SEO (HTML completo server-side), performance (cache CDN), e flessibilità 
-contenuti multilingua.
+  differenziati per tipo di contenuto. Per le 6 landing pages principali dei 
+  verticali aziendali è implementata un'architettura basata su React Server 
+  Components (RSC) con pattern "Server-First with Selective Hydration": i contenuti 
+  statici (hero sections, testi, layout) sono Server Components senza overhead 
+  JavaScript client-side, mentre componenti interattivi specifici (form di contatto, 
+  animazioni scroll, tracking analytics) sono marcati come Client Components e 
+  subiscono hydration solo dove necessario. Questo approccio garantisce HTML 
+  completo per crawler, metriche Core Web Vitals ottimizzate, bundle JavaScript 
+  ridotto e Time-to-Interactive migliorato rispetto a SPA tradizionale. Il blog 
+  preesistente, re-integrato nel monorepo, implementa Static Site Generation (SSG) 
+  con pre-generazione degli slug degli articoli in fase di build. Le chiamate API 
+  al backend Django adottano Incremental Static Regeneration (ISR) con revalidation 
+  a 1 ora, implementando pattern Stale-While-Revalidate per ridurre dipendenze da 
+  uptime backend. CloudFront CDN distribuisce asset statici globalmente, mentre 
+  next/image ottimizza automaticamente immagini con lazy loading e conversione WebP. 
+  Questa architettura bilancia SEO (HTML completo server-side), performance (cache CDN), 
+  e flessibilità contenuti multilingua.
   
   \item \textbf{Design system condiviso}: definizione di una libreria di componenti 
   accessibili basata su ShadCN UI (Radix UI primitives) e Tailwind CSS, costruita 
@@ -43,27 +45,26 @@ contenuti multilingua.
   customizzazione completa e riutilizzo del codice UI tra le landing.
 \end{itemize}
 
-\section{Metodologia di progettazione e collaborazione} 
+\section{Metodologia di progettazione e collaborazione}
 Il progetto di redesign è stato organizzato come una \textbf{macro-release trimestrale},
 considerata strategica per l'azienda. La fase di progettazione non si è limitata
 alla definizione di scelte tecniche, ma ha previsto un percorso strutturato di
-analisi, collaborazione e validazione:
+analisi, collaborazione e validazione.
+
+Dopo un'iniziale revisione delle soluzioni esistenti e identificazione dei 
+pattern da mantenere o eliminare, il team ha organizzato \textbf{incontri 
+interfunzionali} con prodotto, marketing e design per garantire allineamento 
+tra esigenze business e soluzioni tecniche. Il rilascio preliminare delle 
+landing a un gruppo ristretto di stakeholder interni ha permesso di raccogliere 
+feedback e iterare rapidamente sulle ottimizzazioni necessarie.
+
+L'intero processo è stato gestito con \textbf{approccio Agile} strutturato:
 
 \begin{itemize}
-  \item \textbf{Analisi iniziale}: revisione delle soluzioni esistenti e
-  identificazione dei pattern da mantenere o eliminare.
-  \item \textbf{Collaborazione interfunzionale}: raccolta dei requisiti in
-  incontri con i team di prodotto, marketing e design, così da garantire
-  allineamento tra esigenze di business e soluzioni tecniche.
-  \item \textbf{Iterazioni e feedback}: rilascio preliminare delle nuove landing
-  a un gruppo ristretto di stakeholder interni, con raccolta feedback e successive
-  ottimizzazioni.
-  \item \textbf{Approccio Agile}: gestione del lavoro in sprint bisettimanali,
-  con daily standup, retrospettive e momenti di confronto dedicati alla revisione
-  della qualità.
-  \item \textbf{Progettazione responsive}: attenzione fin dall'inizio alle tre
-  principali dimensioni di visualizzazione (desktop, tablet e mobile), per
-  garantire una user experience coerente e ottimizzata.
+  \item Sprint bisettimanali con planning e retrospettive dedicate
+  \item Daily standup per allineamento quotidiano del team
+  \item Progettazione responsive fin dall'inizio per garantire user experience 
+        coerente su desktop, tablet e mobile
 \end{itemize}
 
 Questa metodologia ha consentito di ridurre i rischi, migliorare la qualità
@@ -73,18 +74,16 @@ e dell'azienda.
 \section{Processo di design e design system}
 Il design system è stato sviluppato in stretta collaborazione con il team UX/UI,
 a partire da wireframe validati con il product team fino a mockup
-high-fidelity realizzati in Figma. Il processo ha incluso:
+high-fidelity realizzati in Figma. Il processo ha incluso la definizione di 
+\textbf{design tokens comuni} (colori, tipografia, spaziatura) condivisi tra 
+Figma e configurazioni Tailwind CSS di progetto, seguita dalla creazione di 
+\textbf{componenti modulari} con varianti responsive per garantire consistenza 
+visiva e riutilizzo tra le 6 landing pages principali.
 
-\begin{itemize}
-  \item definizione di design tokens comuni (colori, tipografia, spaziatura),
-  condivisi tra Figma e configurazioni Tailwind CSS di progetto;
-  \item creazione di componenti modulari con varianti responsive, per garantire 
-consistenza visiva e riutilizzo tra le 6 landing pages principali;
-\end{itemize}
-
-L'architettura componenti ha permesso di standardizzare elementi ricorrenti garantendo il riutilizzo di molto del codice UI tra le diverse landing.
-
-Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza tra design e implementazione e abilitare una rapida iterazione.
+L'architettura componenti ha permesso di standardizzare elementi ricorrenti 
+garantendo il riutilizzo di molto del codice UI tra le diverse landing. Questo 
+approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza tra 
+design e implementazione e abilitare una rapida iterazione.
 
 \begin{figure}[h!]
     \centering
@@ -93,6 +92,7 @@ Questo approccio ha permesso di ridurre i tempi di sviluppo, garantire coerenza 
     \label{fig:design-system}
 \end{figure}
 
+\clearpage
 \section{Architettura delle landing pages}
 L'ecosistema è stato progettato con una struttura comune di base (\textit{navbar}, 
 \textit{footer}) e con personalizzazioni specifiche per ciascun verticale. 
@@ -100,42 +100,41 @@ Ogni landing è stata progettata con registro linguistico e UX mirati per target
 specifici:
 
 \begin{itemize}
-  \item \textbf{Home Page} (/it/): pagina principale con panoramica generale 
-  dei 4 verticali e routing intelligente verso servizi specifici. Target: 
-  visitatori generici.
+  \item \textbf{Home Page} (/it/): hub centrale con panoramica generale dei 
+  4 verticali e routing intelligente verso servizi specifici per visitatori generici.
   
-  \item \textbf{Tech Recruiting} (/it/tech-recruiting/): registro linguistico 
-  consulenziale business-to-business (B2B), layout pulito, form di contatto 
-  avanzati con campi aziendali, CTA orientate a demo (``Richiedi demo'', 
-  ``Contatta team''). Target: aziende in cerca di talenti tech.
+  \item \textbf{Tech Recruiting} (/it/tech-recruiting/): landing B2B con registro 
+  consulenziale, layout pulito, form contatto con campi aziendali e CTA demo-oriented 
+  (``Richiedi demo'', ``Contatta team'') per aziende in cerca di talenti tech.
   
   \item \textbf{Tech Community} (/it/tech-media-agency/): linguaggio informale, 
   elementi visuali orientati alla cultura developer, CTA engagement per newsletter 
-  ``Commit'', social proof con 500k+ iscritti. Target: developer e tech enthusiast.
+  ``Commit'' e social proof con 500k+ iscritti per developer e tech enthusiast.
   
-  \item \textbf{AI Adoption} (/it/ai-adoption/): registro linguistico professionale 
-  B2B enterprise, focus upskilling organizzativo e trasformazione interna, case 
-  studies aziendali, CTA consulenza personalizzata. Target: HR e management.
+  \item \textbf{AI Adoption} (/it/ai-adoption/): registro professionale B2B 
+  enterprise, focus upskilling organizzativo con case studies aziendali e CTA 
+  consulenza personalizzata per HR e management.
   
   \item \textbf{AI Engineering} (/it/ai-engineering/): showcase framework 
-  proprietario ``Datapizza AI'' con gallery progetti (Copiloti Sales/HR/Legal/Customer), 
-  CTA demo tecnica. Target: CTO e IT Decision Makers.
+  proprietario ``Datapizza AI'' con gallery progetti (Copiloti Sales/HR/Legal/Customer) 
+  e CTA demo tecnica per CTO e IT Decision Makers.
   
-  \item \textbf{Jobs Platform} (/jobs/): stile diretto e colorato 
-  business-to-consumer (B2C), call-to-action immediate (``Cerca lavoro'', 
-  ``Candidati ora''), esperienza mobile-first, trasparenza salary con RAL sempre 
-  visibile, Tech Buddy matching e zero ghosting policy. Target: candidati in cerca 
-  di opportunità tech.
+  \item \textbf{Jobs Platform} (/jobs/): stile diretto B2C, call-to-action 
+  immediate (``Cerca lavoro'', ``Candidati ora''), esperienza mobile-first con 
+  trasparenza salary (RAL sempre visibile), Tech Buddy matching e zero ghosting 
+  policy per candidati in cerca di opportunità tech.
 \end{itemize}
 
-
+Questa differenziazione per target ha permesso di ottimizzare i tassi di 
+conversione specifici per ciascun servizio, garantendo messaggi mirati e 
+customer journey personalizzati.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1.06\textwidth]{chapters/figures/mockup.pdf}
     \caption{Mockup desktop della Jobs Platform.}
     \label{fig:jobs-desktop}
-    \end{figure}
+\end{figure}
 
 \clearpage
 \begin{figure}[h!]
@@ -154,22 +153,28 @@ interazioni e conversioni con granularità maggiore rispetto alla soluzione unic
 precedente.
 
 \subsection{Event taxonomy e funnel}
-L'architettura tracking implementa una tassonomia strutturata di eventi:
-\begin{itemize}
-  \item \textbf{Page events}: page\_view, landing\_loaded
-  \item \textbf{Interaction events}: cta\_clicked, scroll\_depth, section\_viewed
-  \item \textbf{Conversion events}: form\_submitted, newsletter\_signup
-\end{itemize}
+L'architettura tracking implementa una \textbf{tassonomia strutturata} 
+su tre livelli gerarchici. Il primo livello monitora gli eventi di 
+visualizzazione pagina (quando un utente carica una landing), il secondo 
+traccia le interazioni (click su pulsanti, scroll progressivo della pagina, 
+visualizzazione sezioni specifiche), mentre il terzo cattura le conversioni 
+finali (compilazione form contatto, iscrizione newsletter).
 
-Il tracking permette di analizzare funnel di conversione differenziati per verticale:
-\begin{itemize}
-  \item \textbf{B2B}: landing\_view $\rightarrow$ cta\_click $\rightarrow$ form\_view $\rightarrow$ form\_submit
-  \item \textbf{B2C Jobs}: landing\_view $\rightarrow$ search\_used $\rightarrow$ position\_click $\rightarrow$ application\_start
-  \item \textbf{Community}: landing\_view $\rightarrow$ scroll\_50\% $\rightarrow$ newsletter\_click $\rightarrow$ newsletter\_submit
-\end{itemize}
+Questa classificazione permette di analizzare \textbf{funnel di conversione 
+differenziati per verticale}. Per le landing B2B (Recruiting, AI Adoption, 
+AI Engineering), il percorso completo va dalla visualizzazione iniziale 
+fino al click su call-to-action, apertura del form di contatto e invio 
+dei dati per generare lead commerciali qualificati. La piattaforma Jobs 
+B2C monitora invece il flusso dalla visualizzazione della landing all'utilizzo 
+della ricerca offerte, click su posizione lavorativa e reindirizzamento 
+verso il prodotto Datapizza Jobs per completare la candidatura. La landing 
+Community traccia il percorso dall'arrivo sulla pagina fino al click sul 
+pulsante di iscrizione e conferma dell'iscrizione alla newsletter ``Commit''.
 
 Questa segmentazione consente analisi specifiche per ottimizzazione delle 
-conversioni e identificazione dei punti di drop-off nel customer journey.
+conversioni e identificazione dei punti di abbandono (drop-off) nel customer 
+journey, permettendo di migliorare continuamente l'esperienza utente per 
+ciascun target.
 
 \subsection{GDPR compliance}
 Particolare attenzione è stata data alla conformità normativa europea con 
