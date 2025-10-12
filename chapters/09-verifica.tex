@@ -1,306 +1,111 @@
 \chapter{Verifica sperimentale}
 
-\section{Testing funzionale}
-\subsection{Test di regressione}
-Verifica sistematica che le funzionalità esistenti continuino a 
-funzionare correttamente:
+\section{Testing e validazione}
 
-\begin{itemize}
-  \item Routing tra landing pages e navigazione multilingua (/it/, /en/)
-  \item Form submission e validazione campi (email, phone, company)
-  \item Integrazione newsletter "Commit" con Mailchimp
-  \item Link esterni (Discord, social media, Jobs platform)
-  \item Tracking Mixpanel per tutti gli eventi mappati
-  \item Cookie consent e gestione privacy GDPR
-\end{itemize}
+La fase di verifica ha coperto testing funzionale (routing multilingua, form 
+submission, tracking Mixpanel), cross-browser compatibility (Chrome, Firefox, 
+Safari, Edge su desktop e mobile), e usabilità con beta testing su 10 utenti 
+interni (rating medio 8/10). Le modifiche iterative hanno migliorato contrasto 
+testi e dimensione call-to-action mobile.
 
-Tutti i test di regressione superati senza issue critiche.
+\section{Risultati performance e accessibilità}
 
-\subsection{Test di usabilità}
-\begin{itemize}
-  \item Navigation flow testato per ciascun target (B2B/B2C/Community)
-  \item Chiarezza CTA e conversion path verificata con team design
-  \item Mobile usability testing su iPhone 12/13, iPad, Android devices
-  \item Feedback utenti beta tester (10 persone): 8/10 rating medio UX
-  \item Modifiche iterative basate su feedback: migliorato contrasto 
-        testi, aumentato size CTA mobile
-\end{itemize}
+Il redesign ha portato miglioramenti significativi su tutte le metriche Lighthouse, 
+come mostrato nella Figura \ref{fig:lighthouse-comparison}. Il performance score 
+è passato da 65/100 a 94/100, l'accessibilità da 78/100 a 98/100, mentre SEO e 
+Best Practices hanno raggiunto 100/100. Il bundle JavaScript è stato ridotto del 
+50\% (da 850KB a 420KB) tramite code splitting e cleanup dependencies.
 
-\subsection{Cross-browser e responsive}
-Testing completo su:
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/figures/lighthouse-comparison.pdf}
+    \caption{Confronto score Lighthouse pre e post-redesign.}
+    \label{fig:lighthouse-comparison}
+\end{figure}
 
-\textbf{Browser testati}
-\begin{itemize}
-  \item Chrome 120+ (desktop e mobile): 100\% funzionante
-  \item Firefox 121+: 100\% funzionante
-  \item Safari 17+ (macOS e iOS): 100\% funzionante (fix regex phone 
-        validation necessario)
-  \item Edge 120+: 100\% funzionante
-\end{itemize}
-
-\textbf{Dispositivi}
-\begin{itemize}
-  \item Desktop: 1920x1080, 1440x900, 1280x720 - layout ottimale
-  \item Tablet: iPad Pro, iPad Air, Android tablet - grid responsive 
-        corretto
-  \item Mobile: iPhone 12/13/14, Samsung Galaxy S21/S22 - mobile-first 
-        design validato
-\end{itemize}
-
-Issue rilevati e risolti: Safari regex validation (risolto), Firefox 
-form autofill styling (risolto).
-
-\section{Analisi performance}
-\subsection{Lighthouse scores}
-Risultati audit performance per landing principali:
-
-\textbf{Pre-redesign (baseline)}
-\begin{itemize}
-  \item Performance: 65/100
-  \item Accessibility: 78/100
-  \item Best Practices: 82/100
-  \item SEO: 88/100
-\end{itemize}
-
-\textbf{Post-redesign (media 6 landing)}
-\begin{itemize}
-  \item Performance: 94/100 (media), range 92-96
-  \item Accessibility: 98/100 (media), tutti > 95
-  \item Best Practices: 100/100 (tutte le landing)
-  \item SEO: 100/100 (tutte le landing)
-\end{itemize}
-
-Miglioramento significativo su tutte le metriche, specialmente 
-Performance (+29 punti) e Accessibility (+20 punti).
-
-\subsection{Core Web Vitals}
-Metriche misurate in produzione (real-user monitoring Vercel Analytics):
-
-\begin{itemize}
-  \item \textbf{FCP} (First Contentful Paint): 1.4s (target < 2s) ✓
-  \item \textbf{LCP} (Largest Contentful Paint): 2.1s (target < 2.5s) ✓
-  \item \textbf{CLS} (Cumulative Layout Shift): 0.04 (target < 0.1) ✓
-  \item \textbf{TTI} (Time to Interactive): 2.6s (target < 3s) ✓
-  \item \textbf{TBT} (Total Blocking Time): 180ms (target < 300ms) ✓
-\end{itemize}
-
-Tutti i Core Web Vitals in range "Good" (verde) su Google Search Console. 
-75th percentile utenti reali sotto i target definiti.
-
-\subsection{Bundle size}
-\begin{itemize}
-  \item Initial bundle (pre-ottimizzazioni): 850KB
-  \item Bundle ottimizzato: 420KB (-50\%)
-  \item Code splitting effectiveness: 6 chunks route-based + 2 dynamic 
-        import (Chart.js, heavy components)
-  \item Gzip compression: 420KB → 125KB (-70\% transfer size)
-  \item Technical debt reduction contributo: -15\% bundle size da 
-        cleanup dependencies
-\end{itemize}
+Le Core Web Vitals hanno raggiunto tutti i target: First Contentful Paint 1.4s, 
+Largest Contentful Paint 2.1s, Cumulative Layout Shift 0.04, Time to Interactive 
+2.6s, Total Blocking Time 180ms (tutti in range "Good" su Google Search Console). 
+L'accessibilità WCAG 2.1 livello AA è compliant al 100\% con test screen reader 
+NVDA, keyboard navigation e contrasto colori verificati. La validazione SEO 
+conferma meta tags ottimizzati, structured data JSON-LD e tutte le sei landing 
+indicizzate correttamente entro due settimane.
 
 \section{Tracking e analytics}
-\subsection{Verifica eventi Mixpanel}
-Validazione tracking implementato con monitoring 30 giorni post-launch:
 
-\textbf{Eventi base}
-\begin{itemize}
-  \item \texttt{page\_view}: 45k eventi/mese (tutte le landing)
-  \item \texttt{landing\_loaded}: 43k eventi/mese (~95\% di page\_view, 
-        delta normale)
-  \item \texttt{scroll\_depth}: 38k eventi/mese (tracking a 25\%, 50\%, 
-        75\%, 100\%)
-\end{itemize}
+Il sistema Mixpanel ha monitorato 95.000 eventi mensili su 30 giorni post-lancio. 
+La Figura \ref{fig:mixpanel-funnel} mostra i funnel di conversione per verticale.
 
-\textbf{Eventi conversione}
-\begin{itemize}
-  \item \texttt{form\_submit}: 1.2k eventi/mese (conversion rate 2.7\%)
-  \item \texttt{cta\_clicked}: 8.5k eventi/mese (click-through rate 19\%)
-  \item \texttt{newsletter\_signup}: 2.8k eventi/mese (signup rate 6.2\%)
-\end{itemize}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/figures/mixpanel-funnel.pdf}
+    \caption{Funnel di conversione per verticale B2B, B2C e Community.}
+    \label{fig:mixpanel-funnel}
+\end{figure}
 
-\textbf{User properties tracciati}
-\begin{itemize}
-  \item Source: organic 62\%, direct 23\%, social 10\%, paid 5\%
-  \item Device: mobile 58\%, desktop 35\%, tablet 7\%
-  \item Location: Italia 78\%, EU 15\%, altro 7\%
-\end{itemize}
+I funnel evidenziano performance differenziate: B2B (Recruiting, AI Adoption, AI 
+Engineering) con 4.5\% conversion rate complessivo da 15.200 visualizzazioni a 
+680 lead qualificati mensili, Community newsletter con 24\% conversion da 11.800 
+visualizzazioni a 2.800 iscrizioni mensili, e Jobs Platform con 5\% application 
+rate da 18.500 visualizzazioni a 920 candidature mensili. Le metriche engagement 
+confermano efficacia dell'esperienza utente: tempo medio sessione 2 minuti e 45 
+secondi (superiore al target di 2 minuti), bounce rate 42\% rispetto al baseline 
+del 68\% (riduzione relativa del 38\%), scroll depth medio 58\%, e click-through 
+rate sulle call-to-action del 19\%. Il traffico di 45.000 utenti mensili è 
+prevalentemente organico (62\%) e mobile (58\%), validando l'approccio mobile-first 
+del design.
 
-Volume totale eventi: ~95k eventi/mese, tracking stabile senza data loss.
+\section{Problemi riscontrati e risoluzioni}
 
-\subsection{Analisi funnel con Redash}
-Funnel di conversione misurati per verticale (dati 30 giorni):
+Nelle prime settimane post-lancio è emersa una problematica sui form di contatto 
+delle landing B2B: il sistema registrava doppi invii causando confusione utente 
+e lead duplicati nel CRM del team sales. L'analisi della root cause ha rivelato 
+due problematiche correlate: il pulsante "Invia" non si disabilitava immediatamente 
+permettendo click multipli durante il processing, e mancava feedback visivo chiaro 
+post-submit lasciando l'utente in stato di incertezza sul completamento dell'azione.
 
-\textbf{B2B (Recruiting/AI Adoption/AI Engineering)}
-\begin{itemize}
-  \item Landing view: 15.2k
-  \item CTA click: 3.1k (20\% conversion)
-  \item Form view: 2.4k (77\% of clicks)
-  \item Form submit: 680 (28\% form completion, 4.5\% overall)
-\end{itemize}
+La risoluzione in due iterazioni ha implementato disabilitazione automatica del 
+pulsante al primo click e alert di conferma esplicito post-submit (Figura 
+\ref{fig:form-success}) che comunica chiaramente l'avvenuto completamento e le 
+tempistiche di follow-up. Il deployment completato in una settimana ha eliminato 
+completamente i doppi invii.
 
-\textbf{B2C (Jobs Platform)}
-\begin{itemize}
-  \item Landing view: 18.5k
-  \item Search interaction: 8.2k (44\% engagement)
-  \item Position click: 4.1k (50\% of searches)
-  \item Application start: 920 (22\% application rate, 5\% overall)
-\end{itemize}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/figures/form-success-alert.pdf}
+    \caption{Alert di conferma implementato per feedback post-submit.}
+    \label{fig:form-success}
+\end{figure}
 
-\textbf{Community (Newsletter)}
-\begin{itemize}
-  \item Landing view: 11.8k
-  \item Scroll > 50\%: 7.9k (67\% engagement)
-  \item Newsletter CTA click: 3.2k (40\% of engaged)
-  \item Newsletter signup: 2.8k (87\% completion, 24\% overall)
-\end{itemize}
-
-Funnel più performante: Community newsletter (24\% conversion rate).
-
-\subsection{Metriche engagement}
-\begin{itemize}
-  \item Tempo medio sessione: 2m 45s (target > 2m) ✓
-  \item Bounce rate: 42\% (target < 50\%, baseline era 68\%) ✓
-  \item Scroll depth medio: 58\% (target > 50\%) ✓
-  \item Click-through rate CTA: 19\% (target > 15\%) ✓
-  \item Pages per session: 1.8 (multi-page navigation limitata per 
-        design landing-focused)
-\end{itemize}
-
-\section{Accessibilità e SEO}
-\subsection{WCAG compliance}
-\begin{itemize}
-  \item Livello conformità raggiunto: WCAG 2.1 AA (100\%)
-  \item Test con screen reader NVDA: navigazione completa possibile, 
-        tutti i contenuti accessibili
-  \item Keyboard navigation: tutti gli elementi interattivi raggiungibili 
-        con Tab, Enter, Space
-  \item Contrasto colori: ratio minimo 4.5:1 rispettato su tutti i testi 
-        (verificato con Color Contrast Analyzer)
-  \item ARIA labels: implementati su form, navigation, modals
-  \item Alt text: presente su tutte le immagini (descrittivo, non decorativo)
-\end{itemize}
-
-\subsection{SEO validation}
-\begin{itemize}
-  \item Meta tags: title (50-60 char), description (150-160 char), 
-        Open Graph verificati su tutte le landing
-  \item Structured data: JSON-LD implementato (Organization, WebSite, 
-        BreadcrumbList) - validato con Google Rich Results Test
-  \item Sitemap XML: generata automaticamente per tutte le route, 
-        submitted a Google Search Console
-  \item Robots.txt: configurato correttamente, nessuna pagina bloccata 
-        per errore
-  \item Google Search Console insights: 0 errori indicizzazione, 
-        6 landing tutte indicizzate correttamente in 2 settimane
-  \item Mobile-friendly test: tutte le landing "Mobile-friendly" 
-        (Google test)
-\end{itemize}
-
-\section{Monitoraggio post-rilascio}
-\subsection{Problemi riscontrati in produzione}
-\textbf{Issue 1: Safari Form Validation Regex}
-\begin{itemize}
-  \item \textbf{Descrizione}: Regex JavaScript per validazione phone 
-        non supportata da Safari 16
-  \item \textbf{Impatto}: ~15\% utenti (Safari mobile/desktop) non 
-        riuscivano a submit form
-  \item \textbf{Root cause}: Safari supporto limitato lookbehind regex
-  \item \textbf{Soluzione}: Semplificata regex, usato Zod schema 
-        validation cross-browser
-  \item \textbf{Tempo risoluzione}: 6 ore (hotfix stesso giorno)
-\end{itemize}
-
-\textbf{Issue 2: Mixpanel Tracking su iOS Safari (Private Browsing)}
-\begin{itemize}
-  \item \textbf{Descrizione}: Eventi Mixpanel non tracciati su Safari 
-        Private Browsing mode
-  \item \textbf{Impatto}: ~5\% utenti iOS, tracking parziale (undercount 
-        conversioni)
-  \item \textbf{Root cause}: localStorage bloccato in Private Browsing, 
-        Mixpanel SDK fallback non gestito
-  \item \textbf{Soluzione}: Implementato graceful degradation, tracking 
-        session-based senza persistent storage
-  \item \textbf{Tempo risoluzione}: 2 giorni (non critico, fix su sprint 
-        successivo)
-\end{itemize}
-
-\subsection{Hotfix e patch}
-\begin{itemize}
-  \item Hotfix rilasciati post-launch: 3 (2 critici, 1 minore)
-  \item Issue critici: Safari regex (risolto 6h), Mixpanel iOS (2 giorni)
-  \item Issue minori: Typo testi (1h), link Discord broken (30min)
-  \item Tempo medio fix per critical issue: < 1 giorno
-  \item Tempo medio fix per minor issue: < 4 ore
-\end{itemize}
-
-\subsection{Analytics real-time}
-Monitoraggio continuo metriche chiave:
-
-\begin{itemize}
-  \item Dashboard live Mixpanel: monitoring eventi in real-time, alert 
-        configurati
-  \item Alert automatici su error rate spike: threshold > 5\% error rate 
-        (mai triggerato)
-  \item Performance degradation detection: Vercel Analytics alert se 
-        LCP > 3s (1 spike rilevato, risolto cache invalidation)
-  \item Incidenti rilevati tramite monitoring: 1 (spike LCP temporaneo 
-        da CDN, risolto in 20min)
-\end{itemize}
+Un issue minore riguardava il tracking Mixpanel su Safari in modalità Private 
+Browsing (circa 5\% utenti iOS) dove il blocco di localStorage impediva la 
+persistenza degli eventi. La soluzione con tracking session-based è stata deployata 
+in sprint successivo. Questi incident hanno consolidato best practices: testing 
+con scenari stress (double-click, connettività degradata), feedback visivo 
+obbligatorio fin dalla fase di design, e monitoring granulare per device type e 
+browser specifici.
 
 \section{Risultati rispetto agli obiettivi}
-\subsection{Obiettivi tecnici}
-Confronto con target definiti in Cap. 4:
 
-\begin{itemize}
-  \item \textbf{Performance}: Target Lighthouse > 90 → Achieved 94/100 
-        (media) ✓
-  \item \textbf{Accessibility}: Target WCAG 2.1 AA → Achieved 98/100, 
-        100\% compliance ✓
-  \item \textbf{SEO}: Target Lighthouse > 90 → Achieved 100/100 ✓
-  \item \textbf{Scalabilità}: Architettura modulare implementata, 
-        design system documentato ✓
-  \item \textbf{Core Web Vitals}: Tutti target raggiunti (FCP, LCP, 
-        CLS, TTI) ✓
-\end{itemize}
+Gli obiettivi tecnici definiti nel Capitolo 4 sono stati raggiunti: performance 
+score Lighthouse 94/100 (target superiore a 90), accessibilità WCAG 2.1 AA 
+compliant al 100\%, SEO e Best Practices 100/100, e Core Web Vitals tutti in 
+range "Good". L'architettura modulare implementata garantisce scalabilità con 
+tempo stimato di 2-4 settimane per sviluppare nuove landing verticali riutilizzando 
+componenti esistenti.
 
-\subsection{Obiettivi di business}
-\textbf{Conversion rate}
-\begin{itemize}
-  \item Baseline pre-redesign: Non disponibile (no tracking precedente)
-  \item Post-redesign B2B: 4.5\% conversion rate (form submit)
-  \item Post-redesign B2C Jobs: 5\% application start rate
-  \item Post-redesign Community: 24\% newsletter signup rate
-  \item Miglioramento stimato: Impossibile quantificare vs baseline, 
-        ma rates in linea con industry benchmarks
-\end{itemize}
+Sul fronte business, le landing generano complessivamente 4.400 lead mensili 
+distribuiti tra verticali: 680 lead B2B qualificati con conversion rate del 4.5\%, 
+2.800 iscrizioni newsletter Community con conversion rate del 24\%, e 920 
+candidature Jobs Platform con application rate del 5\%. Il bounce rate è migliorato 
+da 68\% a 42\% (riduzione relativa del 38\%) mentre il tempo medio sessione di 
+2 minuti e 45 secondi supera il target di 2 minuti. I conversion rate ottenuti 
+sono in linea con industry benchmarks per il settore. Il traffico totale di 45.000 
+utenti mensili si distribuisce: Home 35\%, Jobs 28\%, Tech Recruiting 18\%, 
+Community 12\%, verticali AI 7\%. Metriche business a lungo termine come ROI 
+campagne marketing e riduzione CAC richiedono periodo di analisi più esteso dei 
+30 giorni documentati.
 
-\textbf{Lead generation}
-\begin{itemize}
-  \item Lead B2B (Recruiting/AI): 680 lead/mese (form submit qualified)
-  \item Newsletter signups: 2.8k iscrizioni/mese
-  \item Job applications: 920 candidature/mese
-  \item Total lead pipeline: ~4.4k lead/mese cross-verticali
-\end{itemize}
-
-\textbf{Traffico}
-\begin{itemize}
-  \item Traffico totale landing pages: 45k utenti/mese
-  \item Traffico per landing: Home 35\%, Jobs 28\%, Recruiting 18\%, 
-        Community 12\%, AI 7\%
-  \item Bounce rate improvement: da 68\% (baseline) a 42\% (-38\% 
-        relativo)
-  \item Tempo sessione: 2m 45s (sopra target 2min)
-\end{itemize}
-
-\subsection{Impatto sul business}
-\begin{itemize}
-  \item Riduzione CAC (Costo Acquisizione Cliente): Non quantificato 
-        direttamente (richiede analisi marketing long-term)
-  \item ROI campagne marketing: Tracking abilitato ma dati insufficienti 
-        per ROI completo (periodo 30gg)
-  \item Posizionamento brand: Presenza web professionale per 60+ persone, 
-        feedback stakeholder positivo
-  \item Scalabilità: Framework pronto per nuovi verticali, tempo 
-        sviluppo nuova landing stimato 2-4 settimane
-  \item Lead quality: Da validare con Sales team (follow-up necessario)
-\end{itemize}
+\bigskip
+Il progetto ha raggiunto gli obiettivi prefissati fornendo foundation scalabile 
+per crescita futura e validando l'approccio multi-landing con tracking avanzato.
