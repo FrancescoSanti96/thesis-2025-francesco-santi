@@ -1,136 +1,107 @@
-\chapter{Dispiegamento in opera}
+\chapter{Sviluppo}
 
-\section{Architettura deployment}
+\section{Processo di sviluppo}
+Lo sviluppo delle landing pages è stato organizzato con un approccio
+iterativo basato su sprint bisettimanali. Ogni sprint prevedeva
+pianificazione delle priorità, sviluppo incrementale, revisione del
+codice e demo finale con stakeholder per raccogliere feedback.  
+Il workflow ha incluso code review obbligatoria su ogni Pull Request,
+testing continuo su ambiente \textit{staging} e rilascio progressivo
+per singola landing.
 
-Il deployment delle landing pages Next.js è stato progettato per garantire scalabilità, performance e compliance GDPR attraverso un'architettura cloud-native basata su containerizzazione Docker e distribuzione globale su AWS.
+\section{Fasi di implementazione}
+Il progetto è stato articolato in quattro fasi principali:
 
-\subsection{Stack deployment}
-
-\begin{itemize}
-  \item \textbf{Next.js rendering ibrido}: Static Site Generation (SSG) per contenuti statici con Incremental Static Regeneration (ISR, revalidation 1 ora) per aggiornamenti dinamici, bilanciando performance e freshness dei contenuti
-  
-  \item \textbf{Containerizzazione Docker}: Multi-stage builds per ottimizzazione immagini (riduzione 60\% dimensione finale) e consistency tra ambienti sviluppo-produzione. Layer caching per build incrementali veloci
-  
-  \item \textbf{AWS Cloud Infrastructure}: ECR (Elastic Container Registry, region eu-south-1) per gestione immagini Docker, S3 per asset statici, CloudFront CDN per distribuzione globale con 180+ edge locations
-  
-  \item \textbf{Multi-environment}: Separazione staging/production per validation workflow prima del deployment in produzione
-\end{itemize}
-
-\subsection{Motivazioni scelte infrastrutturali}
-
-La scelta di AWS rispetto ad alternative come Vercel o Netlify è stata guidata da requisiti business specifici:
-
-\textbf{Compliance GDPR e data residency EU}: Necessità di servire clienti enterprise B2B che richiedono data residency europea nei contratti, garantita da region eu-south-1. Configurazioni custom per tracking Mixpanel con IP anonymization e cookie consent obbligatorio.
-
-\textbf{Integrazione ecosystem esistente}: Infrastruttura AWS già presente per backend Django, database PostgreSQL 15 e servizi AI, garantendo coerenza architetturale e riuso competenze DevOps team.
-
-\textbf{Scalabilità cost-effective}: Previsione crescita traffico organico post-SEO optimization richiedeva pricing model predittibile. CloudFront critico per conversion rate: ogni 100ms latency aggiuntiva causa -1\% conversioni (fonte: Google 2023).
-
-\section{Processo di deployment}
-
-\subsection{Workflow deployment}
-
-Il deployment delle landing pages segue un workflow strutturato con quality gates rigorosi ad ogni step:
-
-\begin{enumerate}
-  \item \textbf{Build e testing locale}: Sviluppatore esegue build Docker locale con \texttt{docker build}, verifica funzionamento container in ambiente sviluppo
-  
-  \item \textbf{Quality checks}: Esecuzione linting ESLint, type checking TypeScript, Lighthouse audit locale per performance baseline
-  
-  \item \textbf{Code review}: Merge Request su GitLab con review obbligatoria da parte di Tech Lead o senior developer
-  
-  \item \textbf{Push immagine ECR}: Upload immagine Docker validata su AWS Elastic Container Registry con tag versione (es. \texttt{v1.2.3})
-  
-  \item \textbf{Deploy staging}: Deployment su ambiente staging, testing funzionale completo (form, tracking, navigation multilingua)
-  
-  \item \textbf{Validation UAT}: User Acceptance Testing con stakeholder interni (product, design), raccolta feedback
-  
-  \item \textbf{Deploy production}: Dopo approvazione esplicita, deployment produzione con stesso container validato su staging
-  
-  \item \textbf{Smoke testing}: Verifica funzionalità critical path post-deploy, monitoring metriche Mixpanel e Vercel Analytics
-  
-  \item \textbf{Cache invalidation}: Invalidazione cache CloudFront per freshness immediata contenuti aggiornati
-\end{enumerate}
-
-La promozione della stessa immagine Docker da staging a production ("artifact promotion") elimina discrepanze ambiente e garantisce consistency.
-
-\subsection{Quality gates}
-
-Il processo prevede quality gates rigorosi:
 
 \begin{itemize}
-  \item \textbf{Code quality}: ESLint e Prettier configurati in pre-commit hooks Git, TypeScript strict mode impedisce commit con errori tipo
-  \item \textbf{Performance testing}: Lighthouse audit con threshold Performance > 90, Accessibility > 95
-  \item \textbf{Peer review}: Code review obbligatoria su ogni Merge Request prima di merge su branch \texttt{main}
-  \item \textbf{Cross-browser testing}: Checklist validazione su Chrome, Safari, Firefox su desktop e mobile
+  \item \textbf{Fase 1 – Architettura e design system}: setup del progetto
+  Next.js con App Router, configurazione multilingua e definizione del design
+  system base con Tailwind e ShadCN.
+  \item \textbf{Fase 2 – Sviluppo landing pages}: implementazione progressiva
+  delle sei landing, a partire dalla Home Page (validazione del design system) fino alla Jobs Platform.
+  \item \textbf{Fase 3 – Tracking e ottimizzazione}: integrazione completa di
+  Mixpanel, funnel di conversione per verticale, cookie consent GDPR e
+  ottimizzazioni SEO e performance.
+  \item \textbf{Fase 4 – Deploy e monitoring}: rilascio graduale in produzione,
+  monitoraggio in tempo reale con Mixpanel e Vercel Analytics, e documentazione finale.
 \end{itemize}
 
-\section{Strategie deployment e reliability}
+\section{Sviluppo delle landing}
+Le landing sono state sviluppate seguendo priorità strategiche. La
+\textbf{Home Page} è stata la prima, hub centrale con routing verso i verticali
+e social proof aziendali.  
+Sono seguite le pagine \textbf{Tech Recruiting} e \textbf{Community}, rispettivamente orientate a lead generation B2B e alla crescita della community.  
+Successivamente sono state realizzate \textbf{AI Adoption} e \textbf{AI Engineering}, focalizzate sui servizi enterprise, e infine la \textbf{Jobs Platform}, progettata mobile–first con ricerca avanzata e trasparenza salariale.  
 
-\subsection{Zero-downtime deployment}
+\section{Implementazione architettura}
+Come progettato nel capitolo precedente, l'implementazione ha seguito le decisioni 
+architetturali chiave: monorepo Next.js con 6 route dedicate, SSG con ISR per 
+performance ottimali, e design system basato su ShadCN UI.
 
-L'architettura AWS garantisce continuità servizio durante deploy:
+Dal punto di vista tecnico, lo sviluppo ha previsto tre aree principali:
 
-\textbf{Rolling updates}: Nuove istanze container avviate in parallelo alle precedenti. Dopo health check positivo, load balancer AWS Application Load Balancer (ALB) inizia routing graduale traffico verso nuove istanze. Solo dopo 100\% traffico migrato, istanze vecchie vengono terminate.
+\textbf{Architettura componenti} – è stata realizzata una libreria di componenti 
+riutilizzabili con TypeScript per garantire consistenza e riuso tra le 6 landing pages.
 
-\textbf{Health checks}: Endpoint \texttt{/api/health} implementato per verifica stato applicazione. ALB esegue health check ogni 30 secondi, rimuove automaticamente istanze unhealthy dal pool.
+\textbf{Routing e rendering} – le landing sono state generate staticamente
+(SSG) con revalidazione oraria (ISR), con gestione automatica di meta tags e
+sitemap per l'ottimizzazione SEO.  
 
-\subsection{Rollback e gestione incidenti}
+\textbf{Tracking e compliance} – l'SDK di Mixpanel è stato integrato con 
+inizializzazione condizionale dopo consenso esplicito e anonimizzazione IP 
+per conformità GDPR.
 
-Strategia rollback per incident response basata su immutable deployments:
+\section{Sfide affrontate e soluzioni}
+Durante lo sviluppo sono emerse diverse difficoltà tecniche risolte con 
+soluzioni specifiche:
 
-\textbf{Rollback rapido}: In caso issue critici post-deploy, rollback eseguito deployando immagine Docker versione precedente da ECR. Processo identico a deployment normale ma con tag versione stabile precedente. Tempo medio rollback: 8-10 minuti.
+\textbf{Cross-browser compatibility} – Safari mostrava incompatibilità con 
+regex JavaScript per validazione form. La soluzione è stata implementare 
+validazione alternativa con Zod schema per garantire funzionamento uniforme 
+su tutti i browser.
 
-\textbf{Database migrations safety}: Migrations Django sempre backward-compatible per evitare data loss in rollback scenarios. Policy: nessuna migration distruttiva (DROP, ALTER con dataloss) in release con deploy applicativo.
+\textbf{Performance con contenuti ricchi} – la landing AI Engineering, con
+gallery e componenti interattivi, presentava tempi di caricamento elevati. 
+Ottimizzazione immagini (WebP), lazy loading e dynamic import hanno migliorato 
+significativamente le performance, raggiungendo i target Lighthouse prefissati.  
 
-\textbf{CDN cache management}: Invalidazione cache CloudFront post-deploy e post-rollback per consistency asset statici (CSS, JS, immagini). Wildcard invalidation \texttt{/*} garantisce freshness completa.
+\textbf{Bundle optimization} – il bundle iniziale risultava eccessivamente 
+pesante. L'implementazione di code splitting automatico per route e dynamic 
+import per componenti pesanti ha ridotto il payload iniziale, migliorando 
+First Contentful Paint.
 
-\subsection{Configuration management}
+\textbf{Tracking inconsistente} – eventi Mixpanel non venivano tracciati 
+correttamente su dispositivi iOS in modalità Private Browsing. Implementazione 
+graceful degradation e fallback per tracking senza localStorage ha risolto 
+la problematica.
 
-Gestione sicura configurazioni attraverso:
+\section{Esempio implementazione}
+Segue un esempio di implementazione tecnica significativa per il progetto:
 
+\begin{lstlisting}[language=JavaScript, caption=Custom hook per tracking]
+// hooks/use-mixpanel.ts
+const track = useCallback((event: string, properties?: Record<string, any>) => {
+  // Implementation details
+}, []);
+\end{lstlisting}
+
+Questo esempio illustra l'approccio adottato per garantire tracking consistente 
+e GDPR-compliant attraverso hook personalizzati riutilizzabili.
+
+\section{Testing e qualità}
+Il progetto è stato sottoposto a una strategia di quality assurance che ha
+incluso test manuali su staging, validazione cross-browser e responsive,
+verifica accessibilità WCAG 2.1 AA, monitoraggio performance con Lighthouse CI e
+controlli regressivi su ogni landing.  
+
+La qualità del codice è stata mantenuta tramite ESLint, Prettier, typing
+rigoroso con TypeScript e code review obbligatorie su ogni Pull Request.
+
+Testing specifico ha incluso:
 \begin{itemize}
-  \item \textbf{Environment separation}: File \texttt{.env.staging} e \texttt{.env.production} separati, mai committati su Git. Variabili ambiente iniettate runtime in container Docker
-  \item \textbf{Secrets management}: API keys Mixpanel, credenziali database e AWS access keys gestite tramite AWS Secrets Manager con accesso IAM role-based
-  \item \textbf{Audit trail}: Logging deployment in Notion (versione, timestamp, responsabile) per compliance e troubleshooting
+  \item Validazione funnel di conversione su ambiente staging
+  \item Test cross-browser su Chrome, Safari, Firefox
+  \item Responsive testing su dispositivi mobile e tablet
+  \item Performance audit con Core Web Vitals monitoring
+  \item Accessibilità con screen reader e keyboard navigation
 \end{itemize}
-
-\section{Monitoring e observability}
-
-\subsection{Real-time monitoring}
-
-Stack monitoring per observability in produzione:
-
-\begin{itemize}
-  \item \textbf{Application monitoring}: Mixpanel per user behavior tracking ed eventi custom, CloudWatch per application logs e error tracking
-  \item \textbf{Infrastructure monitoring}: AWS CloudWatch per container health, resource utilization (CPU, memoria, network), alert su threshold
-  \item \textbf{Performance tracking}: Vercel Analytics per Core Web Vitals real-user monitoring (FCP, LCP, CLS)
-  \item \textbf{Uptime monitoring}: Ping automatico ogni 5 minuti su endpoint pubblici, notifica immediata su Slack in caso downtime
-\end{itemize}
-
-\subsection{Post-deploy validation}
-
-Checklist validation post-deploy:
-
-\begin{itemize}
-  \item Smoke testing critical path: caricamento homepage, submit form contatto, tracking eventi Mixpanel, navigazione /it/ e /en/
-  \item Lighthouse audit produzione: verifica performance non regressionate vs baseline
-  \item Cross-browser spot check: Chrome, Safari, Firefox
-  \item Analytics verification: dashboard Mixpanel live per verifica eventi flowing correttamente
-  \item Error monitoring: CloudWatch logs per spike error rate prime 30 minuti post-deploy
-\end{itemize}
-
-\section{Risultati operativi}
-
-L'architettura deployment ha conseguito risultati significativi in produzione:
-
-\textbf{Reliability}: Zero downtime durante deployment negli ultimi 6 mesi grazie a rolling updates. Un rollback necessario (issue Safari regex validation, documentato in Cap. 9) eseguito in 8 minuti con ripristino completo funzionalità.
-
-\textbf{Deploy efficiency}: Deploy time medio 12-15 minuti (build + push ECR + deploy AWS + smoke testing). Processo strutturato riduce rischio errori umani attraverso checklist validation.
-
-\textbf{Performance globale}: Time To First Byte (TTFB) medio < 200ms per utenti EU, < 500ms globalmente tramite CloudFront CDN con 180+ edge locations. Edge caching asset statici riduce load origin server del 85\%.
-
-\textbf{Cost optimization}: Configurazione ottimale CloudFront (TTL 24h asset statici, 1h HTML) e Reserved Instances EC2 mantengono costi infrastruttura predittibili (~200€/mese) supportando 45k utenti/mese.
-
-\bigskip
-L'architettura deployment ha fornito foundation scalabile e reliable per ecosistema landing pages, supportando crescita aziendale da 10-20 a 60+ persone e garantendo experience utente consistent. L'implementazione futura di pipeline CI/CD automatizzata è prevista in roadmap aziendale per aumentare deployment frequency e ridurre ulteriormente time-to-market.
