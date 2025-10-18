@@ -12,32 +12,43 @@ diversi verticali aziendali e raccogliere dati utili a livello di marketing. La
 progettazione ha quindi introdotto tre scelte fondamentali:
 
 \begin{itemize}
-  \item \textbf{Architettura multi-landing}: adozione di un monorepo Next.js 
-  con sei landing pages dedicate per i verticali aziendali (/it/home, 
+  \item \textbf{Architettura multi-landing}: adozione di un monorepo (singolo 
+  repository contenente tutto il codice delle diverse landing pages) basato su 
+  Next.js con sei landing dedicate per i verticali aziendali (/it/home, 
   /it/tech-recruiting/, /it/ai-adoption/, /it/ai-engineering/, 
-  /it/tech-media-agency/, /it/jobs/). Il sistema include inoltre pagine 
+  /it/tech-media-agency/, /it/jobs/). Include inoltre pagine 
   preesistenti come blog tecnico e pagina contatti, re-integrate 
   nell'architettura unificata. Questa struttura garantisce posizionamento 
   SEO ottimale, riuso di componenti comuni e semplicità di manutenzione.
   
-  \item \textbf{Strategia di rendering ibrida}: il sistema combina tre approcci 
-  differenziati per tipo di contenuto. Per le 6 landing pages principali dei 
-  verticali aziendali è implementata un'architettura basata su React Server 
-  Components (RSC) con pattern "Server-First with Selective Hydration": i contenuti 
-  statici (hero sections, testi, layout) sono Server Components senza overhead 
-  JavaScript client-side, mentre componenti interattivi specifici (form di contatto, 
-  animazioni scroll, tracking analytics) sono marcati come Client Components e 
-  subiscono hydration solo dove necessario. Questo approccio garantisce HTML 
-  completo per crawler, metriche Core Web Vitals ottimizzate, bundle JavaScript 
-  ridotto e Time-to-Interactive migliorato rispetto a SPA tradizionale. Il blog 
-  preesistente, re-integrato nel monorepo, implementa Static Site Generation (SSG) 
-  con pre-generazione degli slug degli articoli in fase di build. Le chiamate API 
-  al backend Django adottano Incremental Static Regeneration (ISR) con revalidation 
-  a 1 ora, implementando pattern Stale-While-Revalidate per ridurre dipendenze da 
-  uptime backend. CloudFront CDN distribuisce asset statici globalmente, mentre 
-  next/image ottimizza automaticamente immagini con lazy loading e conversione WebP. 
-  Questa architettura bilancia SEO (HTML completo server-side), performance (cache CDN), 
-  e flessibilità contenuti multilingua.
+  \item \textbf{Strategia di rendering ibrida}: combina approcci 
+  differenziati per tipo di contenuto. Per le sei landing pages principali è 
+  stata implementata un'architettura basata su React Server Components 
+  (componenti che vengono elaborati interamente sul server prima di essere 
+  inviati al browser), seguendo il pattern "Server-First with Selective 
+  Hydration". I contenuti statici come hero sections, testi descrittivi e 
+  layout vengono renderizzati sul server senza richiedere codice JavaScript 
+  nel browser dell'utente. Solo i componenti interattivi specifici (form di 
+  contatto, animazioni scroll, tracking analytics) vengono marcati come Client 
+  Components e attivati nel browser dopo il caricamento iniziale della pagina, 
+  processo chiamato "hydration" (attivazione delle funzionalità interattive). 
+  Questo approccio garantisce HTML completo per i motori di ricerca, metriche 
+  Core Web Vitals ottimizzate, bundle JavaScript ridotto e Time-to-Interactive 
+  (tempo necessario affinché la pagina diventi completamente interattiva) 
+  migliorato rispetto a Single Page Application tradizionali.
+  
+  Il blog tecnico preesistente, re-integrato nel monorepo, implementa Static 
+  Site Generation con pre-generazione degli URL degli articoli in fase di build. 
+  Le chiamate API al backend Django adottano Incremental Static Regeneration 
+  con revalidazione ogni ora, implementando il pattern Stale-While-Revalidate 
+  (strategia che serve contenuti memorizzati in cache mentre in background 
+  vengono aggiornati con le ultime modifiche), riducendo la dipendenza 
+  dall'uptime del backend. La CDN CloudFront 
+  distribuisce gli asset statici globalmente, mentre il componente next/image 
+  ottimizza automaticamente le immagini con caricamento differito (lazy loading) 
+  e conversione in formato WebP. Questa architettura bilancia SEO attraverso 
+  HTML completo server-side, performance tramite cache distribuita su CDN, 
+  e flessibilità per contenuti multilingua.
   
   \item \textbf{Design system condiviso}: definizione di una libreria di componenti 
   accessibili basata su ShadCN UI (Radix UI primitives) e Tailwind CSS, costruita 
@@ -61,10 +72,10 @@ feedback e iterare rapidamente sulle ottimizzazioni necessarie.
 L'intero processo è stato gestito con \textbf{approccio Agile} strutturato:
 
 \begin{itemize}
-  \item Sprint bisettimanali con planning e retrospettive dedicate
-  \item Daily standup per allineamento quotidiano del team
+  \item Sprint bisettimanali con planning e retrospettive dedicate.
+  \item Daily standup per allineamento quotidiano del team.
   \item Progettazione responsive fin dall'inizio per garantire user experience 
-        coerente su desktop, tablet e mobile
+        coerente su desktop, tablet e mobile.
 \end{itemize}
 
 Questa metodologia ha consentito di ridurre i rischi, migliorare la qualità
@@ -78,7 +89,7 @@ high-fidelity realizzati in Figma. Il processo ha incluso la definizione di
 \textbf{design tokens comuni} (colori, tipografia, spaziatura) condivisi tra 
 Figma e configurazioni Tailwind CSS di progetto, seguita dalla creazione di 
 \textbf{componenti modulari} con varianti responsive per garantire consistenza 
-visiva e riutilizzo tra le 6 landing pages principali.
+visiva e riutilizzo tra le sei landing pages principali.
 
 L'architettura componenti ha permesso di standardizzare elementi ricorrenti 
 garantendo il riutilizzo di molto del codice UI tra le diverse landing. Questo 
@@ -183,7 +194,6 @@ di inizializzazione Mixpanel, anonimizzazione automatica degli indirizzi IP
 e gestione opt-out utente.
 
 \bigskip
-In sintesi, la progettazione ha permesso di definire una base solida dal punto di
-vista tecnico e metodologico, con decisioni architetturali motivate e framework 
-scalabile, che ha guidato lo sviluppo e il dispiegamento presentati nei capitoli 
-successivi.
+In sintesi, la progettazione ha fornito una base metodologica e architetturale 
+solida che ha guidato in modo diretto le fasi di sviluppo, deployment e verifica 
+descritte nei capitoli successivi.

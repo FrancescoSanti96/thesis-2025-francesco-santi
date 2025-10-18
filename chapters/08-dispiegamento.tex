@@ -1,31 +1,34 @@
 \chapter{Dispiegamento in opera}
 
-\section{Architettura deployment}
+\section{Architettura di deployment}
 
-Il deployment delle landing pages Next.js è stato progettato seguendo 
-un'architettura cloud-native basata su containerizzazione Docker e 
-infrastruttura AWS.
+Il deployment delle landing pages Next.js è stato progettato secondo 
+un'architettura cloud-native basata su container Docker (tecnologia che 
+impacchetta l'applicazione e tutte le sue dipendenze in unità isolate 
+chiamate container) e infrastruttura AWS.
 
 \subsection{Stack deployment}
 
 L'applicazione è stata deployata su infrastruttura AWS con approccio cloud-native. 
 La scelta di AWS è coerente con l'infrastruttura già presente per gli altri 
 prodotti aziendali (backend Django, database PostgreSQL), permettendo di 
-riutilizzare competenze DevOps del team e mantenere consistency architetturale.
+riutilizzare competenze DevOps del team e mantenere consistenza architetturale.
 
-La strategia di rendering combina \textbf{Static Site Generation} (SSG) per 
-contenuti statici come le landing principali, con \textbf{Incremental Static 
-Regeneration} (ISR) e revalidation ogni ora per i contenuti dinamici. 
-Questo approccio ibrido garantisce tempi di caricamento ottimali attraverso 
-HTML pre-generato, mantenendo al contempo i contenuti aggiornati senza 
-necessità di rebuild completi dell'applicazione.
+La strategia di rendering combina Static Site Generation per contenuti statici 
+come le landing principali, con Incremental Static Regeneration e revalidation 
+ogni ora per i contenuti dinamici. Questo approccio ibrido garantisce tempi di 
+caricamento ottimali attraverso HTML pre-generato, mantenendo al contempo i 
+contenuti aggiornati senza necessità di rebuild completi dell'applicazione.
 
-La \textbf{containerizzazione Docker} utilizza multi-stage builds per 
-ottimizzazione delle dimensioni delle immagini finali. Le immagini Docker 
-vengono gestite tramite AWS Elastic Container Registry (ECR) nella region 
-eu-south-1, con repository separati per staging e production. Gli asset statici 
-(immagini, CSS, JavaScript) sono salvati su S3 storage per gestione efficiente 
-e caching distribuito tramite CloudFront CDN.
+La containerizzazione Docker adotta build multi-stage (processo in più fasi 
+che separa compilazione e runtime per ridurre le dimensioni finali dell'immagine) 
+per ottimizzazione delle dimensioni delle immagini finali. Le immagini Docker 
+vengono gestite tramite AWS Elastic Container Registry (ECR, registro per 
+archiviare e gestire immagini Docker) nella region eu-south-1, con repository 
+separati per staging e production. Gli asset statici (immagini, CSS, JavaScript) 
+sono salvati sul servizio di storage AWS S3 (Simple Storage Service) per 
+gestione efficiente e caching distribuito tramite CloudFront, Content Delivery 
+Network (CDN) globale di AWS.
 
 \section{Processo deployment}
 
@@ -40,16 +43,17 @@ a ogni step:
 
 \begin{enumerate}
   \item \textbf{Autenticazione}: login su AWS ECR tramite AWS CLI per autorizzare 
-        push delle immagini Docker;
+        push delle immagini Docker.
   \item \textbf{Validazione codice}: type checking TypeScript (\texttt{pnpm ts-check}) 
-        e linting ESLint (\texttt{pnpm lint}) per applicare gli standard di codifica del team;
+        e linting ESLint (\texttt{pnpm lint}) per applicare gli standard di codifica del team.
   \item \textbf{Build immagine}: compilazione immagine Docker con variabili 
-        ambiente specifiche per staging o production;
+        ambiente specifiche per staging o production.
   \item \textbf{Tag e versionamento}: applicazione tag all'immagine seguendo 
-        la nomenclatura repository ECR;
+        la nomenclatura repository ECR.
   \item \textbf{Push registry}: upload dell'immagine su AWS ECR nella regione eu-south-1.
 \end{enumerate}
 
+\medskip
 Questo processo strutturato garantisce validazione automatica del codice prima 
 di ogni deployment, riducendo il rischio di regressioni in produzione. La Figura 
 \ref{fig:deployment-pipeline} illustra il flusso completo dal codice locale fino 
@@ -76,18 +80,17 @@ L'\textbf{ambiente Production} con repository ECR dedicato serve il traffico
 reale degli utenti finali.
 
 Questa separazione rigorosa previene deploy accidentali in production e permette 
-validation approfondita delle modifiche. La configurazione ambiente viene caricata 
+validazione approfondita delle modifiche. La configurazione ambiente viene caricata 
 dinamicamente all'avvio del container tramite merge di file base con file specifico 
 per ambiente, separando codice applicativo da configurazioni.
 
 \section{Ottimizzazioni rendering}
 
 Le landing pages principali sfruttano un approccio ibrido di rendering basato su 
-\textbf{Static Site Generation (SSG)} per i contenuti statici e 
-\textbf{Incremental Static Regeneration (ISR)} per i contenuti dinamici, 
-con rigenerazione automatica ogni ora. Questo modello consente di garantire tempi 
-di caricamento ottimali e aggiornamenti periodici senza dover eseguire rebuild 
-completi dell'applicazione.
+Static Site Generation per i contenuti statici e Incremental Static Regeneration 
+per i contenuti dinamici, con rigenerazione automatica ogni ora. Questo modello 
+consente di garantire tempi di caricamento ottimali e aggiornamenti periodici 
+senza dover eseguire rebuild completi dell'applicazione.
 
 Un caso applicativo esteso di questa architettura è rappresentato dal 
 \textbf{blog tecnico aziendale}, già integrato nella codebase. In questo contesto, 
@@ -101,31 +104,12 @@ caricamento differito (lazy loading), conversione in formato WebP per browser
 moderni e generazione di versioni responsive, garantendo performance elevate 
 e qualità visiva su tutti i dispositivi.
 
-\section{Tracking e analytics}
-
-Il sistema di tracking implementato nelle landing pages integra diversi provider 
-per copertura completa degli analytics. \textbf{Google Analytics 4} fornisce 
-metriche di traffico e analisi comportamentale. \textbf{Google Tag Manager} 
-orchestra gli eventi custom verso i diversi provider. \textbf{Facebook Pixel} 
-traccia conversioni per campagne marketing con event deduplication per evitare 
-doppi conteggi. \textbf{Segment Analytics} gestisce tracking client-side per 
-analisi del percorso utente. Un sistema di \textbf{tracking server-side} tramite 
-API interna fornisce analisi lato server per garantire coerenza dei dati e 
-conformità GDPR.
-
-Tutti i provider implementano cookie consent GDPR-compliant con gestione 
-categorie analytics e marketing, garantendo conformità normativa europea.
-
 \section{Gestione contenuti e internazionalizzazione}
 
-Per la gestione dei contenuti dinamici è stata integrata un'area amministrativa 
-già presente nella codebase aziendale, utilizzata principalmente per la 
-pubblicazione di articoli del blog tecnico. L'interfaccia, accessibile tramite 
-autenticazione via magic link, consente la creazione di contenuti in formato 
-Markdown e attiva automaticamente la revalidation delle pagine interessate, 
-senza intervento diretto dei developer. Questa funzionalità dimostra 
-l'estendibilità dell'architettura di deployment anche a casi d'uso non 
-strettamente legati alle landing pages.
+L'architettura di deployment integra un'area amministrativa preesistente per 
+la gestione del blog tecnico aziendale, che utilizza lo stesso sistema di 
+revalidation on-demand delle landing pages. Questa integrazione dimostra la 
+scalabilità del sistema di rendering adottato.
 
 Il sistema di \textbf{internazionalizzazione} supporta italiano e inglese con 
 generazione automatica di route statiche per entrambe le lingue. Le traduzioni 
@@ -138,13 +122,15 @@ gli utenti alla versione più appropriata del sito.
 L'architettura di deployment ha garantito rilasci consistenti cross-ambiente grazie 
 a Docker multi-stage, separazione chiara degli ambienti staging e production su ECR, 
 e validazione automatica pre-deploy tramite TypeScript type checking ed ESLint. 
-La gestione efficiente degli asset statici con S3, il tracking analytics completo 
-multi-provider e la flessibilità nella gestione contenuti con CMS integrato 
-forniscono una foundation scalabile per l'ecosistema delle landing pages.
+La gestione efficiente degli asset statici con S3 e la flessibilità nella gestione 
+contenuti con area amministrativa integrata forniscono una base scalabile 
+per l'ecosistema delle landing pages.
 
 \bigskip
-L'infrastruttura fornisce una base solida con focus su developer experience 
-(pnpm, TypeScript strict) e performance rendering (SSG + ISR). 
-L'implementazione futura di pipeline CI/CD completamente automatizzata è prevista 
-in roadmap aziendale per aumentare la frequenza dei rilasci e ridurre ulteriormente 
-il time-to-market.
+L'infrastruttura fornisce una base solida orientata a developer experience 
+grazie all'uso di \texttt{pnpm} e alla configurazione \texttt{TypeScript strict}, 
+e performance rendering tramite Static Site Generation e Incremental Static 
+Regeneration. L'implementazione futura di pipeline CI/CD (Continuous Integration/
+Continuous Deployment, automazione completa del processo di test e rilascio) 
+completamente automatizzata, prevista in roadmap aziendale, consentirà di 
+aumentare ulteriormente la frequenza dei rilasci e ridurre il time-to-market.
