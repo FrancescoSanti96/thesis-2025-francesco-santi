@@ -1,10 +1,11 @@
 \chapter{Conclusioni e sviluppi futuri}
 
 \section{Sintesi dei risultati}
-Il progetto di redesign delle landing pages ha trasformato la presenza web di Datapizza
-da un'unica pagina generica a un ecosistema di sei landing specializzate. 
-Questo ha permesso di posizionare chiaramente i verticali aziendali, differenziare i messaggi
-per target specifici e introdurre strumenti concreti di marketing data-driven.
+Il progetto di redesign delle landing pages ha trasformato la presenza web aziendale 
+da un'unica landing generica in un ecosistema di sei pagine specializzate e 
+ottimizzate per target diversi. Questo ha permesso di posizionare chiaramente i 
+verticali aziendali, differenziare i messaggi per target specifici e introdurre 
+strumenti concreti, orientati al marketing data-driven.
 
 L'architettura realizzata ha dimostrato efficacia su tre dimensioni principali:
 \begin{itemize}
@@ -43,70 +44,52 @@ su codebase in produzione ha consolidato competenze immediatamente spendibili ne
 contesto professionale.
 
 \medskip
-Accanto al progetto principale, i contributi trasversali a Datapizza Jobs, Company
+Oltre al progetto principale, i contributi trasversali a Datapizza Jobs, Company
 e al gestionale interno hanno fornito una base di crescita significativa su frontend, 
 backend e concetti trasversali allo sviluppo software. L'ambiente stimolante, 
 caratterizzato da continui scambi, feedback costruttivi e code review rigorose, 
 ha accelerato l'apprendimento ben oltre quanto possibile in contesto accademico.
 
-\section{Limiti e criticità}
-Accanto ai risultati ottenuti e alle competenze acquisite, è importante riconoscere 
-alcuni aspetti migliorabili del progetto.
-
-
-\medskip
-Nonostante i risultati raggiunti, il lavoro presenta alcuni aspetti migliorabili. 
-L'implementazione di test A/B strutturati, pattern già utilizzato in altri 
-prodotti aziendali, potrebbe essere estesa alle landing pages per validare 
-iterazioni future e confrontare l'efficacia di differenti approcci per verticale. 
-Le scelte architetturali iniziali, come l'assenza di un CMS headless con gestione 
-dei contenuti direttamente via codice, rappresentano un trade-off tipico della 
-progettazione software che vincola parzialmente evoluzioni future e richiede 
-manutenzione tecnica continuativa. La timeline ristretta, con focus prioritario 
-sulla delivery, ha limitato il tempo disponibile per ottimizzazioni avanzate del 
-processo di deployment e approfondimenti su edge cases specifici.
-
 \section{Sviluppi futuri}
 
-Il progetto landing pages rappresenta una macro-release in un ecosistema software 
-più ampio. Gli sviluppi futuri variano in base alle priorità aziendali e ai diversi 
-prodotti su cui il team lavora.
+Il progetto landing pages rappresenta una macro-release (rilascio principale 
+trimestrale) in un ecosistema software più ampio che continuerà ad evolversi 
+in base alle priorità aziendali e alle necessità dei diversi verticali. Alcuni 
+aspetti del progetto attuale, pur funzionali agli obiettivi iniziali, possono 
+essere ulteriormente ottimizzati per supportare la crescita futura.
 
-\subsection{Evoluzione landing pages}
+\subsection{Ottimizzazione continua e testing}
 
-Con l'arrivo di un team marketing dedicato, l'approccio allo sviluppo evolverà 
-verso iterazioni più misurate e validate.
+L'architettura attuale garantisce solidità e performance, ma può beneficiare 
+di iterazioni progressive. L'implementazione di test A/B strutturati, pattern 
+già utilizzato in altri prodotti aziendali, permetterà di validare ipotesi 
+prima di rilasci definitivi e confrontare l'efficacia di differenti approcci 
+per verticale. Con l'arrivo di un team marketing dedicato, sarà possibile 
+testare varianti anche esternamente all'ecosistema per misurare l'impatto 
+prima dell'integrazione completa.
 
-L'implementazione di test A/B 
-strutturati permetterà di validare ipotesi prima di rilasci definitivi, con 
-possibilità di testare varianti anche esternamente all'ecosistema per misurare 
-l'impatto prima dell'integrazione completa. 
+L'ottimizzazione delle conversioni beneficerà dell'espansione del tracking 
+con heatmap e session recording per individuare punti di attrito nei flussi 
+di navigazione. Il rilascio di nuovi verticali seguirà un approccio iterativo 
+con micro-release e collaborazione frequente con i team design e product per 
+aggiustamenti rapidi.
 
-Il rilascio di nuovi verticali 
-seguirà un approccio meno invasivo rispetto alla macro-release iniziale, con 
-micro-iterazioni continue e collaborazione più frequente con i team design e 
-product per aggiustamenti rapidi. 
+\subsection{Evoluzione e manutenzione tecnologica}
 
-L'ottimizzazione delle conversioni beneficerà 
-dell'espansione del tracking con heatmap e session recording per identificare 
-friction points e ottimizzare i percorsi utente in modo data-driven.
+L'architettura attuale, funzionale agli obiettivi di time-to-market, può essere 
+evoluta per maggiore scalabilità. È in valutazione una migrazione verso 
+architettura monorepo con component library condivisa, già adottata su altri 
+prodotti aziendali (Jobs, Company), per massimizzare il riuso del codice e 
+garantire consistency tra tutte le piattaforme.
 
-\subsection{Evoluzione ecosistema tecnico}
+L'ecosistema richiede manutenzione continua per rimanere competitivo. Il 
+mantenimento dello stack tecnologico aggiornato (React, TypeScript, Next.js) 
+garantirà l'accesso a nuove funzionalità, miglioramenti di performance e patch 
+di sicurezza. Il monitoraggio continuo dei Core Web Vitals guiderà 
+l'implementazione di ottimizzazioni progressive per mantenere standard elevati 
+di user experience.
 
-L'ecosistema richiede manutenzione continua e aggiornamenti per rimanere 
-competitivo.
-
-Il mantenimento dello stack tecnologico aggiornato (Next.js, React, 
-TypeScript) garantirà l'accesso a nuove funzionalità, miglioramenti di 
-performance e patch di sicurezza. Il monitoraggio continuo dei Core Web Vitals 
-guiderà l'implementazione di ottimizzazioni progressive per mantenere standard 
-elevati di user experience. È in valutazione una migrazione verso architettura 
-monorepo con component library condivisa, già adottata su altri prodotti 
-aziendali (Jobs, Company), per massimizzare il riuso del codice e garantire 
-consistency anche sulle landing pages. L'integrazione di un CMS headless è in 
-roadmap per fornire autonomia al team marketing nella gestione dei contenuti, 
-mantenendo al contempo controllo tecnico su performance e SEO.
-
+\medskip
 Questi sviluppi, pianificati in accordo con le priorità aziendali e l'evoluzione 
 del mercato, consentiranno di consolidare ulteriormente il valore dell'ecosistema 
 landing pages nel medio-lungo termine.

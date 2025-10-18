@@ -8,78 +8,98 @@ indicizzazione ottimale sui motori di ricerca e scalabilità futura.
 
 \subsection{Frontend}
 
-Il framework principale è Next.js 15.3, che si basa su React 19 e TypeScript 
-5.7. Queste tecnologie erano già utilizzate nel progetto preesistente e sono 
+Il framework principale è Next.js 15, che si basa su React 19 e TypeScript 
+5.7. Queste tecnologie erano già in uso nel progetto precedente e sono 
 state mantenute durante il redesign per coerenza con l'intero ecosistema 
 tecnologico aziendale.
 
 \paragraph{React 19}
 React è la libreria JavaScript per costruire interfacce utente component-based, 
-utilizzata in tutti i prodotti Datapizza (Jobs, Company, gestionale). Questa 
-coerenza garantisce riutilizzo di componenti, competenze consolidate del team e 
-facilita l'onboarding di nuovi sviluppatori. L'approccio component-based permette 
-di creare UI modulari e riutilizzabili attraverso paradigma dichiarativo, 
-facilitando manutenzione e scalabilità del codice.
+utilizzata in tutti i principali prodotti Datapizza (Jobs, Company, gestionale 
+interno). Questa coerenza tecnologica garantisce riuso del codice, competenze 
+consolidate del team e facilita l'inserimento di nuovi sviluppatori. L'approccio 
+component-based permette di costruire interfacce modulari suddividendo 
+l'interfaccia in componenti indipendenti e riutilizzabili, facilitando la 
+manutenzione e la scalabilità del codice.
 
-Uno degli aspetti che rende React particolarmente efficiente è l'uso del Virtual 
-DOM, una rappresentazione virtuale dell'interfaccia. Quando qualcosa cambia 
-nell'applicazione, React identifica automaticamente solo le parti effettivamente 
-modificate e aggiorna esclusivamente quelle, evitando di ricaricare elementi 
-inutilmente. Questo approccio migliora significativamente le performance 
-percepite dall'utente. Gli Hooks permettono di gestire stato e logica in 
-componenti funzionali, semplificando il codice e la riutilizzabilità della 
-logica applicativa.
+Uno degli aspetti che rende React particolarmente efficiente è il Virtual DOM, 
+una rappresentazione virtuale dell'interfaccia mantenuta in memoria. Quando 
+l'applicazione cambia, React calcola automaticamente le differenze rispetto 
+alla versione precedente e aggiorna solo gli elementi effettivamente modificati 
+nel DOM reale, evitando operazioni costose e migliorando le performance 
+percepite dall'utente.
 
 \paragraph{TypeScript 5.7}
-A supporto di React, il progetto utilizza TypeScript 5.7, un superset di 
+A supporto di React è stato adottato TypeScript 5.7, un superset di 
 JavaScript che aggiunge type safety statico, ormai standard per applicazioni 
-moderne in contesti production. L'adozione di TypeScript riduce drasticamente i 
-bug in produzione grazie al type checking in fase di sviluppo: errori comuni 
-come accesso a proprietà inesistenti o passaggio di parametri errati vengono 
-intercettati dal compilatore prima del deployment. In un contesto production 
-come le landing pages, dove bug critici impattano direttamente le conversioni, 
-TypeScript è fondamentale per minimizzare errori.
+moderne in contesti production. L'adozione di TypeScript riduce significativamente 
+la probabilità di errori in produzione grazie al type checking in fase di 
+sviluppo: errori comuni come accesso a proprietà inesistenti o passaggio di 
+parametri errati vengono intercettati dal compilatore prima del deployment. 
+In un contesto production come le landing pages, dove errori critici impattano 
+direttamente le conversioni, TypeScript è fondamentale per garantire affidabilità.
 
 TypeScript migliora significativamente il lavoro in team rendendo il codice più 
-strutturato e auto-documentato. L'autocompletion intelligente negli IDE e il 
-refactoring sicuro automatizzato accelerano lo sviluppo e riducono il tempo di 
-onboarding di nuovi sviluppatori sul codebase.
+strutturato e auto-documentato. L'autocompletion intelligente negli IDE accelera 
+lo sviluppo, mentre il supporto al refactoring permette modifiche strutturali 
+sicure, riducendo il tempo di apprendimento per nuovi sviluppatori.
+
+\medskip
+L'integrazione tra React e TypeScript costituisce la base su cui si innesta 
+Next.js, framework che fornisce funzionalità avanzate di rendering essenziali 
+per landing pages SEO-oriented.
 
 \paragraph{Next.js 15}
-Next.js è il framework React che fornisce le funzionalità essenziali per landing 
-pages SEO-oriented. La scelta di Next.js rispetto a React vanilla si basa su 
-tre vantaggi fondamentali per il progetto.
+Next.js è un framework React ampiamente adottato per lo sviluppo di applicazioni 
+production-ready, fornendo funzionalità avanzate di rendering e ottimizzazione. 
+La scelta di Next.js rispetto a React standalone si basa su tre vantaggi 
+fondamentali per il progetto.
 
-Il rendering ibrido combina Server-Side Rendering per pagine dinamiche con 
-contenuti statici memorizzati in cache che possono essere aggiornati 
-periodicamente senza rigenerare l'intero sito (Incremental Static Regeneration). 
-Questo approccio ottimizza sia i tempi di caricamento che l'aggiornamento dei 
-contenuti. Il SEO nativo garantisce che i motori di ricerca ricevano HTML 
-completo immediatamente, fondamentale per indicizzazione e traffico organico. 
-Il code splitting automatico suddivide il codice in bundle separati per ogni 
-route, riducendo il payload iniziale dell'applicazione.
+Il rendering ibrido combina diverse strategie di generazione delle pagine: 
+Server-Side Rendering (SSR) per generare HTML dinamico ad ogni richiesta, 
+Static Site Generation (SSG) per pre-generare pagine statiche in fase di build, 
+e Incremental Static Regeneration (ISR) che estende SSG permettendo 
+l'aggiornamento incrementale di contenuti statici senza rigenerare l'intero 
+sito. Questo approccio ottimizza sia i tempi di caricamento che la freschezza 
+dei contenuti.
 
-Next.js supporta nativamente la configurazione multilingua, estesa in questo 
-progetto tramite la libreria next-intl per gestire i percorsi dedicati (/it/ e 
-/en/). Il componente next/image ottimizza automaticamente le immagini 
-convertendole in formato WebP, caricandole solo quando visibili sullo schermo 
-(lazy loading) e adattandole alle diverse dimensioni di dispositivo, riducendo 
-il peso delle immagini principali mantenendo qualità visiva.
+Il SEO nativo garantisce che i motori di ricerca ricevano HTML completo 
+server-side, fondamentale per indicizzazione efficace e traffico organico. 
+Il code splitting automatico suddivide il codice in bundle separati per 
+ogni route, caricando solo lo stretto necessario per la pagina corrente 
+e riducendo il tempo di primo caricamento.
+
+Next.js supporta nativamente il routing internazionalizzato, esteso in questo 
+progetto tramite la libreria next-intl per gestire i percorsi localizzati 
+(/it/ e /en/). Il componente next/image ottimizza automaticamente le immagini: 
+conversione in formato moderno (WebP/AVIF), caricamento differito quando 
+l'immagine entra nel viewport (lazy loading), e generazione di varianti 
+responsive per adattarsi alle dimensioni del dispositivo, riducendo il peso 
+complessivo mantenendo qualità visiva.
 
 \subsection{Styling e UI}
 
 Per garantire coerenza visiva con l'identità aziendale, il sistema di styling 
-si basa su Tailwind CSS 3.4 con component library ShadCN UI. Tailwind CSS 
-permette di costruire interfacce utilizzando classi predefinite direttamente nel 
-codice HTML, senza necessità di scrivere file CSS separati. Tutte le classi 
-vengono compilate in CSS statico durante la fase di build, garantendo che 
-nessun codice aggiuntivo venga eseguito nel browser.
+si basa su Tailwind CSS integrato con la component library ShadCN UI.
 
-ShadCN UI fornisce componenti accessibili basati su Radix UI con conformità agli 
-standard di accessibilità WCAG 2.1 integrata. A differenza di una libreria 
-installabile tradizionale, ShadCN UI genera componenti direttamente nel progetto 
-tramite CLI, permettendo pieno controllo sul codice e garantendo accessibilità 
-nativa attraverso le primitive di Radix UI.
+Tailwind CSS è un framework CSS utility-first (approccio basato su classi 
+utilitarie) che permette di costruire interfacce applicando classi predefinite 
+direttamente nel markup HTML, eliminando la necessità di scrivere file CSS 
+separati. A differenza dei framework tradizionali basati su componenti 
+pre-stilizzati (come Bootstrap), Tailwind fornisce classi atomiche di basso 
+livello che compongono lo stile finale. Durante la fase di build, solo le 
+classi effettivamente utilizzate vengono compilate nel CSS finale, riducendo 
+drasticamente le dimensioni del bundle e garantendo tempi di caricamento ridotti.
+
+ShadCN UI completa l'infrastruttura di styling fornendo componenti accessibili 
+basati sulle primitive Radix UI, con conformità nativa agli standard WCAG 2.1 
+livello AA. A differenza delle librerie tradizionali, ShadCN UI genera i 
+componenti direttamente nel progetto tramite command-line interface, garantendo 
+pieno controllo sul codice senza dipendenze esterne rigide. L'integrazione con 
+Tailwind permette di stilizzare i componenti con utility classes, combinando 
+accessibilità e flessibilità di design. Entrambe le tecnologie garantiscono 
+conformità WCAG 2.1 livello AA, requisito verificato durante la fase di 
+testing (v. Capitolo 9).
 
 \subsection{Librerie complementari}
 
@@ -87,24 +107,65 @@ Per animazioni e interattività avanzate, il progetto utilizza Framer Motion per
 animazioni fluide nelle sezioni principali (Hero sections) e Three.js con React 
 Three Fiber per visualizzazioni 3D sulla landing AI Engineering. La gestione dei 
 form si basa su React Hook Form per performance ottimali e Zod per validazione 
-dello schema dati con supporto TypeScript integrato sui form di acquisizione 
-lead.
+dello schema dati con supporto TypeScript integrato sui form di acquisizione lead.
+
+Il tracking degli eventi utente è gestito tramite Mixpanel, piattaforma di 
+product analytics che permette di tracciare interazioni personalizzate e 
+costruire funnel di conversione differenziati per verticale. A differenza di 
+strumenti generici come Google Analytics, Mixpanel offre granularità event-based: 
+ogni interazione utente (click su call-to-action, scroll della pagina, apertura 
+form) viene tracciata come evento discreto, permettendo analisi dettagliate del 
+customer journey. L'SDK Mixpanel viene inizializzato lato client solo dopo 
+consenso esplicito dell'utente tramite cookie banner, in conformità al GDPR 
+mediante anonimizzazione degli indirizzi IP e gestione delle preferenze di 
+privacy.
 
 \subsection{Backend per dati dinamici}
 
-Alcune funzionalità delle landing pages necessitano di un backend per 
-elaborazioni più complesse. Il backend Django gestisce l'invio dei form con 
-validazione lato server per garantire sicurezza, l'integrazione con il servizio 
-di email automation Customer.io per la newsletter "Commit", il recupero in tempo 
-reale delle opportunità lavorative dal database PostgreSQL, e il tracking degli 
-eventi utente tramite Mixpanel con conformità GDPR. Lo stack si basa su Django 
-4.x con PostgreSQL 15 e Python 3.9.
+Alcune funzionalità delle landing pages richiedono elaborazioni lato server 
+che il frontend non può gestire autonomamente, come la validazione sicura dei 
+form, l'integrazione con servizi esterni e l'accesso al database aziendale.
+
+Il backend è condiviso tra tutti i prodotti Datapizza: oltre alle landing pages, 
+serve le applicazioni Jobs (lato candidati), Company (lato aziende) e il CRM 
+interno. Questa architettura unificata consente una manutenzione centralizzata 
+e garantisce consistenza dei dati tra piattaforme.
+
+\paragraph{Django e Python}
+Il backend si basa su Django, framework web scritto in Python. Python è un 
+linguaggio di programmazione ad alto livello, apprezzato per la sua semplicità 
+sintattica e il vasto ecosistema di librerie, particolarmente ricco nell'ambito 
+data science e intelligenza artificiale. Django fornisce un'architettura robusta 
+per costruire API REST in modo rapido e sicuro, con strumenti integrati per 
+autenticazione, gestione database e validazione dati.
+
+\paragraph{PostgreSQL}
+Il database utilizzato è PostgreSQL, sistema di gestione database relazionale 
+open-source. PostgreSQL organizza i dati in tabelle strutturate collegate tra 
+loro tramite relazioni, garantendo integrità referenziale e consistenza. Nel 
+contesto del progetto, PostgreSQL gestisce le opportunità lavorative visualizzate 
+sulla Jobs Platform, i dati degli utenti registrati e le informazioni aziendali.
+
+\paragraph{Funzionalità principali}
+Il backend gestisce diverse integrazioni critiche per il funzionamento delle 
+landing pages. I form di contatto passano attraverso validazione lato server 
+per prevenire input malevoli e garantire che solo dati validi raggiungano il 
+database. L'integrazione con Customer.io, piattaforma di email automation, 
+gestisce le iscrizioni alla newsletter "Commit" e l'invio di comunicazioni 
+personalizzate agli oltre 500.000 iscritti della community. Il sistema fornisce 
+inoltre API per il recupero in tempo reale delle opportunità lavorative 
+visualizzate sulla Jobs Platform.
+
+Deployato su infrastruttura cloud AWS, lo stack backend completo si basa su 
+Django 4.x, PostgreSQL 15 e Python 3.9, per garantire scalabilità e disponibilità. 
+L'infrastruttura cloud descritta costituisce la base del processo di deployment 
+trattato nel Capitolo 8.
 
 \section{Stack tecnologico aziendale}
 
-L'ecosistema Datapizza (Jobs, Company, gestionale) condivide uno stack 
-unificato per garantire coerenza tecnologica e riutilizzo di competenze tra 
-prodotti. La Tabella~\ref{tab:stack-aziendale} fornisce una panoramica 
+L'ecosistema Datapizza (Jobs, Company, gestionale, landing pages) condivide 
+uno stack unificato per garantire coerenza tecnologica e riutilizzo di competenze 
+tra prodotti. La Tabella~\ref{tab:stack-aziendale} fornisce una panoramica 
 completa delle tecnologie adottate a livello aziendale.
 
 \begin{table}[h]
@@ -138,33 +199,13 @@ Tools & Customer.io & Email automation (500k+ iscritti) \\
 \end{tabular}
 \end{table}
 
-\subsection{Motivazioni architetturali}
-
-Lo stack è stato selezionato per tre obiettivi principali. Sul frontend, React 
-con TypeScript garantisce coerenza tecnologica tra tutti i prodotti aziendali, 
-permettendo riutilizzo di componenti UI e competenze condivise del team. React 
-Query gestisce la sincronizzazione dei dati con il server attraverso un sistema 
-di cache intelligente, riducendo le chiamate ripetute alle API e migliorando la 
-velocità percepita dall'utente. TanStack Router, adottato progressivamente sul 
-gestionale CRM, fornisce routing type-safe con validazione statica dei percorsi.
-
-Sul backend, Django con PostgreSQL costituisce lo stack verticale Python, 
-scelto per la consolidata expertise del team e l'ecosistema ricco di librerie 
-per intelligenza artificiale e machine learning.
-
-L'infrastruttura AWS fornisce scalabilità automatica e conformità GDPR 
-attraverso data center localizzati in Europa (region eu-south-1). Le landing 
-pages sono distribuite come container Docker gestiti tramite AWS Elastic 
-Container Registry, con S3 per l'archiviazione di immagini e file statici, e 
-CloudFront CDN per distribuzione globale dei contenuti. AWS Lambda gestisce le 
-integrazioni AI serverless con scalabilità automatica in base al carico.
-
 \section{Development tools e workflow}
 
 Il team utilizza una suite integrata di strumenti per garantire efficienza, 
 qualità del codice e collaborazione efficace. La Tabella~\ref{tab:dev-tools} 
 riassume le principali tecnologie adottate.
 
+\clearpage
 \begin{table}[h]
 \centering
 \caption{Strumenti di sviluppo e workflow}
