@@ -22,13 +22,6 @@ component-based permette di costruire interfacce modulari suddividendo
 l'interfaccia in componenti indipendenti e riutilizzabili, facilitando la 
 manutenzione e la scalabilità del codice.
 
-Uno degli aspetti che rende React particolarmente efficiente è il Virtual DOM, 
-una rappresentazione virtuale dell'interfaccia mantenuta in memoria. Quando 
-l'applicazione cambia, React calcola automaticamente le differenze rispetto 
-alla versione precedente e aggiorna solo gli elementi effettivamente modificati 
-nel DOM reale, evitando operazioni costose e migliorando le performance 
-percepite dall'utente.
-
 \paragraph{TypeScript 5.7}
 A supporto di React è stato adottato TypeScript 5.7, un superset di 
 JavaScript che aggiunge type safety statico, ormai standard per applicazioni 
@@ -43,11 +36,6 @@ TypeScript migliora significativamente il lavoro in team rendendo il codice più
 strutturato e auto-documentato. L'autocompletion intelligente negli IDE accelera 
 lo sviluppo, mentre il supporto al refactoring permette modifiche strutturali 
 sicure, riducendo il tempo di apprendimento per nuovi sviluppatori.
-
-\medskip
-L'integrazione tra React e TypeScript costituisce la base su cui si innesta 
-Next.js, framework che fornisce funzionalità avanzate di rendering essenziali 
-per landing pages SEO-oriented.
 
 \paragraph{Next.js 15}
 Next.js è un framework React ampiamente adottato per lo sviluppo di applicazioni 
@@ -97,9 +85,7 @@ livello AA. A differenza delle librerie tradizionali, ShadCN UI genera i
 componenti direttamente nel progetto tramite command-line interface, garantendo 
 pieno controllo sul codice senza dipendenze esterne rigide. L'integrazione con 
 Tailwind permette di stilizzare i componenti con utility classes, combinando 
-accessibilità e flessibilità di design. Entrambe le tecnologie garantiscono 
-conformità WCAG 2.1 livello AA, requisito verificato durante la fase di 
-testing (v. Capitolo 8).
+accessibilità e flessibilità di design.
 
 \subsection{Librerie complementari}
 
@@ -158,8 +144,20 @@ visualizzate sulla Jobs Platform.
 
 Deployato su infrastruttura cloud AWS, lo stack backend completo si basa su 
 Django 4.x, PostgreSQL 15 e Python 3.9, per garantire scalabilità e disponibilità. 
-L'infrastruttura cloud descritta costituisce la base del processo di deployment 
-trattato nel Capitolo 7.
+L'infrastruttura di deployment su AWS è dettagliata nel Capitolo 7, mentre 
+la Figura~\ref{fig:stack-landing} illustra l'architettura applicativa 
+complessiva delle landing pages.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.52\textwidth]{chapters/figures/stack2.pdf}
+    \caption{Architettura applicativa delle landing pages che mostra 
+    l'interazione tra frontend e backend 
+ tramite API REST.}
+    \label{fig:stack-landing}
+\end{figure}
+
+\clearpage
 
 \section{Stack tecnologico aziendale}
 
