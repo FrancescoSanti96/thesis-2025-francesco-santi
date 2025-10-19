@@ -1,111 +1,97 @@
-\chapter{Verifica sperimentale}
+\chapter{Verifica e risultati}
 
 \section{Testing e validazione}
 
-La fase di verifica ha coperto testing funzionale (routing multilingua, form 
-submission, tracking Mixpanel), cross-browser compatibility (Chrome, Firefox, 
-Safari, Edge su desktop e mobile), e usabilità con beta testing su 10 utenti 
-interni (rating medio 8/10). Le modifiche iterative hanno migliorato contrasto 
-testi e dimensione call-to-action mobile.
+La fase di verifica ha seguito un approccio strutturato su più livelli per 
+garantire qualità e affidabilità delle landing pages prima del rilascio 
+pubblico. Il testing funzionale ha coperto il routing multilingua tra versioni 
+italiana e inglese, la validazione dei form di contatto con gestione degli 
+errori, e l'integrazione del sistema di tracking Mixpanel per gli eventi utente. 
+La compatibilità cross-browser è stata verificata su Chrome, Firefox, Safari ed 
+Edge, testando sia versioni desktop che mobile per garantire esperienza 
+consistente su tutti i dispositivi.
 
-\section{Risultati performance e accessibilità}
+Il beta testing interno ha coinvolto stakeholder aziendali (team product, 
+marketing e sales) che hanno utilizzato le landing in scenari reali, fornendo 
+feedback su usabilità e chiarezza dei messaggi. Le iterazioni successive hanno 
+permesso di ottimizzare elementi critici come il contrasto dei testi per 
+migliorare la leggibilità e le dimensioni delle call-to-action su dispositivi 
+mobile per facilitare l'interazione touch.
 
-Il redesign ha portato miglioramenti significativi su tutte le metriche Lighthouse, 
-come mostrato nella Figura \ref{fig:lighthouse-comparison}. Il performance score 
-è passato da 65/100 a 94/100, l'accessibilità da 78/100 a 98/100, mentre SEO e 
-Best Practices hanno raggiunto 100/100. Il bundle JavaScript è stato ridotto del 
-50\% (da 850KB a 420KB) tramite code splitting e cleanup dependencies.
+\section{Risultati performance}
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/figures/lighthouse-comparison.pdf}
-    \caption{Confronto score Lighthouse pre e post-redesign.}
-    \label{fig:lighthouse-comparison}
-\end{figure}
+Il redesign ha portato miglioramenti significativi su performance, accessibilità 
+e SEO, validati attraverso test su dispositivi reali e strumenti di analisi 
+standard. Le ottimizzazioni implementate includono code splitting del JavaScript, 
+lazy loading delle immagini e cleanup delle dipendenze, risultando in tempi di 
+caricamento ridotti e esperienza utente fluida su tutti i dispositivi.
 
-Le Core Web Vitals hanno raggiunto tutti i target: First Contentful Paint 1.4s, 
-Largest Contentful Paint 2.1s, Cumulative Layout Shift 0.04, Time to Interactive 
-2.6s, Total Blocking Time 180ms (tutti in range "Good" su Google Search Console). 
-L'accessibilità WCAG 2.1 livello AA è compliant al 100\% con test screen reader 
-NVDA, keyboard navigation e contrasto colori verificati. La validazione SEO 
-conferma meta tags ottimizzati, structured data JSON-LD e tutte le sei landing 
-indicizzate correttamente entro due settimane.
+L'accessibilità conforme agli standard WCAG 2.1 livello AA è stata validata 
+attraverso test con screen reader e navigazione completa da tastiera, garantendo 
+fruibilità del sito a utenti con diverse tipologie di disabilità. Le Figure 
+\ref{fig:landing-desktop} e \ref{fig:landing-mobile} mostrano il risultato finale 
+implementato, evidenziando il design coerente tra versioni desktop e mobile.
 
-\section{Tracking e analytics}
+%\begin{figure}[h!]
+%    \centering
+%    \includegraphics[width=\textwidth]{chapters/figures/landing-desktop.pdf}
+%    \caption{Screenshot della landing AI Engineering in versione desktop.}
+%    \label{fig:landing-desktop}
+%\end{figure}
 
-Il sistema Mixpanel ha monitorato 95.000 eventi mensili su 30 giorni post-lancio. 
-La Figura \ref{fig:mixpanel-funnel} mostra i funnel di conversione per verticale.
+%\begin{figure}[h!]
+ %   \centering
+%    \includegraphics[width=0.5\textwidth]{chapters/figures/landing-mobile.pdf}
+%    \caption{Screenshot della landing Jobs Platform in versione mobile.}
+%    \label{fig:landing-mobile}
+%\end{figure}
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/figures/mixpanel-funnel.pdf}
-    \caption{Funnel di conversione per verticale B2B, B2C e Community.}
-    \label{fig:mixpanel-funnel}
-\end{figure}
+\section{Criticità post-lancio e risoluzione}
 
-I funnel evidenziano performance differenziate: B2B (Recruiting, AI Adoption, AI 
-Engineering) con 4.5\% conversion rate complessivo da 15.200 visualizzazioni a 
-680 lead qualificati mensili, Community newsletter con 24\% conversion da 11.800 
-visualizzazioni a 2.800 iscrizioni mensili, e Jobs Platform con 5\% application 
-rate da 18.500 visualizzazioni a 920 candidature mensili. Le metriche engagement 
-confermano efficacia dell'esperienza utente: tempo medio sessione 2 minuti e 45 
-secondi (superiore al target di 2 minuti), bounce rate 42\% rispetto al baseline 
-del 68\% (riduzione relativa del 38\%), scroll depth medio 58\%, e click-through 
-rate sulle call-to-action del 19\%. Il traffico di 45.000 utenti mensili è 
-prevalentemente organico (62\%) e mobile (58\%), validando l'approccio mobile-first 
-del design.
+Nelle prime settimane dopo il rilascio è emersa una problematica sui form di 
+contatto delle landing B2B: il sistema registrava doppi invii causando lead 
+duplicati nel CRM del team sales. L'analisi ha rivelato che il pulsante "Invia" 
+non si disabilitava immediatamente, permettendo click multipli durante il 
+processing, e mancava feedback visivo chiaro post-submit.
 
-\section{Problemi riscontrati e risoluzioni}
+La risoluzione ha implementato la disabilitazione automatica del pulsante al 
+primo click e un alert di conferma esplicito che comunica l'avvenuto 
+completamento. Il deployment completato in una settimana ha eliminato 
+completamente i doppi invii. Questo incident ha consolidato best practices 
+per sviluppi futuri: testing con scenari stress, feedback visivo obbligatorio 
+fin dal design, e monitoring granulare post-deploy.
 
-Nelle prime settimane post-lancio è emersa una problematica sui form di contatto 
-delle landing B2B: il sistema registrava doppi invii causando confusione utente 
-e lead duplicati nel CRM del team sales. L'analisi della root cause ha rivelato 
-due problematiche correlate: il pulsante "Invia" non si disabilitava immediatamente 
-permettendo click multipli durante il processing, e mancava feedback visivo chiaro 
-post-submit lasciando l'utente in stato di incertezza sul completamento dell'azione.
+\section{Tracking e monitoraggio}
 
-La risoluzione in due iterazioni ha implementato disabilitazione automatica del 
-pulsante al primo click e alert di conferma esplicito post-submit (Figura 
-\ref{fig:form-success}) che comunica chiaramente l'avvenuto completamento e le 
-tempistiche di follow-up. Il deployment completato in una settimana ha eliminato 
-completamente i doppi invii.
+Il sistema di tracking Mixpanel implementato permette di monitorare il customer 
+journey completo attraverso funnel di conversione differenziati per verticale. 
+La Figura \ref{fig:mixpanel-dashboard} mostra un esempio di dashboard analytics 
+che evidenzia le metriche di engagement e i punti di drop-off nel percorso utente, 
+abilitando ottimizzazioni data-driven delle landing pages.
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/figures/form-success-alert.pdf}
-    \caption{Alert di conferma implementato per feedback post-submit.}
-    \label{fig:form-success}
-\end{figure}
+%\begin{figure}[h!]
+%    \centering
+%    \includegraphics[width=\textwidth]{chapters/figures/mixpanel-dashboard.pdf}
+%    \caption{Dashboard Mixpanel che mostra funnel di conversione e metriche 
+%    di engagement per analisi data-driven.}
+%    \label{fig:mixpanel-dashboard}
+%\end{figure}
 
-Un issue minore riguardava il tracking Mixpanel su Safari in modalità Private 
-Browsing (circa 5\% utenti iOS) dove il blocco di localStorage impediva la 
-persistenza degli eventi. La soluzione con tracking session-based è stata deployata 
-in sprint successivo. Questi incident hanno consolidato best practices: testing 
-con scenari stress (double-click, connettività degradata), feedback visivo 
-obbligatorio fin dalla fase di design, e monitoring granulare per device type e 
-browser specifici.
+\section{Risultati complessivi}
 
-\section{Risultati rispetto agli obiettivi}
+Il progetto ha raggiunto gli obiettivi tecnici e di business definiti nei 
+capitoli precedenti. Le performance sono state ottimizzate su tutti i dispositivi, 
+l'accessibilità è verificata conformemente agli standard WCAG 2.1 livello AA, 
+e le ottimizzazioni SEO hanno garantito indicizzazione corretta su tutti i motori 
+di ricerca. L'architettura modulare implementata garantisce scalabilità concreta 
+con tempo stimato di 2-4 settimane per sviluppare nuove landing verticali 
+riutilizzando i componenti esistenti.
 
-Gli obiettivi tecnici definiti nel Capitolo 4 sono stati raggiunti: performance 
-score Lighthouse 94/100 (target superiore a 90), accessibilità WCAG 2.1 AA 
-compliant al 100\%, SEO e Best Practices 100/100, e Core Web Vitals tutti in 
-range "Good". L'architettura modulare implementata garantisce scalabilità con 
-tempo stimato di 2-4 settimane per sviluppare nuove landing verticali riutilizzando 
-componenti esistenti.
-
-Sul fronte business, le landing generano complessivamente 4.400 lead mensili 
-distribuiti tra verticali: 680 lead B2B qualificati con conversion rate del 4.5\%, 
-2.800 iscrizioni newsletter Community con conversion rate del 24\%, e 920 
-candidature Jobs Platform con application rate del 5\%. Il bounce rate è migliorato 
-da 68\% a 42\% (riduzione relativa del 38\%) mentre il tempo medio sessione di 
-2 minuti e 45 secondi supera il target di 2 minuti. I conversion rate ottenuti 
-sono in linea con industry benchmarks per il settore. Il traffico totale di 45.000 
-utenti mensili si distribuisce: Home 35\%, Jobs 28\%, Tech Recruiting 18\%, 
-Community 12\%, verticali AI 7\%. Metriche business a lungo termine come ROI 
-campagne marketing e riduzione CAC richiedono periodo di analisi più esteso dei 
-30 giorni documentati.
+Le landing pages hanno abilitato il posizionamento chiaro dei quattro verticali 
+aziendali con messaggi differenziati per target B2B e B2C. Il sistema di tracking 
+fornisce al team marketing visibilità completa sui funnel di conversione, 
+permettendo ottimizzazioni continue basate su dati reali.
 
 \bigskip
-Il progetto ha raggiunto gli obiettivi prefissati fornendo foundation scalabile 
-per crescita futura e validando l'approccio multi-landing con tracking avanzato.
+Il progetto ha fornito una base scalabile e performante per la crescita futura, 
+validando l'approccio multi-landing con architettura modulare riutilizzabile.

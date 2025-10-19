@@ -2,106 +2,116 @@
 
 \section{Processo di sviluppo}
 Lo sviluppo delle landing pages è stato organizzato con un approccio
-iterativo basato su sprint bisettimanali. Ogni sprint prevedeva
+\textbf{agile iterativo} basato su sprint bisettimanali. Ogni sprint prevedeva
 pianificazione delle priorità, sviluppo incrementale, revisione del
-codice e demo finale con stakeholder per raccogliere feedback.  
-Il workflow ha incluso code review obbligatoria su ogni Pull Request,
-testing continuo su ambiente \textit{staging} e rilascio progressivo
-per singola landing.
+codice.
+Il workflow ha incluso code review obbligatoria su ogni \textit{Pull Request} 
+prima del merge sul branch principale, testing continuo su ambiente 
+\textit{staging} e rilascio progressivo per singola landing.
 
 \section{Fasi di implementazione}
 Il progetto è stato articolato in quattro fasi principali:
 
-
 \begin{itemize}
   \item \textbf{Fase 1 – Architettura e design system}: setup del progetto
   Next.js con App Router, configurazione multilingua e definizione del design
-  system base con Tailwind e ShadCN.
+  system base con Tailwind CSS e ShadCN UI.
   \item \textbf{Fase 2 – Sviluppo landing pages}: implementazione progressiva
-  delle sei landing, a partire dalla Home Page (validazione del design system) fino alla Jobs Platform.
+  delle sei landing, a partire dalla Home Page (validazione del design system) 
+  fino alla Jobs Platform.
   \item \textbf{Fase 3 – Tracking e ottimizzazione}: integrazione completa di
-  Mixpanel, funnel di conversione per verticale, cookie consent GDPR e
-  ottimizzazioni SEO e performance.
+  Mixpanel e altri provider analytics, funnel di conversione per verticale, 
+  cookie consent GDPR e ottimizzazioni SEO e performance.
   \item \textbf{Fase 4 – Deploy e monitoring}: rilascio graduale in produzione,
-  monitoraggio in tempo reale con Mixpanel e Vercel Analytics, e documentazione finale.
+  monitoraggio in tempo reale e documentazione finale.
 \end{itemize}
 
 \section{Sviluppo delle landing}
-Le landing sono state sviluppate seguendo priorità strategiche. La
-\textbf{Home Page} è stata la prima, hub centrale con routing verso i verticali
-e social proof aziendali.  
-Sono seguite le pagine \textbf{Tech Recruiting} e \textbf{Community}, rispettivamente orientate a lead generation B2B e alla crescita della community.  
-Successivamente sono state realizzate \textbf{AI Adoption} e \textbf{AI Engineering}, focalizzate sui servizi enterprise, e infine la \textbf{Jobs Platform}, progettata mobile–first con ricerca avanzata e trasparenza salariale.  
+Le landing sono state sviluppate seguendo priorità strategiche, con approccio 
+mobile-first applicato a tutte le sei pagine per garantire esperienza ottimale 
+su dispositivi mobili. La \textbf{Home Page} è stata sviluppata per prima come 
+hub centrale con routing verso i verticali e social proof aziendale, permettendo 
+di validare il design system e i componenti base riutilizzabili. Sono seguite 
+le pagine \textbf{Tech Recruiting}, orientata a lead generation B2B per aziende 
+in cerca di talenti tech, e \textbf{Tech Community}, focalizzata sulla crescita 
+della community con target B2C (developer e tech enthusiast) e B2B (brand 
+awareness per aziende partner). Queste prime landing hanno consolidato i pattern 
+di interazione e i funnel di conversione differenziati per target. Successivamente 
+sono state realizzate \textbf{AI Adoption} e \textbf{AI Engineering}, entrambe 
+focalizzate su servizi enterprise B2B con contenuti più complessi e showcase 
+progetti. Infine è stata implementata la \textbf{Jobs Platform}, orientata B2C 
+per candidati in cerca di opportunità, che integra ricerca avanzata, filtri 
+dinamici e trasparenza salariale riutilizzando i componenti già validati nelle 
+landing precedenti.
 
 \section{Implementazione architettura}
 Come progettato nel capitolo precedente, l'implementazione ha seguito le decisioni 
-architetturali chiave: monorepo Next.js con 6 route dedicate, SSG con ISR per 
-performance ottimali, e design system basato su ShadCN UI.
+architetturali chiave: monorepo Next.js con sei route dedicate, Static Site 
+Generation con Incremental Static Regeneration per performance ottimali, e 
+design system basato su ShadCN UI.
 
-Dal punto di vista tecnico, lo sviluppo ha previsto tre aree principali:
+Dal punto di vista tecnico, lo sviluppo ha previsto tre aree principali. 
+L'architettura componenti ha realizzato una libreria di elementi riutilizzabili 
+con TypeScript per garantire consistenza e riuso tra le sei landing pages. 
+Il routing e rendering ha implementato generazione statica con revalidazione 
+oraria, gestione automatica di meta tags e sitemap per ottimizzazione SEO. 
+Il sistema di tracking ha integrato diversi provider analytics con particolare 
+attenzione alla conformità GDPR.
 
-\textbf{Architettura componenti} – è stata realizzata una libreria di componenti 
-riutilizzabili con TypeScript per garantire consistenza e riuso tra le 6 landing pages.
+\section{Integrazione tracking e analytics}
 
-\textbf{Routing e rendering} – le landing sono state generate staticamente
-(SSG) con revalidazione oraria (ISR), con gestione automatica di meta tags e
-sitemap per l'ottimizzazione SEO.  
+Il sistema di tracking è stato integrato nelle landing pages implementando 
+diversi provider analytics per garantire copertura completa del customer journey. 
+Mixpanel fornisce il tracciamento principale degli eventi utente con funnel 
+differenziati per verticale. Google Analytics 4 e Google Tag Manager gestiscono 
+metriche di traffico e orchestrazione eventi verso i diversi provider. Facebook 
+Pixel traccia conversioni per campagne marketing con event deduplication per 
+evitare doppi conteggi.
 
-\textbf{Tracking e compliance} – l'SDK di Mixpanel è stato integrato con 
-inizializzazione condizionale dopo consenso esplicito e anonimizzazione IP 
-per conformità GDPR.
+L'implementazione ha richiesto particolare attenzione alla conformità GDPR: 
+tutti i provider sono inizializzati solo dopo consenso esplicito dell'utente 
+tramite cookie banner, con gestione differenziata delle categorie analytics 
+e marketing. Gli indirizzi IP vengono anonimizzati automaticamente e gli utenti 
+possono revocare il consenso in qualsiasi momento attraverso le preferenze cookie.
 
 \section{Sfide affrontate e soluzioni}
-Durante lo sviluppo sono emerse diverse difficoltà tecniche risolte con 
-soluzioni specifiche:
+Durante lo sviluppo sono emerse diverse difficoltà tecniche legate all'implementazione 
+di animazioni complesse e effetti visuali avanzati, risolte con soluzioni specifiche.
 
-\textbf{Cross-browser compatibility} – Safari mostrava incompatibilità con 
-regex JavaScript per validazione form. La soluzione è stata implementare 
-validazione alternativa con Zod schema per garantire funzionamento uniforme 
-su tutti i browser.
+L'implementazione di animazioni ed effetti parallax sulle landing, progettati per 
+creare un'esperienza immersiva su desktop, richiedeva particolare attenzione alla 
+resa su dispositivi mobile. Gli effetti parallax, che su schermi grandi garantivano 
+profondità visiva e dinamismo durante lo scroll, rischiavano di compromettere le 
+performance su mobile a causa del rendering più oneroso e della gestione touch 
+differente rispetto al mouse. La soluzione ha implementato detection automatica 
+del tipo di dispositivo con disabilitazione selettiva degli effetti più pesanti 
+su mobile, mantenendo animazioni semplificate che preservassero l'esperienza visiva 
+senza impattare negativamente le performance.
 
-\textbf{Performance con contenuti ricchi} – la landing AI Engineering, con
-gallery e componenti interattivi, presentava tempi di caricamento elevati. 
-Ottimizzazione immagini (WebP), lazy loading e dynamic import hanno migliorato 
-significativamente le performance, raggiungendo i target Lighthouse prefissati.  
+La gestione delle animazioni cross-browser presentava inconsistenze significative, 
+particolarmente per transizioni complesse e animazioni sincronizzate tra componenti. 
+L'adozione di Framer Motion come libreria di animazione standardizzata ha garantito 
+comportamento uniforme su tutti i browser, eliminando le differenze di rendering 
+e timing che causavano esperienze utente frammentate.
 
-\textbf{Bundle optimization} – il bundle iniziale risultava eccessivamente 
-pesante. L'implementazione di code splitting automatico per route e dynamic 
-import per componenti pesanti ha ridotto il payload iniziale, migliorando 
-First Contentful Paint.
-
-\textbf{Tracking inconsistente} – eventi Mixpanel non venivano tracciati 
-correttamente su dispositivi iOS in modalità Private Browsing. Implementazione 
-graceful degradation e fallback per tracking senza localStorage ha risolto 
-la problematica.
-
-\section{Esempio implementazione}
-Segue un esempio di implementazione tecnica significativa per il progetto:
-
-\begin{lstlisting}[language=JavaScript, caption=Custom hook per tracking]
-// hooks/use-mixpanel.ts
-const track = useCallback((event: string, properties?: Record<string, any>) => {
-  // Implementation details
-}, []);
-\end{lstlisting}
-
-Questo esempio illustra l'approccio adottato per garantire tracking consistente 
-e GDPR-compliant attraverso hook personalizzati riutilizzabili.
+La landing AI Engineering, caratterizzata da gallery interattive e showcase 
+progetti con contenuti multimediali ricchi, presentava tempi di caricamento 
+elevati. L'ottimizzazione delle immagini ha richiesto particolare attenzione 
+per bilanciare qualità visiva e dimensioni file, con un processo iterativo di 
+compressione e ridimensionamento che ha permesso di ridurre significativamente 
+i tempi di caricamento mantenendo l'impatto visivo richiesto dal design. 
+L'implementazione di lazy loading per il caricamento progressivo dei contenuti 
+fuori viewport ha ulteriormente migliorato le performance iniziali della pagina.
 
 \section{Testing e qualità}
 Il progetto è stato sottoposto a una strategia di quality assurance che ha
 incluso test manuali su staging, validazione cross-browser e responsive,
-verifica accessibilità WCAG 2.1 AA, monitoraggio performance con Lighthouse CI e
-controlli regressivi su ogni landing.  
+verifica accessibilità WCAG 2.1 AA, monitoraggio performance e controlli 
+regressivi su ogni landing.
 
-La qualità del codice è stata mantenuta tramite ESLint, Prettier, typing
-rigoroso con TypeScript e code review obbligatorie su ogni Pull Request.
-
-Testing specifico ha incluso:
-\begin{itemize}
-  \item Validazione funnel di conversione su ambiente staging
-  \item Test cross-browser su Chrome, Safari, Firefox
-  \item Responsive testing su dispositivi mobile e tablet
-  \item Performance audit con Core Web Vitals monitoring
-  \item Accessibilità con screen reader e keyboard navigation
-\end{itemize}
+Il controllo della qualità del codice è stato garantito tramite ESLint, Prettier, 
+typing rigoroso con TypeScript e code review obbligatorie su ogni Pull Request.
+Il testing specifico ha coperto validazione funnel di conversione su ambiente 
+staging, test cross-browser su Chrome, Safari e Firefox, responsive testing 
+su dispositivi mobile e tablet, performance audit con Core Web Vitals monitoring, 
+e accessibilità con screen reader e keyboard navigation.
